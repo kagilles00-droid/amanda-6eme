@@ -364,8 +364,8 @@ function defaultState(){
 
 async function loadState(){
   try{
-    const r = await window.storage.get('amanda_progress', false);
-    state = r ? JSON.parse(r.value) : defaultState();
+    const raw = localStorage.getItem('amanda_progress');
+    state = raw ? JSON.parse(raw) : defaultState();
   }catch(e){
     state = defaultState();
   }
@@ -374,7 +374,7 @@ async function loadState(){
 }
 
 async function saveState(){
-  try{ await window.storage.set('amanda_progress', JSON.stringify(state), false); }catch(e){ console.error('storage error', e); }
+  try{ localStorage.setItem('amanda_progress', JSON.stringify(state)); }catch(e){ console.error('storage error', e); }
 }
 
 /* ===================== HELPERS ===================== */
@@ -569,7 +569,7 @@ function renderQuizResult(subj, lesson, qz){
   return `
     <div class="quiz-result">
       <div class="score">${qz.correctCount} / ${qz.questions.length}</div>
-      <p>${qz.correctCount===qz.questions.length ? 'Parfait, tu maîtrises cette leçon ! 🎉' : 'Bien joué, continue à t\\'entraîner !'}</p>
+      <p>${qz.correctCount===qz.questions.length ? 'Parfait, tu maîtrises cette leçon ! 🎉' : 'Bien joué, continue à t’entraîner !'}</p>
       ${isNewBest ? `<p style="color:var(--mint);font-weight:800;">Nouveau record enregistré ⭐</p>` : ''}
       <div class="lesson-actions" style="justify-content:center;">
         <button class="btn btn-secondary" onclick="startQuiz('${subj}','${lesson.id}')">Recommencer</button>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Carnet de Mission d'Amanda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2340;
+    --paper:#FAF6EA;
+    --paper-line:#E3DAC2;
+    --card:#FFFFFF;
+    --cobalt:#2A4B8D;
+    --cobalt-dark:#1D3564;
+    --sun:#F4B400;
+    --coral:#E8483A;
+    --mint:#2FA37A;
+    --code-bg:#12182B;
+    --code-text:#7CF29C;
+    --shadow: 0 4px 0 rgba(27,35,64,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 1px 1px, var(--paper-line) 1px, transparent 1px) 0 0/22px 22px,
+      var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    min-height:100vh;
+  }
+  h1,h2,h3,.display{font-family:'Baloo 2',sans-serif;}
+  .app{max-width:980px;margin:0 auto;padding:18px 16px 60px;}
+
+  /* HEADER */
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--cobalt);color:#fff;border-radius:18px;
+    padding:16px 20px;box-shadow:var(--shadow);
+    flex-wrap:wrap;gap:10px;
+  }
+  header.top .title{display:flex;align-items:center;gap:12px;}
+  header.top .badge-icon{
+    font-size:32px;background:#fff;border-radius:14px;padding:6px 10px;
+    box-shadow:0 3px 0 rgba(0,0,0,0.15);
+  }
+  header.top h1{margin:0;font-size:22px;letter-spacing:.3px;}
+  header.top .sub{font-size:13px;opacity:.85;margin-top:2px;}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;}
+  .stat-pill{
+    background:rgba(255,255,255,0.15);border-radius:999px;padding:8px 14px;
+    font-weight:800;font-family:'Baloo 2';font-size:14px;display:flex;align-items:center;gap:6px;
+  }
+
+  /* TABS - folder style */
+  nav.tabs{display:flex;gap:6px;margin:22px 0 0;overflow-x:auto;padding-bottom:2px;}
+  nav.tabs button{
+    font-family:'Baloo 2';font-weight:700;font-size:14px;
+    background:#EFE7D2;color:var(--ink);border:none;
+    padding:12px 16px 10px;border-radius:12px 12px 0 0;cursor:pointer;
+    white-space:nowrap;position:relative;top:2px;opacity:.7;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  nav.tabs button:hover{transform:translateY(-2px);opacity:.9;}
+  nav.tabs button.active{
+    background:var(--card);opacity:1;top:0;
+    box-shadow:0 -2px 0 var(--paper-line) inset, var(--shadow);
+  }
+  main.sheet{
+    background:var(--card);border-radius:4px 16px 16px 16px;
+    padding:24px;box-shadow:var(--shadow);min-height:420px;
+  }
+
+  /* HOME */
+  .welcome{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:18px;}
+  .welcome h2{margin:0 0 4px;font-size:24px;}
+  .welcome p{margin:0;color:#55597A;}
+  .mission-card{
+    background:linear-gradient(135deg,#2A4B8D,#3C63B5);color:#fff;border-radius:14px;
+    padding:16px 18px;margin-bottom:20px;
+  }
+  .mission-card .label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;font-weight:800;}
+  .mission-card h3{margin:6px 0 8px;font-size:19px;}
+  .mission-card button{margin-top:6px;}
+  .progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
+  .prog-card{border:2px solid var(--paper-line);border-radius:14px;padding:14px;}
+  .prog-card .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-card .icon{font-size:22px;}
+  .bar{height:10px;background:#EFE7D2;border-radius:999px;overflow:hidden;}
+  .bar > div{height:100%;background:var(--mint);border-radius:999px;transition:width .4s ease;}
+  .prog-card .pct{font-size:12px;color:#777;margin-top:6px;font-weight:700;}
+
+  /* BUTTONS */
+  button{font-family:'Nunito',sans-serif;cursor:pointer;}
+  .btn{
+    border:none;border-radius:10px;padding:10px 18px;font-weight:800;
+    font-family:'Baloo 2';font-size:14px;box-shadow:0 3px 0 rgba(0,0,0,0.15);
+    transition:transform .1s ease;
+  }
+  .btn:active{transform:translateY(2px);box-shadow:none;}
+  .btn-primary{background:var(--sun);color:var(--ink);}
+  .btn-secondary{background:#fff;color:var(--cobalt);border:2px solid var(--cobalt);box-shadow:none;}
+  .btn-ghost{background:#F2EDDD;color:var(--ink);}
+  .btn-danger{background:var(--coral);color:#fff;}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+
+  /* LESSON CARDS */
+  .lesson-list{display:flex;flex-direction:column;gap:12px;}
+  .lesson-card{border:2px solid var(--paper-line);border-radius:14px;padding:14px 16px;}
+  .lesson-head{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;}
+  .lesson-head h3{margin:0;font-size:16px;}
+  .lesson-head .stars{font-size:13px;color:var(--sun);font-weight:800;white-space:nowrap;}
+  .lesson-body{margin-top:10px;font-size:14.5px;line-height:1.55;color:#3A3F5C;}
+  .lesson-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;}
+  .subject-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .subject-header .emoji{font-size:30px;}
+
+  /* QUIZ */
+  .quiz-box{max-width:560px;}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:16px;}
+  .quiz-progress div{flex:1;height:6px;border-radius:999px;background:#EFE7D2;}
+  .quiz-progress div.done{background:var(--mint);}
+  .quiz-progress div.current{background:var(--sun);}
+  .quiz-q{font-size:17px;font-weight:800;font-family:'Baloo 2';margin-bottom:16px;}
+  .quiz-opt{
+    display:block;width:100%;text-align:left;border:2px solid var(--paper-line);
+    background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;font-size:14.5px;font-weight:700;
+    transition:background .15s ease;
+  }
+  .quiz-opt:hover{background:#F7F2E4;}
+  .quiz-opt.correct{background:#E4F6EE;border-color:var(--mint);color:#1B6B4C;}
+  .quiz-opt.wrong{background:#FCE9E7;border-color:var(--coral);color:#a3271d;}
+  .quiz-explain{font-size:13.5px;color:#55597A;background:#F7F2E4;border-radius:10px;padding:10px 12px;margin:10px 0 4px;}
+  .quiz-result{text-align:center;padding:20px 0;}
+  .quiz-result .score{font-size:42px;font-family:'Baloo 2';font-weight:800;color:var(--cobalt);}
+
+  /* ROBOTICS */
+  .robo-wrap{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;}
+  .robo-levels{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .lvl-btn{
+    width:40px;height:40px;border-radius:10px;border:2px solid var(--paper-line);background:#fff;
+    font-family:'Baloo 2';font-weight:800;
+  }
+  .lvl-btn.active{background:var(--cobalt);color:#fff;border-color:var(--cobalt);}
+  .lvl-btn.done{background:var(--mint);color:#fff;border-color:var(--mint);}
+  .lvl-btn:disabled{opacity:.35;}
+  .grid-board{
+    display:grid;gap:3px;background:var(--paper-line);border-radius:10px;padding:6px;
+    width:fit-content;
+  }
+  .cell{
+    width:44px;height:44px;background:#fff;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;font-size:20px;
+    position:relative;
+  }
+  .cell.obstacle{background:#EFE3D2;}
+  .robot{
+    grid-row:1;grid-column:1;
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    font-size:24px;z-index:5;transition:grid-row .3s ease, grid-column .3s ease, transform .3s ease;
+  }
+  .robo-panel{flex:1;min-width:260px;}
+  .objective{background:#F7F2E4;border-left:4px solid var(--sun);padding:10px 14px;border-radius:0 10px 10px 0;font-size:14px;margin-bottom:14px;}
+  .console{
+    background:var(--code-bg);color:var(--code-text);border-radius:12px;padding:14px 16px;
+    font-family:'Space Mono',monospace;font-size:13px;min-height:110px;max-height:220px;overflow-y:auto;margin-bottom:14px;
+  }
+  .console .line{opacity:.9;}
+  .console .empty{opacity:.4;}
+  .console .cursor{display:inline-block;width:8px;background:var(--code-text);animation:blink 1s step-start infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .palette{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .cmd-btn{
+    border:none;border-radius:10px;padding:10px 14px;font-family:'Space Mono',monospace;font-weight:700;font-size:12.5px;
+    background:var(--cobalt);color:#fff;box-shadow:0 3px 0 var(--cobalt-dark);
+  }
+  .cmd-btn:active{transform:translateY(2px);box-shadow:none;}
+  .mult-row{display:flex;gap:6px;align-items:center;margin-bottom:12px;font-size:13px;font-weight:700;}
+  .mult-btn{border:2px solid var(--paper-line);background:#fff;border-radius:8px;padding:6px 10px;font-family:'Baloo 2';font-weight:800;font-size:12px;}
+  .mult-btn.active{background:var(--sun);border-color:var(--sun);}
+  .feedback{border-radius:10px;padding:12px 14px;font-weight:800;font-family:'Baloo 2';margin-top:10px;}
+  .feedback.success{background:#E4F6EE;color:#1B6B4C;}
+  .feedback.fail{background:#FCE9E7;color:#a3271d;}
+  .fact{background:#FFF7E0;border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:18px;border-left:4px solid var(--sun);}
+
+  footer.reset{text-align:center;margin-top:26px;}
+  footer.reset button{background:none;border:none;color:#9a9a9a;font-size:12px;text-decoration:underline;}
+  .loading{text-align:center;padding:60px 0;color:#9a9a9a;font-family:'Baloo 2';}
+</style>
+</head>
+<body>
+<div class="app" id="app"><div class="loading">Chargement du carnet de mission…</div></div>
+
+<script>
+/* ===================== DATA ===================== */
+const SUBJECTS = [
+  {id:'fr', name:'Français', emoji:'📖'},
+  {id:'math', name:'Maths', emoji:'📐'},
+  {id:'hg', name:'Histoire-Géo', emoji:'🗺️'},
+  {id:'sciences', name:'Sciences', emoji:'🔬'},
+  {id:'ang', name:'Anglais', emoji:'🇬🇧'},
+];
+
+const LESSONS = {
+  fr: [
+    {id:'nature', title:'La nature des mots', text:"Chaque mot d'une phrase a une nature : c'est sa classe grammaticale. Le nom désigne une personne, un animal, une chose ou une idée (chat, joie). Le verbe exprime une action ou un état (manger, être). L'adjectif qualifie le nom (grand, joyeux). Il existe aussi les déterminants (le, un, ma), les pronoms (il, elle) et les adverbes (vite, très).",
+      q:[
+        {q:"Dans « Le petit chat dort », quel mot est un adjectif ?", o:["Le","petit","chat","dort"], c:1, e:"« petit » qualifie le nom « chat » : c'est un adjectif."},
+        {q:"Quelle est la nature du mot « manger » ?", o:["Nom","Verbe","Adjectif","Adverbe"], c:1, e:"« Manger » exprime une action : c'est un verbe."},
+        {q:"Un mot qui désigne une personne, un animal ou une chose est…", o:["un verbe","un adjectif","un nom","un adverbe"], c:2, e:"C'est la définition du nom."},
+      ]},
+    {id:'temps', title:'Les temps du récit', text:"Dans un récit, on utilise souvent l'imparfait pour décrire une situation qui dure (Il faisait beau) et le passé simple pour une action précise et rapide (Il partit soudain).",
+      q:[
+        {q:"Quel temps décrit un décor qui dure dans un récit ?", o:["Le passé simple","L'imparfait","Le futur","L'impératif"], c:1, e:"L'imparfait sert à décrire ce qui dure."},
+        {q:"« Il ouvrit la porte et sursauta » : à quel temps sont ces verbes ?", o:["Imparfait","Passé simple","Présent","Conditionnel"], c:1, e:"Ce sont des actions brèves et précises : passé simple."},
+        {q:"« Il faisait nuit quand elle arriva. » Quel verbe est à l'imparfait ?", o:["faisait","arriva","les deux","aucun"], c:0, e:"« faisait » décrit une situation qui dure : imparfait."},
+      ]},
+    {id:'vocab', title:'Synonymes et antonymes', text:"Un synonyme est un mot de sens proche (content = joyeux). Un antonyme est un mot de sens contraire (grand ≠ petit). Utiliser des synonymes évite de répéter toujours le même mot.",
+      q:[
+        {q:"Quel mot est un synonyme de « content » ?", o:["triste","joyeux","fatigué","rapide"], c:1, e:"« Joyeux » a un sens proche de « content »."},
+        {q:"Quel mot est l'antonyme de « rapide » ?", o:["lent","grand","joyeux","fort"], c:0, e:"« Lent » est le contraire de « rapide »."},
+        {q:"« Immense » est un synonyme de…", o:["petit","énorme","faible","calme"], c:1, e:"« Immense » et « énorme » veulent dire la même chose."},
+      ]},
+    {id:'ponct', title:'La ponctuation', text:"Le point (.) termine une phrase déclarative. Le point d'interrogation (?) marque une question. Le point d'exclamation (!) exprime la surprise. La virgule (,) sépare des éléments dans une phrase.",
+      q:[
+        {q:"Quel signe utilise-t-on à la fin d'une question ?", o:[".",",","!","?"], c:3, e:"Le point d'interrogation marque une question."},
+        {q:"« Quelle chance___ » Quel signe complète cette exclamation ?", o:["?",".","!",","], c:2, e:"Le point d'exclamation exprime la surprise."},
+        {q:"La virgule sert à…", o:["terminer une phrase","séparer des éléments","poser une question","exprimer la surprise"], c:1, e:"La virgule sépare des éléments dans une phrase."},
+      ]},
+  ],
+  math: [
+    {id:'decimaux', title:'Nombres entiers et décimaux', text:"Un nombre décimal a une partie entière et une partie décimale séparées par une virgule (3,25). Dans 3,25 : 3 est la partie entière, 25 la partie décimale.",
+      q:[
+        {q:"Dans 12,7 quelle est la partie décimale ?", o:["12","7","0,7","1,2"], c:1, e:"Après la virgule, on trouve 7 : c'est la partie décimale."},
+        {q:"Quel nombre est le plus grand ?", o:["4,5","4,15","4,05","4,2"], c:0, e:"4,5 = 4,50, c'est le plus grand des quatre."},
+        {q:"5 dixièmes s'écrivent…", o:["0,5","5,0","0,05","50"], c:0, e:"5 dixièmes = 5/10 = 0,5."},
+      ]},
+    {id:'fractions', title:'Les fractions', text:"Une fraction représente une partie d'un tout : dans 3/4, 4 est le dénominateur (nombre de parts égales) et 3 le numérateur (nombre de parts prises).",
+      q:[
+        {q:"Dans 5/8, que représente le 8 ?", o:["le numérateur","le dénominateur","le résultat","rien"], c:1, e:"Le 8 indique en combien de parts égales le tout est découpé."},
+        {q:"Quelle fraction représente la moitié ?", o:["1/3","1/2","2/2","1/4"], c:1, e:"1/2 = la moitié."},
+        {q:"3/4 signifie…", o:["3 parts sur 4","4 parts sur 3","3 fois 4","3 plus 4"], c:0, e:"Le tout est coupé en 4 et on en prend 3."},
+      ]},
+    {id:'perimetre', title:'Périmètre et aire', text:"Le périmètre d'un rectangle se calcule avec (Longueur + largeur) × 2. L'aire (surface) se calcule avec Longueur × largeur.",
+      q:[
+        {q:"Un rectangle a une longueur de 5 cm et une largeur de 3 cm. Son périmètre est…", o:["8 cm","15 cm","16 cm","30 cm"], c:2, e:"(5+3)×2 = 16 cm."},
+        {q:"Quelle est l'aire de ce même rectangle ?", o:["8 cm²","15 cm²","16 cm²","30 cm²"], c:1, e:"5×3 = 15 cm²."},
+        {q:"L'aire d'un carré de côté 4 cm est…", o:["8 cm²","16 cm²","4 cm²","12 cm²"], c:1, e:"4×4 = 16 cm²."},
+      ]},
+    {id:'symetrie', title:'La symétrie axiale', text:"Deux points sont symétriques par rapport à une droite (l'axe) si cette droite est la médiatrice du segment qui les relie. La figure symétrique garde la même forme et la même taille.",
+      q:[
+        {q:"Une figure et son symétrique par rapport à un axe ont…", o:["des tailles différentes","la même forme et la même taille","des couleurs différentes","rien en commun"], c:1, e:"La symétrie conserve forme et taille."},
+        {q:"L'axe de symétrie est…", o:["au hasard","une droite qui sert de miroir","un point","un angle"], c:1, e:"L'axe agit comme un miroir."},
+        {q:"Quelle lettre majuscule a un axe de symétrie vertical ?", o:["F","A","R","N"], c:1, e:"La lettre A est symétrique par rapport à un axe vertical."},
+      ]},
+  ],
+  hg: [
+    {id:'prehistoire', title:'La Préhistoire', text:"La Préhistoire est la longue période avant l'invention de l'écriture. Les premiers hommes étaient des chasseurs-cueilleurs. Ils ont découvert le feu, fabriqué des outils en pierre, et peint dans des grottes comme à Lascaux.",
+      q:[
+        {q:"La Préhistoire se termine avec l'invention de…", o:["la roue","l'écriture","l'agriculture","le feu"], c:1, e:"L'écriture marque le début de l'Histoire."},
+        {q:"Que faisaient les hommes préhistoriques pour se nourrir au début ?", o:["Ils cultivaient des champs","Ils chassaient et cueillaient","Ils achetaient au marché","Ils élevaient des vaches"], c:1, e:"C'étaient des chasseurs-cueilleurs."},
+        {q:"Où trouve-t-on de célèbres peintures préhistoriques en France ?", o:["Versailles","Lascaux","Notre-Dame","Le Louvre"], c:1, e:"La grotte de Lascaux est célèbre pour ses peintures."},
+      ]},
+    {id:'egypte', title:"L'Égypte ancienne", text:"L'Égypte ancienne se développe le long du Nil, un fleuve qui fertilise les terres grâce à ses crues. Les Égyptiens construisent des pyramides pour leurs pharaons et inventent une écriture : les hiéroglyphes.",
+      q:[
+        {q:"Quel fleuve traverse l'Égypte ancienne ?", o:["Le Rhin","Le Nil","Le Tibre","L'Amazone"], c:1, e:"Le Nil est le fleuve d'Égypte."},
+        {q:"Comment s'appelle l'écriture égyptienne ?", o:["l'alphabet","les hiéroglyphes","le braille","les runes"], c:1, e:"Les hiéroglyphes sont l'écriture égyptienne."},
+        {q:"Les pyramides étaient construites pour…", o:["les paysans","les pharaons","les commerçants","les animaux"], c:1, e:"Elles servaient de tombeaux aux pharaons."},
+      ]},
+    {id:'grece', title:'La Grèce antique', text:"La Grèce antique est organisée en cités-États comme Athènes ou Sparte. Les Grecs inventent la démocratie à Athènes et honorent des dieux comme Zeus, notamment lors des Jeux Olympiques.",
+      q:[
+        {q:"Quelle cité grecque est célèbre pour avoir inventé la démocratie ?", o:["Sparte","Athènes","Rome","Troie"], c:1, e:"Athènes est le berceau de la démocratie."},
+        {q:"Comment appelle-t-on le roi des dieux grecs ?", o:["Zeus","Ra","Jupiter","Odin"], c:0, e:"Zeus est le roi des dieux grecs."},
+        {q:"Quelle compétition sportive vient de la Grèce antique ?", o:["La Coupe du monde","Les Jeux Olympiques","Le Tour de France","Le marathon de Paris"], c:1, e:"Les Jeux Olympiques sont nés en Grèce antique."},
+      ]},
+    {id:'continents', title:'Les continents et océans', text:"La Terre compte 6 continents (Afrique, Amérique, Antarctique, Asie, Europe, Océanie) et 5 océans (Pacifique, Atlantique, Indien, Arctique, Austral).",
+      q:[
+        {q:"Combien y a-t-il de continents ?", o:["4","5","6","7"], c:2, e:"On compte 6 continents."},
+        {q:"Quel est le plus grand océan du monde ?", o:["Atlantique","Indien","Pacifique","Arctique"], c:2, e:"Le Pacifique est le plus grand océan."},
+        {q:"La France se trouve sur quel continent ?", o:["Asie","Europe","Afrique","Amérique"], c:1, e:"La France est en Europe."},
+      ]},
+  ],
+  sciences: [
+    {id:'vivant', title:'Vivant et non-vivant', text:"Un être vivant naît, grandit, se nourrit, respire et se reproduit. Une pierre ou une voiture ne fait rien de tout cela : ce sont des objets non-vivants.",
+      q:[
+        {q:"Lequel de ces éléments est vivant ?", o:["un caillou","un champignon","une chaise","l'eau"], c:1, e:"Le champignon est un être vivant."},
+        {q:"Un critère du vivant est…", o:["être en métal","se reproduire","être immobile","être coloré"], c:1, e:"Se reproduire est un critère du vivant."},
+        {q:"Une voiture est-elle un être vivant ?", o:["Oui","Non","Parfois","On ne sait pas"], c:1, e:"Une voiture ne naît pas et ne se reproduit pas."},
+      ]},
+    {id:'cellule', title:'La cellule', text:"La cellule est la plus petite unité qui constitue tous les êtres vivants. Certains organismes n'ont qu'une seule cellule (unicellulaires), d'autres en ont des milliards (pluricellulaires).",
+      q:[
+        {q:"Qu'est-ce que la cellule ?", o:["Un organe","L'unité de base du vivant","Un os","Un liquide"], c:1, e:"La cellule est l'unité de base de tout être vivant."},
+        {q:"Un organisme fait d'une seule cellule est dit…", o:["pluricellulaire","unicellulaire","minéral","artificiel"], c:1, e:"« Uni » = une seule cellule."},
+        {q:"Le corps humain est composé de…", o:["une seule cellule","quelques cellules","des milliards de cellules","aucune cellule"], c:2, e:"Notre corps contient des milliards de cellules."},
+      ]},
+    {id:'etats', title:'Les états de la matière', text:"La matière existe sous 3 états : solide (forme fixe), liquide (prend la forme du récipient) et gazeux (se répand partout). L'eau passe de la glace (solide) à l'eau (liquide) puis à la vapeur (gaz).",
+      q:[
+        {q:"La glace est un état… de l'eau.", o:["gazeux","liquide","solide","aucun"], c:2, e:"La glace est de l'eau à l'état solide."},
+        {q:"Quel état prend la forme de son récipient sans forme fixe propre ?", o:["solide","liquide","gazeux","aucun"], c:1, e:"Le liquide prend la forme du récipient."},
+        {q:"Quand l'eau bout, elle se transforme en…", o:["glace","vapeur","sable","huile"], c:1, e:"L'ébullition transforme l'eau liquide en vapeur."},
+      ]},
+    {id:'ecosysteme', title:'Les écosystèmes', text:"Un écosystème regroupe des êtres vivants (plantes, animaux) et leur milieu (eau, sol, air) qui interagissent entre eux, par exemple une forêt ou un étang.",
+      q:[
+        {q:"Un écosystème comprend…", o:["seulement des animaux","des êtres vivants et leur milieu","uniquement des plantes","uniquement des minéraux"], c:1, e:"Un écosystème associe êtres vivants et milieu."},
+        {q:"Une forêt est un exemple de…", o:["planète","écosystème","cellule","atome"], c:1, e:"La forêt est un écosystème."},
+        {q:"Dans un écosystème, les êtres vivants…", o:["n'interagissent jamais","interagissent entre eux et avec leur milieu","vivent seuls","ne se nourrissent pas"], c:1, e:"Ils interagissent entre eux et avec leur milieu."},
+      ]},
+  ],
+  ang: [
+    {id:'presenter', title:'Se présenter', text:"Pour se présenter en anglais : « Hello, my name is Amanda. » / « I am 11 years old. » On demande le nom avec « What is your name? »",
+      q:[
+        {q:"Comment dit-on « Je m'appelle Amanda » en anglais ?", o:["I am Amanda house","My name is Amanda","Amanda is me","Call Amanda"], c:1, e:"« My name is Amanda » = « Je m'appelle Amanda »."},
+        {q:"Que signifie « How old are you? »", o:["Comment vas-tu ?","Quel âge as-tu ?","Où habites-tu ?","Comment t'appelles-tu ?"], c:1, e:"« How old are you? » demande l'âge."},
+        {q:"« I am eleven years old » signifie…", o:["J'ai onze ans","Je suis onze","J'habite à onze","Il est onze heures"], c:0, e:"Cela signifie « J'ai onze ans »."},
+      ]},
+    {id:'nombres', title:"Les nombres et l'heure", text:"Les nombres de 1 à 10 : one, two, three, four, five, six, seven, eight, nine, ten. Pour l'heure : « What time is it? » → « It is three o'clock. »",
+      q:[
+        {q:"Comment dit-on « sept » en anglais ?", o:["six","seven","eight","ten"], c:1, e:"« Seven » = sept."},
+        {q:"« What time is it? » signifie…", o:["Quelle heure est-il ?","Quel jour est-on ?","Quel âge as-tu ?","Où es-tu ?"], c:0, e:"On demande l'heure."},
+        {q:"« Ten » correspond au nombre…", o:["9","10","11","100"], c:1, e:"« Ten » = 10."},
+      ]},
+    {id:'present', title:'Le présent simple', text:"Le présent simple sert à parler d'habitudes : « I play football on Sundays. » Avec he/she/it, on ajoute un « s » : « She plays football. »",
+      q:[
+        {q:"Complète : « She ___ (play) tennis every day. »", o:["play","plays","playing","played"], c:1, e:"Avec « she », on ajoute un s : « plays »."},
+        {q:"« I like chocolate » est au…", o:["passé","présent","futur","impératif"], c:1, e:"C'est une habitude au présent."},
+        {q:"Quelle forme est correcte avec « he » ?", o:["he go","he goes","he going","he gone"], c:1, e:"« He goes » : on ajoute un s à la 3e personne."},
+      ]},
+    {id:'famille', title:'La famille', text:"Vocabulaire de la famille : mother (mère), father (père), sister (sœur), brother (frère), grandmother (grand-mère), grandfather (grand-père).",
+      q:[
+        {q:"Comment dit-on « sœur » en anglais ?", o:["brother","sister","mother","cousin"], c:1, e:"« Sister » = sœur."},
+        {q:"« Father » signifie…", o:["mère","frère","père","oncle"], c:2, e:"« Father » = père."},
+        {q:"« Grandmother » signifie…", o:["grand-père","tante","grand-mère","sœur"], c:2, e:"« Grandmother » = grand-mère."},
+      ]},
+  ],
+};
+
+const ROBO_FACTS = [
+  "Un algorithme, c'est simplement une suite d'instructions précises pour réaliser une tâche — comme une recette de cuisine !",
+  "Un robot fait exactement ce qu'on lui dit, dans l'ordre exact. S'il se trompe, c'est presque toujours une erreur dans les instructions.",
+  "L'intelligence artificielle apprend souvent à partir d'exemples : plus elle en voit, plus elle devient précise.",
+  "En vrai code, TOURNE_DROITE() et AVANCE() sont des fonctions : de petites instructions qu'on peut réutiliser autant de fois qu'on veut.",
+];
+
+const ROBO_LEVELS = [
+  {id:1, size:4, start:{x:0,y:3,dir:0}, target:{x:0,y:0}, obstacles:[], objective:"Programme le robot pour qu'il avance tout droit jusqu'à l'étoile ⭐."},
+  {id:2, size:4, start:{x:0,y:3,dir:0}, target:{x:3,y:0}, obstacles:[], objective:"Cette fois il faut tourner ! Utilise TOURNE_DROITE() pour changer de direction."},
+  {id:3, size:5, start:{x:0,y:4,dir:0}, target:{x:4,y:0}, obstacles:[{x:0,y:2}], objective:"Un rocher 🪨 bloque le passage direct. Tourne plus tôt pour l'éviter."},
+  {id:4, size:5, start:{x:4,y:4,dir:3}, target:{x:0,y:0}, obstacles:[{x:2,y:2}], objective:"Le robot part vers la gauche. Guide-le jusqu'à l'étoile en évitant le rocher."},
+  {id:5, size:6, start:{x:0,y:5,dir:1}, target:{x:5,y:0}, obstacles:[{x:3,y:3}], objective:"Niveau expert : utilise le multiplicateur ×2/×3 pour répéter des instructions, comme une vraie boucle en programmation !"},
+];
+
+const DIR_ARROW = ['▲','▶','▼','◀'];
+const CMD_LABEL = {A:'AVANCE()', L:'TOURNE_GAUCHE()', R:'TOURNE_DROITE()'};
+
+/* ===================== STATE ===================== */
+let state = null;
+let view = {tab:'home', subject:null, lessonId:null, quiz:null, roboLevel:1, roboSeq:[], roboMult:1, roboRunning:false, roboRobot:null, roboMsg:null};
+
+function defaultState(){
+  return {points:0, quiz:{}, roboticsLevel:1, roboticsDone:[]};
+}
+
+async function loadState(){
+  try{
+    const r = await window.storage.get('amanda_progress', false);
+    state = r ? JSON.parse(r.value) : defaultState();
+  }catch(e){
+    state = defaultState();
+  }
+  view.roboLevel = state.roboticsLevel || 1;
+  render();
+}
+
+async function saveState(){
+  try{ await window.storage.set('amanda_progress', JSON.stringify(state), false); }catch(e){ console.error('storage error', e); }
+}
+
+/* ===================== HELPERS ===================== */
+function lessonCount(subj){ return LESSONS[subj].length; }
+function bestScore(subj,lessonId){
+  return (state.quiz[subj] && state.quiz[subj][lessonId]) || 0;
+}
+function subjectPct(subj){
+  const total = lessonCount(subj) * 3;
+  let sum = 0;
+  LESSONS[subj].forEach(l => sum += bestScore(subj,l.id));
+  return Math.round((sum/total)*100);
+}
+function overallPct(){
+  let sum=0,total=0;
+  SUBJECTS.forEach(s=>{ total += lessonCount(s.id)*3; LESSONS[s.id].forEach(l=> sum += bestScore(s.id,l.id)); });
+  return total ? Math.round((sum/total)*100) : 0;
+}
+
+/* ===================== RENDER ===================== */
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <header class="top">
+      <div class="title">
+        <div class="badge-icon">🧭</div>
+        <div>
+          <h1>Le Carnet de Mission d'Amanda</h1>
+          <div class="sub">Objectif : la 6ᵉ, prête à explorer !</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat-pill">⭐ ${state.points} pts</div>
+        <div class="stat-pill">📊 ${overallPct()}%</div>
+      </div>
+    </header>
+    <nav class="tabs">
+      ${tabBtn('home','🏠 Accueil')}
+      ${SUBJECTS.map(s=>tabBtn(s.id, s.emoji+' '+s.name)).join('')}
+      ${tabBtn('robo','🤖 Robotique &amp; IA')}
+    </nav>
+    <main class="sheet">${renderTab()}</main>
+    <footer class="reset"><button onclick="resetProgress()">Réinitialiser la progression</button></footer>
+  `;
+  attachHandlers();
+}
+function tabBtn(id,label){
+  return `<button class="${view.tab===id?'active':''}" onclick="goTab('${id}')">${label}</button>`;
+}
+function goTab(id){
+  view.tab=id; view.subject = SUBJECTS.some(s=>s.id===id)?id:null; view.lessonId=null; view.quiz=null;
+  render();
+}
+
+function renderTab(){
+  if(view.tab==='home') return renderHome();
+  if(view.tab==='robo') return renderRobo();
+  if(view.subject) return renderSubject(view.subject);
+  return '';
+}
+
+function renderHome(){
+  // find first incomplete lesson across subjects for "mission of the day"
+  let mission = null;
+  for(const s of SUBJECTS){
+    for(const l of LESSONS[s.id]){
+      if(bestScore(s.id,l.id) < 3){ mission = {subj:s, lesson:l}; break; }
+    }
+    if(mission) break;
+  }
+  return `
+    <div class="welcome">
+      <div>
+        <h2>Salut Amanda 👋</h2>
+        <p>Chaque mission réussie te rapproche un peu plus de la 6ᵉ. À toi de jouer !</p>
+      </div>
+    </div>
+    ${mission ? `
+    <div class="mission-card">
+      <div class="label">Mission du jour</div>
+      <h3>${mission.subj.emoji} ${mission.lesson.title} — ${mission.subj.name}</h3>
+      <button class="btn btn-primary" onclick="goTab('${mission.subj.id}')">Commencer</button>
+    </div>` : `
+    <div class="mission-card">
+      <div class="label">Bravo !</div>
+      <h3>Tu as terminé toutes les leçons disponibles 🎉</h3>
+    </div>`}
+    <div class="progress-grid">
+      ${SUBJECTS.map(s=>`
+        <div class="prog-card">
+          <div class="top-row"><span class="icon">${s.emoji}</span><strong>${s.name}</strong></div>
+          <div class="bar"><div style="width:${subjectPct(s.id)}%"></div></div>
+          <div class="pct">${subjectPct(s.id)}% maîtrisé</div>
+        </div>`).join('')}
+      <div class="prog-card">
+        <div class="top-row"><span class="icon">🤖</span><strong>Robotique &amp; IA</strong></div>
+        <div class="bar"><div style="width:${Math.round(((state.roboticsDone.length)/ROBO_LEVELS.length)*100)}%"></div></div>
+        <div class="pct">${state.roboticsDone.length}/${ROBO_LEVELS.length} niveaux réussis</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSubject(subj){
+  const s = SUBJECTS.find(x=>x.id===subj);
+  if(view.quiz && view.subject===subj) return renderQuiz();
+  return `
+    <div class="subject-header"><span class="emoji">${s.emoji}</span><h2>${s.name}</h2></div>
+    <div class="lesson-list">
+      ${LESSONS[subj].map(l=>{
+        const score = bestScore(subj,l.id);
+        const open = view.lessonId===l.id;
+        return `
+        <div class="lesson-card">
+          <div class="lesson-head" onclick="toggleLesson('${l.id}')">
+            <h3>${l.title}</h3>
+            <span class="stars">${'⭐'.repeat(score)}${'☆'.repeat(3-score)}</span>
+          </div>
+          ${open ? `
+            <div class="lesson-body">${l.text}</div>
+            <div class="lesson-actions">
+              <button class="btn btn-primary" onclick="startQuiz('${subj}','${l.id}')">Faire le quiz</button>
+            </div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+function toggleLesson(id){ view.lessonId = (view.lessonId===id) ? null : id; render(); }
+
+function startQuiz(subj, lessonId){
+  const lesson = LESSONS[subj].find(l=>l.id===lessonId);
+  view.subject = subj;
+  view.quiz = {lessonId, idx:0, correctCount:0, answered:null, questions:lesson.q};
+  render();
+}
+
+function renderQuiz(){
+  const qz = view.quiz;
+  const subj = view.subject;
+  const lesson = LESSONS[subj].find(l=>l.id===qz.lessonId);
+  if(qz.idx >= qz.questions.length){
+    return renderQuizResult(subj, lesson, qz);
+  }
+  const q = qz.questions[qz.idx];
+  const answered = qz.answered;
+  return `
+    <div class="quiz-box">
+      <div class="quiz-progress">
+        ${qz.questions.map((_,i)=>`<div class="${i<qz.idx?'done':(i===qz.idx?'current':'')}"></div>`).join('')}
+      </div>
+      <div class="quiz-q">${lesson.title} — Question ${qz.idx+1}/${qz.questions.length}</div>
+      <div class="quiz-q" style="font-size:16px;font-weight:700;">${q.q}</div>
+      ${q.o.map((opt,i)=>{
+        let cls='quiz-opt';
+        if(answered!==null){
+          if(i===q.c) cls+=' correct';
+          else if(i===answered) cls+=' wrong';
+        }
+        return `<button class="${cls}" ${answered!==null?'disabled':''} onclick="answerQuiz(${i})">${opt}</button>`;
+      }).join('')}
+      ${answered!==null ? `<div class="quiz-explain">${q.e}</div><button class="btn btn-primary" onclick="nextQuizQuestion()">${qz.idx+1<qz.questions.length?'Question suivante':'Voir mon score'}</button>` : ''}
+    </div>
+  `;
+}
+
+function answerQuiz(i){
+  const qz = view.quiz;
+  if(qz.answered!==null) return;
+  qz.answered = i;
+  const q = qz.questions[qz.idx];
+  if(i===q.c) qz.correctCount++;
+  render();
+}
+function nextQuizQuestion(){
+  const qz = view.quiz;
+  qz.idx++; qz.answered=null;
+  render();
+}
+
+function renderQuizResult(subj, lesson, qz){
+  const prevBest = bestScore(subj, lesson.id);
+  const isNewBest = qz.correctCount > prevBest;
+  if(isNewBest){
+    if(!state.quiz[subj]) state.quiz[subj]={};
+    const gain = (qz.correctCount - prevBest) * 10 + (qz.correctCount===3 && prevBest<3 ? 20 : 0);
+    state.quiz[subj][lesson.id] = qz.correctCount;
+    state.points += gain;
+    saveState();
+  }
+  return `
+    <div class="quiz-result">
+      <div class="score">${qz.correctCount} / ${qz.questions.length}</div>
+      <p>${qz.correctCount===qz.questions.length ? 'Parfait, tu maîtrises cette leçon ! 🎉' : 'Bien joué, continue à t\\'entraîner !'}</p>
+      ${isNewBest ? `<p style="color:var(--mint);font-weight:800;">Nouveau record enregistré ⭐</p>` : ''}
+      <div class="lesson-actions" style="justify-content:center;">
+        <button class="btn btn-secondary" onclick="startQuiz('${subj}','${lesson.id}')">Recommencer</button>
+        <button class="btn btn-primary" onclick="closeQuiz()">Retour aux leçons</button>
+      </div>
+    </div>
+  `;
+}
+function closeQuiz(){ view.quiz=null; render(); }
+
+/* ===================== ROBOTICS ===================== */
+function renderRobo(){
+  const lvl = ROBO_LEVELS.find(l=>l.id===view.roboLevel);
+  if(!view.roboRobot || view.roboRobot.levelId !== lvl.id){
+    view.roboRobot = {...lvl.start, levelId:lvl.id};
+    view.roboSeq = [];
+    view.roboMsg = null;
+  }
+  const fact = ROBO_FACTS[(lvl.id-1) % ROBO_FACTS.length];
+  return `
+    <div class="subject-header"><span class="emoji">🤖</span><h2>Robotique &amp; IA</h2></div>
+    <div class="fact">💡 ${fact}</div>
+    <div class="robo-levels">
+      ${ROBO_LEVELS.map(l=>{
+        const unlocked = l.id <= state.roboticsLevel;
+        const done = state.roboticsDone.includes(l.id);
+        return `<button class="lvl-btn ${l.id===view.roboLevel?'active':''} ${done?'done':''}" ${unlocked?'':'disabled'} onclick="setRoboLevel(${l.id})">${l.id}</button>`;
+      }).join('')}
+    </div>
+    <div class="objective">🎯 ${lvl.objective}</div>
+    <div class="robo-wrap">
+      <div>${renderGrid(lvl)}</div>
+      <div class="robo-panel">
+        <div class="mult-row">
+          Répéter :
+          <button class="mult-btn ${view.roboMult===1?'active':''}" onclick="setMult(1)">×1</button>
+          <button class="mult-btn ${view.roboMult===2?'active':''}" onclick="setMult(2)">×2</button>
+          <button class="mult-btn ${view.roboMult===3?'active':''}" onclick="setMult(3)">×3</button>
+        </div>
+        <div class="palette">
+          <button class="cmd-btn" ${view.roboRunning?'disabled':''} onclick="addCmd('A')">⬆️ AVANCE()</button>
+          <button class="cmd-btn" ${view.roboRunning?'disabled':''} onclick="addCmd('L')">↩️ TOURNE_GAUCHE()</button>
+          <button class="cmd-btn" ${view.roboRunning?'disabled':''} onclick="addCmd('R')">↪️ TOURNE_DROITE()</button>
+        </div>
+        <div class="console">
+          ${view.roboSeq.length===0 ? '<div class="line empty">// tes instructions apparaîtront ici<span class="cursor">&nbsp;</span></div>' :
+            view.roboSeq.map((c,i)=>`<div class="line">${i+1}. ${CMD_LABEL[c]}</div>`).join('') + '<span class="cursor">&nbsp;</span>'}
+        </div>
+        <div class="lesson-actions">
+          <button class="btn btn-ghost" ${view.roboRunning?'disabled':''} onclick="undoCmd()">Effacer dernier</button>
+          <button class="btn btn-ghost" ${view.roboRunning?'disabled':''} onclick="clearCmd()">Effacer tout</button>
+          <button class="btn btn-primary" ${view.roboRunning||view.roboSeq.length===0?'disabled':''} onclick="runProgram()">▶ Exécuter</button>
+        </div>
+        ${view.roboMsg ? `<div class="feedback ${view.roboMsg.ok?'success':'fail'}">${view.roboMsg.text}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderGrid(lvl){
+  const n = lvl.size;
+  const isObstacle = (x,y)=> lvl.obstacles.some(o=>o.x===x&&o.y===y);
+  let cells = '';
+  for(let y=0;y<n;y++){
+    for(let x=0;x<n;x++){
+      let content = '';
+      if(x===lvl.target.x && y===lvl.target.y) content='⭐';
+      else if(isObstacle(x,y)) content='🪨';
+      cells += `<div class="cell ${isObstacle(x,y)?'obstacle':''}" style="grid-row:${y+1};grid-column:${x+1};">${content}</div>`;
+    }
+  }
+  const r = view.roboRobot;
+  const rot = r.dir*90;
+  const robotEl = `<div class="robot" id="robotEl" style="grid-row:${r.y+1};grid-column:${r.x+1};transform:rotate(${rot}deg);">${DIR_ARROW[0]}</div>`;
+  return `<div class="grid-board" style="grid-template-columns:repeat(${n},44px);grid-template-rows:repeat(${n},44px);">${cells}${robotEl}</div>`;
+}
+
+function setRoboLevel(id){
+  if(id > state.roboticsLevel) return;
+  view.roboLevel = id;
+  view.roboRobot = null;
+  render();
+}
+function setMult(n){ view.roboMult = n; render(); }
+function addCmd(c){
+  for(let i=0;i<view.roboMult;i++) view.roboSeq.push(c);
+  view.roboMsg = null;
+  render();
+}
+function undoCmd(){ view.roboSeq.pop(); view.roboMsg=null; render(); }
+function clearCmd(){ view.roboSeq=[]; view.roboMsg=null; render(); }
+
+function delay(ms){ return new Promise(res=>setTimeout(res,ms)); }
+
+async function runProgram(){
+  const lvl = ROBO_LEVELS.find(l=>l.id===view.roboLevel);
+  view.roboRunning = true;
+  view.roboMsg = null;
+  let r = {...lvl.start};
+  render();
+  for(const cmd of view.roboSeq){
+    await delay(380);
+    if(cmd==='L') r.dir = (r.dir+3)%4;
+    else if(cmd==='R') r.dir = (r.dir+1)%4;
+    else if(cmd==='A'){
+      if(r.dir===0) r.y -= 1;
+      else if(r.dir===1) r.x += 1;
+      else if(r.dir===2) r.y += 1;
+      else if(r.dir===3) r.x -= 1;
+    }
+    view.roboRobot = {...r, levelId:lvl.id};
+    // check bounds/obstacle
+    const outOfBounds = r.x<0 || r.y<0 || r.x>=lvl.size || r.y>=lvl.size;
+    const hitObstacle = !outOfBounds && lvl.obstacles.some(o=>o.x===r.x&&o.y===r.y);
+    if(outOfBounds || hitObstacle){
+      view.roboRunning = false;
+      view.roboMsg = {ok:false, text: outOfBounds ? "Oups, le robot sort de la zone ! Ajuste ton programme et réessaie." : "Aïe, un rocher 🪨 bloque le passage. Trouve un autre chemin !"};
+      render();
+      return;
+    }
+    render();
+  }
+  view.roboRunning = false;
+  const success = r.x===lvl.target.x && r.y===lvl.target.y;
+  if(success){
+    view.roboMsg = {ok:true, text:"Bravo, mission réussie ! 🎉"};
+    if(!state.roboticsDone.includes(lvl.id)){
+      state.roboticsDone.push(lvl.id);
+      state.points += 15;
+      if(state.roboticsLevel <= lvl.id && lvl.id < ROBO_LEVELS.length){
+        state.roboticsLevel = lvl.id + 1;
+      }
+      saveState();
+    }
+  }else{
+    view.roboMsg = {ok:false, text:"Presque ! Le robot n'est pas encore sur l'étoile. Ajuste le programme."};
+  }
+  render();
+}
+
+function attachHandlers(){}
+
+async function resetProgress(){
+  if(!confirm("Réinitialiser toute la progression d'Amanda ? Cette action est définitive.")) return;
+  state = defaultState();
+  view.roboLevel = 1;
+  await saveState();
+  render();
+}
+
+loadState();
+</script>
+</body>
+</html>

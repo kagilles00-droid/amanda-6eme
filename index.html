@@ -611,6 +611,16 @@ function speak(text, lang){
   }catch(e){ console.error('speech error', e); }
 }
 function sayLetter(letter){ speak(letter, 'en-US'); }
+function speakLesson(subj, lessonId){
+  const l = LESSONS[subj].find(x=>x.id===lessonId);
+  if(l) speak(l.text, l.lang || 'fr-FR');
+}
+function speakQuizQuestion(){
+  const qz = view.quiz;
+  if(!qz) return;
+  const q = qz.questions[qz.idx];
+  if(q) speak(q.q, 'fr-FR');
+}
 
 function renderSubject(subj){
   const s = SUBJECTS.find(x=>x.id===subj);
@@ -632,7 +642,7 @@ function renderSubject(subj){
             ${l.visual ? renderVocabVisual(l.visual) : ''}
             <div class="lesson-body">${l.text}</div>
             <div class="lesson-actions">
-              <button class="btn btn-ghost" onclick="speak(${JSON.stringify(l.text)}, '${l.lang||'fr-FR'}')">🔊 Écouter le texte</button>
+              <button class="btn btn-ghost" onclick="speakLesson('${subj}','${l.id}')">🔊 Écouter le texte</button>
               <button class="btn btn-primary" onclick="startQuiz('${subj}','${l.id}')">Faire le quiz</button>
             </div>` : ''}
         </div>`;
@@ -667,7 +677,7 @@ function renderQuiz(){
       <div class="quiz-q">${lesson.title} — Question ${qz.idx+1}/${qz.questions.length}</div>
       <div class="quiz-q" style="font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between;">
         <span>${q.q}</span>
-        <button class="btn btn-ghost" style="padding:6px 10px;flex-shrink:0;" onclick="speak(${JSON.stringify(q.q)}, 'fr-FR')">🔊</button>
+        <button class="btn btn-ghost" style="padding:6px 10px;flex-shrink:0;" onclick="speakQuizQuestion()">🔊</button>
       </div>
       ${q.o.map((opt,i)=>{
         let cls='quiz-opt';

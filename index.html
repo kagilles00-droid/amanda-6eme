@@ -184,6 +184,23 @@
   .feedback.success{background:#E4F6EE;color:#1B6B4C;}
   .feedback.fail{background:#FCE9E7;color:#a3271d;}
   .fact{background:#FFF7E0;border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:18px;border-left:4px solid var(--sun);}
+  .alpha-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:8px;}
+  .alpha-btn{
+    border:2px solid var(--paper-line);background:#fff;border-radius:10px;padding:8px 4px;
+    font-family:'Baloo 2';font-weight:800;font-size:18px;color:var(--cobalt);display:flex;flex-direction:column;align-items:center;gap:2px;
+  }
+  .alpha-btn:hover{background:#F7F2E4;border-color:var(--cobalt);}
+  .alpha-btn span{font-family:'Space Mono',monospace;font-weight:400;font-size:10px;color:#777;}
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-bottom:14px;}
+  .vocab-card{
+    border:2px solid var(--paper-line);background:#fff;border-radius:12px;padding:10px 6px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+  }
+  .vocab-card:hover{border-color:var(--cobalt);background:#F7F2E4;}
+  .vocab-card .swatch{width:34px;height:34px;border-radius:8px;border:1px solid rgba(0,0,0,0.15);}
+  .vocab-card .vocab-emoji{font-size:30px;}
+  .vocab-card .vocab-en{font-family:'Space Mono',monospace;font-size:11.5px;font-weight:700;color:var(--cobalt);margin-top:2px;}
+  .vocab-card .vocab-fr{font-size:11.5px;color:#666;}
 
   footer.reset{text-align:center;margin-top:26px;}
   footer.reset button{background:none;border:none;color:#9a9a9a;font-size:12px;text-decoration:underline;}
@@ -197,6 +214,7 @@
 /* ===================== DATA ===================== */
 const SUBJECTS = [
   {id:'fr', name:'Français', emoji:'📖'},
+  {id:'lecture', name:'Lecture', emoji:'📚'},
   {id:'math', name:'Maths', emoji:'📐'},
   {id:'hg', name:'Histoire-Géo', emoji:'🗺️'},
   {id:'sciences', name:'Sciences', emoji:'🔬'},
@@ -228,6 +246,32 @@ const LESSONS = {
         {q:"Quel signe utilise-t-on à la fin d'une question ?", o:[".",",","!","?"], c:3, e:"Le point d'interrogation marque une question."},
         {q:"« Quelle chance___ » Quel signe complète cette exclamation ?", o:["?",".","!",","], c:2, e:"Le point d'exclamation exprime la surprise."},
         {q:"La virgule sert à…", o:["terminer une phrase","séparer des éléments","poser une question","exprimer la surprise"], c:1, e:"La virgule sépare des éléments dans une phrase."},
+      ]},
+  ],
+  lecture: [
+    {id:'chat-souris', title:'Le chat et la souris', text:"Dans une vieille maison de campagne vivait un chat nommé Gribouille. Il passait ses journées à surveiller un petit trou dans le mur du salon, persuadé qu'une souris s'y cachait. Un soir, alors que la maison était plongée dans le silence, une petite souris grise sortit enfin de sa cachette. Gribouille, immobile depuis des heures, bondit aussitôt. Mais la souris, plus rapide, disparut dans une fissure du plancher. Le chat resta seul, penaud, devant le trou vide. Depuis ce jour, il continue de guetter, patient, certain que sa chance finira par tourner.",
+      q:[
+        {q:"Comment s'appelle le chat de l'histoire ?", o:["Minou","Gribouille","Félix","Grisou"], c:1, e:"Le chat s'appelle Gribouille."},
+        {q:"Que fait le chat pendant ses journées ?", o:["Il dort dans le jardin","Il surveille un trou dans le mur","Il chasse des oiseaux","Il joue avec une pelote"], c:1, e:"Il surveille le trou où il pense que vit la souris."},
+        {q:"Pourquoi la souris échappe-t-elle au chat ?", o:["Elle est plus rapide","Le chat s'endort","Elle est invisible","Le chat a peur"], c:0, e:"Le texte dit qu'elle est « plus rapide »."},
+      ]},
+    {id:'foret', title:'La forêt enchantée', text:"Léa adorait se promener dans la forêt derrière chez sa grand-mère. Un matin de printemps, elle remarqua un sentier qu'elle n'avait jamais vu auparavant. Curieuse, elle décida de le suivre. Plus elle avançait, plus les arbres semblaient chuchoter entre eux, comme s'ils se racontaient une histoire ancienne. Au bout du chemin, elle découvrit une clairière où des centaines de fleurs bleues formaient un cercle parfait. Au centre, une pierre gravée portait un message qu'elle ne comprit pas tout de suite : « Seuls ceux qui écoutent la forêt peuvent la voir deux fois. » Léa sourit, et repartit, le cœur rempli de questions.",
+      q:[
+        {q:"Où Léa se promène-t-elle ?", o:["À la plage","Dans la forêt","À la montagne","Au marché"], c:1, e:"Elle se promène dans la forêt."},
+        {q:"Qu'est-ce qui étonne Léa dans la clairière ?", o:["Un lac","Des fleurs bleues en cercle","Un animal sauvage","Une cabane"], c:1, e:"Elle découvre des centaines de fleurs bleues formant un cercle."},
+        {q:"Que signifie l'expression « écouter la forêt » dans ce texte ?", o:["Entendre des bruits d'animaux","Être attentif et curieux face à la nature","Parler fort dans la forêt","Se perdre volontairement"], c:1, e:"C'est une image pour dire « être attentif et curieux »."},
+      ]},
+    {id:'ferme', title:'Une journée à la ferme', text:"À la ferme, chaque journée commence tôt. Dès l'aube, les vaches sont menées à l'étable pour la traite du lait. Les poules, elles, sont libérées de leur poulailler et picorent dans la cour. Vers midi, l'agriculteur vérifie les champs : selon la saison, il sème, arrose ou récolte le blé, le maïs ou les légumes. Le soir venu, les animaux retournent à l'abri, et le fermier prépare déjà le travail du lendemain. Ce rythme, réglé comme une horloge, change peu importe la météo.",
+      q:[
+        {q:"Que fait-on aux vaches à l'aube ?", o:["On les nourrit de foin","On les mène à la traite","On les emmène au marché","On les brosse"], c:1, e:"Les vaches sont menées à l'étable pour la traite du lait."},
+        {q:"Que font les poules dans la cour ?", o:["Elles dorment","Elles picorent","Elles nagent","Elles courent après le chat"], c:1, e:"Elles picorent dans la cour."},
+        {q:"Que vérifie l'agriculteur vers midi ?", o:["Les animaux du zoo","Les champs","La météo à la télé","Les outils du garage"], c:1, e:"Il vérifie les champs."},
+      ]},
+    {id:'phare', title:'Le vieux phare', text:"Le vieux phare se dressait depuis un siècle à la pointe de l'île, fidèle gardien des navires. Chaque nuit, sa lumière balayait l'horizon, avertissant les marins des rochers cachés sous l'eau. Un soir de tempête, alors que les vagues frappaient violemment la falaise, le gardien remarqua que la lumière faiblissait. Sans hésiter, il grimpa les marches en pierre, répara le mécanisme abîmé, et le faisceau retrouva toute sa force. Grâce à lui, un bateau de pêcheurs put rejoindre le port sain et sauf cette nuit-là.",
+      q:[
+        {q:"Depuis combien de temps le phare existait-il ?", o:["Dix ans","Un siècle","Une semaine","Un mois"], c:1, e:"Le phare existait depuis un siècle."},
+        {q:"Que remarque le gardien pendant la tempête ?", o:["Le bateau a disparu","La lumière faiblit","La porte est cassée","Il n'y a plus d'électricité"], c:1, e:"Il remarque que la lumière faiblit."},
+        {q:"Quelle est la conséquence de l'action du gardien ?", o:["Le phare s'écroule","Un bateau est sauvé","La tempête s'arrête","Rien ne se passe"], c:1, e:"Grâce à lui, un bateau de pêcheurs est sauvé."},
       ]},
   ],
   math: [
@@ -327,14 +371,82 @@ const LESSONS = {
         {q:"« I like chocolate » est au…", o:["passé","présent","futur","impératif"], c:1, e:"C'est une habitude au présent."},
         {q:"Quelle forme est correcte avec « he » ?", o:["he go","he goes","he going","he gone"], c:1, e:"« He goes » : on ajoute un s à la 3e personne."},
       ]},
-    {id:'famille', title:'La famille', text:"Vocabulaire de la famille : mother (mère), father (père), sister (sœur), brother (frère), grandmother (grand-mère), grandfather (grand-père).",
+    {id:'famille', title:'La famille', visual:'family', text:"Vocabulaire de la famille : mother (mère), father (père), sister (sœur), brother (frère), grandmother (grand-mère), grandfather (grand-père).",
       q:[
         {q:"Comment dit-on « sœur » en anglais ?", o:["brother","sister","mother","cousin"], c:1, e:"« Sister » = sœur."},
         {q:"« Father » signifie…", o:["mère","frère","père","oncle"], c:2, e:"« Father » = père."},
         {q:"« Grandmother » signifie…", o:["grand-père","tante","grand-mère","sœur"], c:2, e:"« Grandmother » = grand-mère."},
       ]},
+    {id:'couleurs', title:'Vocabulaire : les couleurs', visual:'colors', text:"Les couleurs de base : red (rouge), blue (bleu), green (vert), yellow (jaune), black (noir), white (blanc), orange (orange), purple (violet), pink (rose), brown (marron).",
+      q:[
+        {q:"Comment dit-on « rouge » en anglais ?", o:["red","blue","green","black"], c:0, e:"« Red » = rouge."},
+        {q:"« Yellow » signifie…", o:["vert","jaune","blanc","rose"], c:1, e:"« Yellow » = jaune."},
+        {q:"Comment dit-on « noir » en anglais ?", o:["white","brown","black","purple"], c:2, e:"« Black » = noir."},
+      ]},
+    {id:'tobehave', title:'Les verbes to be et to have', text:"« To be » (être) : I am, you are, he/she/it is, we are, they are. « To have » (avoir) : I have, you have, he/she/it has, we have, they have.",
+      q:[
+        {q:"Comment dit-on « il est » avec le verbe to be ?", o:["he am","he are","he is","he has"], c:2, e:"« He is » = il est."},
+        {q:"Quelle forme est correcte pour « elle a » ?", o:["she have","she has","she is","she are"], c:1, e:"« She has » = elle a."},
+        {q:"Comment dit-on « je suis » ?", o:["I is","I are","I am","I has"], c:2, e:"« I am » = je suis."},
+      ]},
+    {id:'lecture1', title:'Lecture : My Family', lang:'en-US', text:"My name is Tom. I am eleven years old. I have one sister and one brother. My sister is called Emma. She is seven years old. My brother's name is Jack. He is fourteen. We live in a small house with our mother and father. On Sundays, we play football in the garden.",
+      q:[
+        {q:"Quel âge a Tom ?", o:["Sept ans","Onze ans","Quatorze ans","Dix ans"], c:1, e:"« I am eleven years old » : Tom a onze ans."},
+        {q:"Combien de frères et sœurs Tom a-t-il ?", o:["Un frère seulement","Une sœur seulement","Un frère et une sœur","Aucun"], c:2, e:"Il a « one sister and one brother »."},
+        {q:"Que fait la famille le dimanche ?", o:["Ils regardent la télé","Ils jouent au football dans le jardin","Ils vont à l'école","Ils font du vélo"], c:1, e:"« On Sundays, we play football in the garden »."},
+      ]},
+    {id:'lecture2', title:'Lecture : A Day at School', lang:'en-US', text:"Every morning, Lily wakes up at seven o'clock. She has breakfast with her parents, then walks to school with her best friend, Sarah. Her favourite subject is science, because she loves animals and plants. At lunchtime, she eats in the school canteen with her classmates. After school, she does her homework before dinner.",
+      q:[
+        {q:"À quelle heure Lily se réveille-t-elle ?", o:["Six heures","Sept heures","Huit heures","Neuf heures"], c:1, e:"« wakes up at seven o'clock »."},
+        {q:"Quelle est la matière préférée de Lily ?", o:["Les mathématiques","Les sciences","L'anglais","Le sport"], c:1, e:"« Her favourite subject is science »."},
+        {q:"Où Lily mange-t-elle à midi ?", o:["Chez elle","À la cantine","Au restaurant","Dans le jardin"], c:1, e:"« she eats in the school canteen »."},
+      ]},
   ],
 };
+
+const ALPHABET = [
+  {l:'A',p:'éï'},{l:'B',p:'bi'},{l:'C',p:'si'},{l:'D',p:'di'},{l:'E',p:'i'},{l:'F',p:'èf'},
+  {l:'G',p:'dji'},{l:'H',p:'éitch'},{l:'I',p:'aï'},{l:'J',p:'djéi'},{l:'K',p:'kéi'},{l:'L',p:'èl'},
+  {l:'M',p:'èm'},{l:'N',p:'èn'},{l:'O',p:'ô'},{l:'P',p:'pi'},{l:'Q',p:'kiou'},{l:'R',p:'ar'},
+  {l:'S',p:'ès'},{l:'T',p:'ti'},{l:'U',p:'you'},{l:'V',p:'vi'},{l:'W',p:'dabeul-you'},{l:'X',p:'èks'},
+  {l:'Y',p:'waï'},{l:'Z',p:'zi'},
+];
+
+const COLOR_VOCAB = [
+  {en:'Red', fr:'Rouge', hex:'#E8483A'},
+  {en:'Blue', fr:'Bleu', hex:'#2A4B8D'},
+  {en:'Green', fr:'Vert', hex:'#2FA37A'},
+  {en:'Yellow', fr:'Jaune', hex:'#F4B400'},
+  {en:'Black', fr:'Noir', hex:'#1B2340'},
+  {en:'White', fr:'Blanc', hex:'#FFFFFF'},
+  {en:'Orange', fr:'Orange', hex:'#F2994A'},
+  {en:'Purple', fr:'Violet', hex:'#8E5FD9'},
+  {en:'Pink', fr:'Rose', hex:'#F27EB0'},
+  {en:'Brown', fr:'Marron', hex:'#8B5E3C'},
+];
+const FAMILY_VOCAB = [
+  {en:'Mother', fr:'Mère', emoji:'👩'},
+  {en:'Father', fr:'Père', emoji:'👨'},
+  {en:'Sister', fr:'Sœur', emoji:'👧'},
+  {en:'Brother', fr:'Frère', emoji:'👦'},
+  {en:'Grandmother', fr:'Grand-mère', emoji:'👵'},
+  {en:'Grandfather', fr:'Grand-père', emoji:'👴'},
+];
+function renderVocabVisual(kind){
+  if(kind==='colors') return `<div class="vocab-grid">${COLOR_VOCAB.map(c=>`
+    <button class="vocab-card" onclick="speak('${c.en}','en-US')">
+      <div class="swatch" style="background:${c.hex}"></div>
+      <div class="vocab-en">${c.en} 🔊</div>
+      <div class="vocab-fr">${c.fr}</div>
+    </button>`).join('')}</div>`;
+  if(kind==='family') return `<div class="vocab-grid">${FAMILY_VOCAB.map(f=>`
+    <button class="vocab-card" onclick="speak('${f.en}','en-US')">
+      <div class="vocab-emoji">${f.emoji}</div>
+      <div class="vocab-en">${f.en} 🔊</div>
+      <div class="vocab-fr">${f.fr}</div>
+    </button>`).join('')}</div>`;
+  return '';
+}
 
 const ROBO_FACTS = [
   "Un algorithme, c'est simplement une suite d'instructions précises pour réaliser une tâche — comme une recette de cuisine !",
@@ -478,11 +590,34 @@ function renderHome(){
   `;
 }
 
+function renderAlphabet(){
+  return `
+    <div class="lesson-card" style="margin-bottom:14px;">
+      <h3 style="margin:0 0 8px;">🔤 L'alphabet anglais — clique pour écouter</h3>
+      <p style="font-size:13.5px;color:#55597A;margin:0 0 12px;">La prononciation entre parenthèses est indicative (pas l'alphabet phonétique officiel), pour t'aider à te repérer.</p>
+      <div class="alpha-grid">
+        ${ALPHABET.map(a=>`<button class="alpha-btn" onclick="sayLetter('${a.l}')">${a.l}<span>${a.p}</span></button>`).join('')}
+      </div>
+    </div>
+  `;
+}
+function speak(text, lang){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang || 'fr-FR';
+    u.rate = (lang==='en-US') ? 0.9 : 0.95;
+    speechSynthesis.speak(u);
+  }catch(e){ console.error('speech error', e); }
+}
+function sayLetter(letter){ speak(letter, 'en-US'); }
+
 function renderSubject(subj){
   const s = SUBJECTS.find(x=>x.id===subj);
   if(view.quiz && view.subject===subj) return renderQuiz();
   return `
     <div class="subject-header"><span class="emoji">${s.emoji}</span><h2>${s.name}</h2></div>
+    ${subj==='ang' ? renderAlphabet() : ''}
     <div class="lesson-list">
       ${LESSONS[subj].map(l=>{
         const score = bestScore(subj,l.id);
@@ -494,8 +629,10 @@ function renderSubject(subj){
             <span class="stars">${'⭐'.repeat(score)}${'☆'.repeat(3-score)}</span>
           </div>
           ${open ? `
+            ${l.visual ? renderVocabVisual(l.visual) : ''}
             <div class="lesson-body">${l.text}</div>
             <div class="lesson-actions">
+              <button class="btn btn-ghost" onclick="speak(${JSON.stringify(l.text)}, '${l.lang||'fr-FR'}')">🔊 Écouter le texte</button>
               <button class="btn btn-primary" onclick="startQuiz('${subj}','${l.id}')">Faire le quiz</button>
             </div>` : ''}
         </div>`;
@@ -528,7 +665,10 @@ function renderQuiz(){
         ${qz.questions.map((_,i)=>`<div class="${i<qz.idx?'done':(i===qz.idx?'current':'')}"></div>`).join('')}
       </div>
       <div class="quiz-q">${lesson.title} — Question ${qz.idx+1}/${qz.questions.length}</div>
-      <div class="quiz-q" style="font-size:16px;font-weight:700;">${q.q}</div>
+      <div class="quiz-q" style="font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between;">
+        <span>${q.q}</span>
+        <button class="btn btn-ghost" style="padding:6px 10px;flex-shrink:0;" onclick="speak(${JSON.stringify(q.q)}, 'fr-FR')">🔊</button>
+      </div>
       ${q.o.map((opt,i)=>{
         let cls='quiz-opt';
         if(answered!==null){

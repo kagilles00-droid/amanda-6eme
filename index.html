@@ -215,9 +215,18 @@
 const SUBJECTS = [
   {id:'fr', name:'Français', emoji:'📖'},
   {id:'lecture', name:'Lecture', emoji:'📚'},
-  {id:'math', name:'Maths', emoji:'📐'},
-  {id:'hg', name:'Histoire-Géo', emoji:'🗺️'},
-  {id:'sciences', name:'Sciences', emoji:'🔬'},
+  {id:'arithmetique', name:'Arithmétique', emoji:'🔢'},
+  {id:'algebre', name:'Algèbre', emoji:'➗'},
+  {id:'geometrie', name:'Géométrie', emoji:'📐'},
+  {id:'statistique', name:'Statistique', emoji:'📊'},
+  {id:'sciences', name:'Sciences (notions)', emoji:'🔬'},
+  {id:'botanique', name:'Botanique', emoji:'🌱'},
+  {id:'anatomie', name:'Anatomie', emoji:'🫀'},
+  {id:'zoologie', name:'Zoologie', emoji:'🐾'},
+  {id:'techno', name:'Technologie', emoji:'⚙️'},
+  {id:'geo', name:'Géographie', emoji:'🗺️'},
+  {id:'histoire', name:'Histoire', emoji:'🏛️'},
+  {id:'vie', name:'Éducation pour la vie', emoji:'🌟'},
   {id:'ang', name:'Anglais', emoji:'🇬🇧'},
 ];
 
@@ -274,7 +283,13 @@ const LESSONS = {
         {q:"Quelle est la conséquence de l'action du gardien ?", o:["Le phare s'écroule","Un bateau est sauvé","La tempête s'arrête","Rien ne se passe"], c:1, e:"Grâce à lui, un bateau de pêcheurs est sauvé."},
       ]},
   ],
-  math: [
+  arithmetique: [
+    {id:'entiers', title:'Les nombres entiers', text:"Un nombre entier s'écrit avec des chiffres (0 à 9) placés selon leur position : unités, dizaines, centaines, milliers... Par exemple 4 host 528 se lit « quatre mille cinq cent vingt-huit ». Pour comparer deux nombres, on regarde d'abord le nombre de chiffres, puis on compare chiffre par chiffre en partant de la gauche.",
+      q:[
+        {q:"Comment s'écrit en chiffres « trois mille quarante-deux » ?", o:["3402","3042","3420","342"], c:1, e:"« Trois mille » = 3000, puis « quarante-deux » = 42, donc 3042."},
+        {q:"Quel est le plus grand nombre ?", o:["4 785","4 758","4 875","4 587"], c:2, e:"En comparant chiffre par chiffre : 4 875 est le plus grand."},
+        {q:"Dans le nombre 6 291, quel chiffre représente les centaines ?", o:["6","2","9","1"], c:1, e:"En partant de la droite : unités=1, dizaines=9, centaines=2."},
+      ]},
     {id:'decimaux', title:'Nombres entiers et décimaux', text:"Un nombre décimal a une partie entière et une partie décimale séparées par une virgule (3,25). Dans 3,25 : 3 est la partie entière, 25 la partie décimale.",
       q:[
         {q:"Dans 12,7 quelle est la partie décimale ?", o:["12","7","0,7","1,2"], c:1, e:"Après la virgule, on trouve 7 : c'est la partie décimale."},
@@ -287,11 +302,69 @@ const LESSONS = {
         {q:"Quelle fraction représente la moitié ?", o:["1/3","1/2","2/2","1/4"], c:1, e:"1/2 = la moitié."},
         {q:"3/4 signifie…", o:["3 parts sur 4","4 parts sur 3","3 fois 4","3 plus 4"], c:0, e:"Le tout est coupé en 4 et on en prend 3."},
       ]},
+    {id:'operations', title:'Les quatre opérations', text:"Additionner donne une somme, soustraire donne une différence, multiplier donne un produit, diviser donne un quotient. Dans un calcul sans parenthèses, on effectue les multiplications et divisions avant les additions et soustractions.",
+      q:[
+        {q:"Le résultat d'une multiplication s'appelle…", o:["une somme","un produit","une différence","un quotient"], c:1, e:"Le résultat d'une multiplication est un produit."},
+        {q:"Dans 4 + 3 × 2, que calcule-t-on en premier ?", o:["4 + 3","3 × 2","peu importe","4 × 2"], c:1, e:"On effectue d'abord la multiplication : 3 × 2 = 6, puis 4 + 6 = 10."},
+        {q:"Le résultat d'une division s'appelle…", o:["un produit","une somme","un quotient","une différence"], c:2, e:"Le résultat d'une division est un quotient."},
+      ]},
+    {id:'multiples', title:'Multiples et diviseurs', text:"Un multiple d'un nombre s'obtient en le multipliant par un entier (les multiples de 3 sont 3, 6, 9, 12...). Un nombre pair se termine par 0,2,4,6,8 et un nombre impair par 1,3,5,7,9.",
+      q:[
+        {q:"Lequel de ces nombres est un multiple de 5 ?", o:["23","30","42","17"], c:1, e:"30 = 5 × 6, c'est un multiple de 5."},
+        {q:"12 est-il pair ou impair ?", o:["Pair","Impair","Ni l'un ni l'autre","On ne peut pas savoir"], c:0, e:"12 se termine par 2 : il est pair."},
+        {q:"Quel nombre est un diviseur de 20 ?", o:["3","4","6","7"], c:1, e:"20 ÷ 4 = 5 exactement, donc 4 est un diviseur de 20."},
+      ]},
+  ],
+  algebre: [
+    {id:'vocab-math', title:"Le vocabulaire des opérations", text:"En mathématiques, chaque opération a un nom précis pour ses résultats : la somme (addition), la différence (soustraction), le produit (multiplication) et le quotient (division). Bien connaître ce vocabulaire aide à comprendre un énoncé.",
+      q:[
+        {q:"« La somme de 7 et 5 » signifie…", o:["7 - 5","7 + 5","7 × 5","7 ÷ 5"], c:1, e:"La somme désigne le résultat d'une addition."},
+        {q:"« La différence de 9 et 4 » signifie…", o:["9 + 4","9 - 4","9 × 4","4 - 9"], c:1, e:"La différence désigne le résultat d'une soustraction (dans l'ordre donné)."},
+        {q:"« Le produit de 6 et 3 » vaut…", o:["9","3","18","2"], c:2, e:"Le produit est le résultat de la multiplication : 6 × 3 = 18."},
+      ]},
+    {id:'lettre', title:"Une lettre pour un nombre inconnu", text:"En mathématiques, on utilise parfois une lettre (souvent x ou a) pour représenter un nombre qu'on ne connaît pas encore, ou qui peut changer. Par exemple, dans « a + 3 », a peut être n'importe quel nombre.",
+      q:[
+        {q:"Dans l'expression « x + 5 », que représente x ?", o:["Toujours le nombre 5","Un nombre inconnu ou variable","Une lettre de l'alphabet uniquement","Rien du tout"], c:1, e:"x représente un nombre inconnu ou qui peut varier."},
+        {q:"Si a = 4, quelle est la valeur de « a + 6 » ?", o:["6","10","4","24"], c:1, e:"On remplace a par 4 : 4 + 6 = 10."},
+        {q:"Si b = 3, quelle est la valeur de « 2 × b » ?", o:["5","6","23","2"], c:1, e:"2 × b = 2 × 3 = 6."},
+      ]},
+    {id:'equation', title:"Résoudre une équation simple", text:"Une équation est une égalité contenant une lettre inconnue, comme x + 3 = 8. Pour trouver x, on fait l'opération inverse : x = 8 - 3, donc x = 5. Pour vérifier, on remplace x par 5 dans l'équation de départ.",
+      q:[
+        {q:"Dans x + 4 = 10, combien vaut x ?", o:["4","6","14","10"], c:1, e:"x = 10 - 4 = 6."},
+        {q:"Dans x - 3 = 7, combien vaut x ?", o:["4","10","21","7"], c:1, e:"Pour annuler « - 3 » on ajoute 3 : x = 7 + 3 = 10."},
+        {q:"Pour vérifier que x = 5 est solution de x + 2 = 7, on calcule…", o:["5 - 2","5 + 2","5 × 2","5 ÷ 2"], c:1, e:"On remplace x par 5 : 5 + 2 = 7, c'est correct."},
+      ]},
+    {id:'egalite', title:"Le signe égal et les égalités", text:"Le signe = signifie que deux quantités ont la même valeur. Une égalité doit toujours rester vraie des deux côtés : si on fait une opération d'un côté, il faut faire la même opération de l'autre côté pour que l'égalité reste vraie.",
+      q:[
+        {q:"Que signifie le signe = dans un calcul ?", o:["Une différence","Que les deux côtés ont la même valeur","Un produit","Une inconnue"], c:1, e:"Le signe = indique que les deux côtés ont la même valeur."},
+        {q:"Si 5 + 2 = 7, alors 5 + 2 + 1 est égal à…", o:["7","8","6","9"], c:1, e:"On ajoute 1 des deux côtés : 7 + 1 = 8."},
+        {q:"L'égalité 3 × 4 = 12 est-elle vraie ?", o:["Oui","Non","Cela dépend","Impossible à dire"], c:0, e:"3 × 4 = 12, l'égalité est bien vraie."},
+      ]},
+  ],
+  geometrie: [
+    {id:'figures', title:"Les figures planes de base", text:"Le carré a 4 côtés égaux et 4 angles droits. Le rectangle a 4 angles droits mais des côtés opposés seulement égaux deux à deux. Le triangle a 3 côtés. Le cercle est formé de tous les points situés à la même distance (le rayon) d'un point central.",
+      q:[
+        {q:"Combien de côtés égaux a un carré ?", o:["2","3","4","0"], c:2, e:"Un carré a ses 4 côtés égaux."},
+        {q:"Qu'est-ce qui distingue un rectangle d'un carré ?", o:["Le rectangle n'a pas d'angles droits","Le rectangle a des côtés opposés égaux deux à deux, pas les 4 identiques","Le rectangle a 3 côtés","Il n'y a aucune différence"], c:1, e:"Dans un rectangle, seuls les côtés opposés sont égaux."},
+        {q:"Tous les points d'un cercle sont…", o:["à la même distance du centre","alignés","de couleurs différentes","à l'intérieur du carré"], c:0, e:"C'est la définition du cercle : tous les points sont à égale distance du centre (le rayon)."},
+      ]},
+    {id:'droites', title:"Droites, segments et points", text:"Un point marque un emplacement précis. Une droite est une ligne qui va à l'infini dans les deux sens. Un segment est une portion de droite limitée par deux points appelés extrémités.",
+      q:[
+        {q:"Qu'est-ce qu'un segment ?", o:["Une droite infinie","Une portion de droite entre deux points","Un point unique","Un angle"], c:1, e:"Un segment est limité par deux extrémités, contrairement à la droite qui est infinie."},
+        {q:"Une droite s'arrête-t-elle quelque part ?", o:["Oui, toujours","Non, elle continue à l'infini","Seulement à droite","Seulement à gauche"], c:1, e:"Une droite se prolonge à l'infini dans les deux sens."},
+        {q:"Combien de points faut-il au minimum pour tracer un segment ?", o:["1","2","3","4"], c:1, e:"Il faut deux points : les deux extrémités du segment."},
+      ]},
     {id:'perimetre', title:'Périmètre et aire', text:"Le périmètre d'un rectangle se calcule avec (Longueur + largeur) × 2. L'aire (surface) se calcule avec Longueur × largeur.",
       q:[
         {q:"Un rectangle a une longueur de 5 cm et une largeur de 3 cm. Son périmètre est…", o:["8 cm","15 cm","16 cm","30 cm"], c:2, e:"(5+3)×2 = 16 cm."},
         {q:"Quelle est l'aire de ce même rectangle ?", o:["8 cm²","15 cm²","16 cm²","30 cm²"], c:1, e:"5×3 = 15 cm²."},
         {q:"L'aire d'un carré de côté 4 cm est…", o:["8 cm²","16 cm²","4 cm²","12 cm²"], c:1, e:"4×4 = 16 cm²."},
+      ]},
+    {id:'angles', title:"Les angles", text:"Un angle droit mesure exactement 90°, comme le coin d'une feuille de papier. Un angle aigu est plus petit qu'un angle droit (moins de 90°). Un angle obtus est plus grand qu'un angle droit (plus de 90° mais moins de 180°).",
+      q:[
+        {q:"Combien de degrés mesure un angle droit ?", o:["45°","90°","180°","360°"], c:1, e:"Un angle droit mesure exactement 90°."},
+        {q:"Un angle de 40° est un angle…", o:["droit","aigu","obtus","plat"], c:1, e:"40° est inférieur à 90° : c'est un angle aigu."},
+        {q:"Un angle de 120° est un angle…", o:["aigu","droit","obtus","nul"], c:2, e:"120° est entre 90° et 180° : c'est un angle obtus."},
       ]},
     {id:'symetrie', title:'La symétrie axiale', text:"Deux points sont symétriques par rapport à une droite (l'axe) si cette droite est la médiatrice du segment qui les relie. La figure symétrique garde la même forme et la même taille.",
       q:[
@@ -300,30 +373,24 @@ const LESSONS = {
         {q:"Quelle lettre majuscule a un axe de symétrie vertical ?", o:["F","A","R","N"], c:1, e:"La lettre A est symétrique par rapport à un axe vertical."},
       ]},
   ],
-  hg: [
-    {id:'prehistoire', title:'La Préhistoire', text:"La Préhistoire est la longue période avant l'invention de l'écriture. Les premiers hommes étaient des chasseurs-cueilleurs. Ils ont découvert le feu, fabriqué des outils en pierre, et peint dans des grottes comme à Lascaux.",
+  statistique: [
+    {id:'donnees', title:"Recueillir et lire des données", text:"En statistique, on recueille des informations (des données) sur un groupe, par exemple les notes d'une classe. On les range souvent dans un tableau avec des colonnes claires pour pouvoir les lire facilement.",
       q:[
-        {q:"La Préhistoire se termine avec l'invention de…", o:["la roue","l'écriture","l'agriculture","le feu"], c:1, e:"L'écriture marque le début de l'Histoire."},
-        {q:"Que faisaient les hommes préhistoriques pour se nourrir au début ?", o:["Ils cultivaient des champs","Ils chassaient et cueillaient","Ils achetaient au marché","Ils élevaient des vaches"], c:1, e:"C'étaient des chasseurs-cueilleurs."},
-        {q:"Où trouve-t-on de célèbres peintures préhistoriques en France ?", o:["Versailles","Lascaux","Notre-Dame","Le Louvre"], c:1, e:"La grotte de Lascaux est célèbre pour ses peintures."},
+        {q:"Qu'appelle-t-on une « donnée » en statistique ?", o:["Une information recueillie","Une opération mathématique","Un angle","Une figure géométrique"], c:0, e:"Une donnée est une information recueillie, par exemple une note ou un âge."},
+        {q:"À quoi sert un tableau de données ?", o:["À dessiner des figures","À ranger l'information pour la lire facilement","À faire des additions uniquement","À rien de particulier"], c:1, e:"Le tableau organise les données pour les rendre lisibles."},
+        {q:"Si on note l'âge de chaque élève d'une classe, on obtient…", o:["une figure géométrique","un ensemble de données","une équation","un angle"], c:1, e:"C'est un ensemble de données sur l'âge des élèves."},
       ]},
-    {id:'egypte', title:"L'Égypte ancienne", text:"L'Égypte ancienne se développe le long du Nil, un fleuve qui fertilise les terres grâce à ses crues. Les Égyptiens construisent des pyramides pour leurs pharaons et inventent une écriture : les hiéroglyphes.",
+    {id:'diagramme', title:"Lire un diagramme en bâtons", text:"Un diagramme en bâtons représente des quantités par des barres verticales : plus la barre est haute, plus la quantité est grande. L'axe horizontal indique les catégories (par exemple les mois), l'axe vertical indique les quantités.",
       q:[
-        {q:"Quel fleuve traverse l'Égypte ancienne ?", o:["Le Rhin","Le Nil","Le Tibre","L'Amazone"], c:1, e:"Le Nil est le fleuve d'Égypte."},
-        {q:"Comment s'appelle l'écriture égyptienne ?", o:["l'alphabet","les hiéroglyphes","le braille","les runes"], c:1, e:"Les hiéroglyphes sont l'écriture égyptienne."},
-        {q:"Les pyramides étaient construites pour…", o:["les paysans","les pharaons","les commerçants","les animaux"], c:1, e:"Elles servaient de tombeaux aux pharaons."},
+        {q:"Dans un diagramme en bâtons, que représente la hauteur d'une barre ?", o:["Sa couleur","La quantité représentée","Sa largeur","Rien"], c:1, e:"Plus la barre est haute, plus la quantité qu'elle représente est grande."},
+        {q:"Si la barre de « juin » est plus haute que celle de « mai », cela signifie…", o:["juin a une valeur plus petite","juin a une valeur plus grande","les deux mois sont égaux","on ne peut rien dire"], c:1, e:"Une barre plus haute indique une valeur plus grande."},
+        {q:"L'axe horizontal d'un diagramme en bâtons indique souvent…", o:["les quantités","les catégories (ex: les mois)","les couleurs","les angles"], c:1, e:"L'axe horizontal indique en général les catégories comparées."},
       ]},
-    {id:'grece', title:'La Grèce antique', text:"La Grèce antique est organisée en cités-États comme Athènes ou Sparte. Les Grecs inventent la démocratie à Athènes et honorent des dieux comme Zeus, notamment lors des Jeux Olympiques.",
+    {id:'moyenne', title:"La moyenne", text:"Pour calculer une moyenne, on additionne toutes les valeurs puis on divise par le nombre de valeurs. Par exemple, pour les notes 12, 14 et 16 : (12+14+16) ÷ 3 = 14.",
       q:[
-        {q:"Quelle cité grecque est célèbre pour avoir inventé la démocratie ?", o:["Sparte","Athènes","Rome","Troie"], c:1, e:"Athènes est le berceau de la démocratie."},
-        {q:"Comment appelle-t-on le roi des dieux grecs ?", o:["Zeus","Ra","Jupiter","Odin"], c:0, e:"Zeus est le roi des dieux grecs."},
-        {q:"Quelle compétition sportive vient de la Grèce antique ?", o:["La Coupe du monde","Les Jeux Olympiques","Le Tour de France","Le marathon de Paris"], c:1, e:"Les Jeux Olympiques sont nés en Grèce antique."},
-      ]},
-    {id:'continents', title:'Les continents et océans', text:"La Terre compte 6 continents (Afrique, Amérique, Antarctique, Asie, Europe, Océanie) et 5 océans (Pacifique, Atlantique, Indien, Arctique, Austral).",
-      q:[
-        {q:"Combien y a-t-il de continents ?", o:["4","5","6","7"], c:2, e:"On compte 6 continents."},
-        {q:"Quel est le plus grand océan du monde ?", o:["Atlantique","Indien","Pacifique","Arctique"], c:2, e:"Le Pacifique est le plus grand océan."},
-        {q:"La France se trouve sur quel continent ?", o:["Asie","Europe","Afrique","Amérique"], c:1, e:"La France est en Europe."},
+        {q:"Comment calcule-t-on une moyenne ?", o:["On multiplie toutes les valeurs","On additionne les valeurs et on divise par leur nombre","On prend la plus grande valeur","On prend la plus petite valeur"], c:1, e:"La moyenne est la somme des valeurs divisée par leur nombre."},
+        {q:"Quelle est la moyenne de 10 et 20 ?", o:["10","15","20","30"], c:1, e:"(10+20) ÷ 2 = 15."},
+        {q:"Quelle est la moyenne de 8, 10 et 12 ?", o:["8","10","12","30"], c:1, e:"(8+10+12) ÷ 3 = 30 ÷ 3 = 10."},
       ]},
   ],
   sciences: [
@@ -350,6 +417,152 @@ const LESSONS = {
         {q:"Un écosystème comprend…", o:["seulement des animaux","des êtres vivants et leur milieu","uniquement des plantes","uniquement des minéraux"], c:1, e:"Un écosystème associe êtres vivants et milieu."},
         {q:"Une forêt est un exemple de…", o:["planète","écosystème","cellule","atome"], c:1, e:"La forêt est un écosystème."},
         {q:"Dans un écosystème, les êtres vivants…", o:["n'interagissent jamais","interagissent entre eux et avec leur milieu","vivent seuls","ne se nourrissent pas"], c:1, e:"Ils interagissent entre eux et avec leur milieu."},
+      ]},
+  ],
+  botanique: [
+    {id:'parties-plante', title:"Les parties de la plante", text:"Une plante se compose généralement de racines (qui puisent l'eau et les minéraux dans le sol et fixent la plante), d'une tige (qui la soutient et transporte la sève), de feuilles (qui captent la lumière), et souvent de fleurs qui donnent des fruits contenant des graines.",
+      q:[
+        {q:"Quel organe puise l'eau dans le sol ?", o:["La feuille","La racine","La fleur","Le fruit"], c:1, e:"Les racines puisent l'eau et les minéraux dans le sol."},
+        {q:"Quel organe capte la lumière pour la plante ?", o:["La racine","La feuille","La tige","Le fruit"], c:1, e:"Les feuilles captent la lumière du soleil."},
+        {q:"Que contient un fruit ?", o:["Des racines","Des graines","De l'eau uniquement","Rien"], c:1, e:"Le fruit contient les graines de la plante."},
+      ]},
+    {id:'photosynthese', title:"La photosynthèse", text:"Grâce à la lumière du soleil, les feuilles vertes des plantes fabriquent leur propre nourriture à partir d'eau et de gaz carbonique (CO2), et elles rejettent de l'oxygène dans l'air. Ce phénomène s'appelle la photosynthèse.",
+      q:[
+        {q:"De quoi une plante a-t-elle besoin pour faire la photosynthèse ?", o:["De lumière, d'eau et de CO2","Uniquement d'eau","Uniquement de nuit","De sable"], c:0, e:"La photosynthèse nécessite lumière, eau et gaz carbonique."},
+        {q:"Que rejette la plante dans l'air grâce à la photosynthèse ?", o:["Du gaz carbonique","De l'oxygène","De l'azote","De la fumée"], c:1, e:"La plante rejette de l'oxygène, indispensable à notre respiration."},
+        {q:"La photosynthèse se produit surtout dans…", o:["les racines","les feuilles vertes","les fruits mûrs","le sol"], c:1, e:"Ce sont les feuilles vertes qui réalisent la photosynthèse."},
+      ]},
+    {id:'besoins-plante', title:"Les besoins de la plante", text:"Pour vivre et grandir, une plante a besoin d'eau, de lumière, d'air et de sol nourricier (avec des minéraux). Si l'un de ces éléments manque, la plante pousse mal ou meurt.",
+      q:[
+        {q:"Lequel de ces éléments n'est PAS un besoin essentiel de la plante ?", o:["L'eau","La lumière","La musique","L'air"], c:2, e:"La musique n'est pas un besoin vital pour une plante, contrairement à l'eau, la lumière et l'air."},
+        {q:"Que se passe-t-il si une plante manque d'eau longtemps ?", o:["Elle pousse plus vite","Elle risque de dépérir","Rien ne change","Elle change de couleur de fleur uniquement"], c:1, e:"Sans eau, la plante se dessèche et peut mourir."},
+        {q:"Le sol apporte à la plante…", o:["de la lumière","des minéraux nourriciers","de l'air uniquement","rien du tout"], c:1, e:"Le sol fournit les minéraux nécessaires à la plante, absorbés par les racines."},
+      ]},
+  ],
+  anatomie: [
+    {id:'corps-humain', title:"Les grandes parties du corps humain", text:"Le corps humain est soutenu par le squelette (les os), qui protège des organes comme le cœur et les poumons. Les muscles, attachés aux os, permettent de bouger. Le corps est organisé en plusieurs parties : la tête, le tronc et les membres (bras et jambes).",
+      q:[
+        {q:"Quelle structure soutient et protège le corps ?", o:["Le muscle","Le squelette","La peau","Le sang"], c:1, e:"Le squelette, formé des os, soutient et protège le corps."},
+        {q:"Que permettent les muscles ?", o:["De digérer","De bouger","De voir","De respirer"], c:1, e:"Les muscles, attachés aux os, permettent le mouvement."},
+        {q:"Le corps humain est organisé en…", o:["une seule partie","tête, tronc et membres","quatre membres uniquement","aucune partie précise"], c:1, e:"On distingue la tête, le tronc et les membres."},
+      ]},
+    {id:'organes-sens', title:"Les organes des sens", text:"Nous percevons le monde grâce à cinq sens : la vue (les yeux), l'ouïe (les oreilles), l'odorat (le nez), le goût (la langue) et le toucher (la peau). Chaque organe des sens envoie des informations au cerveau.",
+      q:[
+        {q:"Quel organe permet la vue ?", o:["Le nez","Les yeux","La langue","La peau"], c:1, e:"Les yeux sont l'organe de la vue."},
+        {q:"Quel sens correspond aux oreilles ?", o:["Le goût","L'odorat","L'ouïe","Le toucher"], c:2, e:"Les oreilles permettent d'entendre : c'est l'ouïe."},
+        {q:"Combien de sens principaux possède l'être humain ?", o:["Trois","Quatre","Cinq","Six"], c:2, e:"On compte cinq sens : vue, ouïe, odorat, goût, toucher."},
+      ]},
+    {id:'digestion', title:"Le système digestif", text:"Les aliments que nous mangeons parcourent un long trajet : la bouche (mastication), l'œsophage, l'estomac (où ils sont transformés), puis l'intestin, qui absorbe les nutriments utiles au corps avant l'élimination des déchets.",
+      q:[
+        {q:"Où commence la digestion des aliments ?", o:["Dans l'estomac","Dans la bouche","Dans l'intestin","Dans les poumons"], c:1, e:"La digestion commence dans la bouche, avec la mastication."},
+        {q:"Quel organe absorbe les nutriments utiles au corps ?", o:["L'œsophage","L'intestin","La bouche","Le cœur"], c:1, e:"C'est l'intestin qui absorbe les nutriments utiles."},
+        {q:"Quel est le rôle de l'estomac ?", o:["Voir","Transformer les aliments","Entendre","Respirer"], c:1, e:"L'estomac transforme les aliments reçus."},
+      ]},
+  ],
+  zoologie: [
+    {id:'vertebres', title:"Vertébrés et invertébrés", text:"Les animaux vertébrés possèdent une colonne vertébrale et un squelette interne (mammifères, oiseaux, poissons, reptiles, amphibiens). Les invertébrés n'ont pas de colonne vertébrale (insectes, vers, mollusques).",
+      q:[
+        {q:"Qu'est-ce qui caractérise un animal vertébré ?", o:["Il vole","Il possède une colonne vertébrale","Il vit dans l'eau","Il n'a pas de squelette"], c:1, e:"Un vertébré possède une colonne vertébrale et un squelette interne."},
+        {q:"Lequel de ces animaux est un invertébré ?", o:["Le chat","Le poisson","La fourmi","L'oiseau"], c:2, e:"La fourmi est un insecte, donc un invertébré."},
+        {q:"Les mammifères, oiseaux, poissons et reptiles sont tous des…", o:["invertébrés","vertébrés","plantes","minéraux"], c:1, e:"Ce sont toutes des familles d'animaux vertébrés."},
+      ]},
+    {id:'reproduction-animaux', title:"Modes de reproduction des animaux", text:"Les animaux ovipares pondent des œufs qui se développent à l'extérieur du corps de la mère (poules, poissons, la plupart des reptiles). Les animaux vivipares donnent naissance à des petits déjà formés (la plupart des mammifères, comme la vache ou l'être humain).",
+      q:[
+        {q:"Un animal qui pond des œufs est dit…", o:["vivipare","ovipare","carnivore","herbivore"], c:1, e:"« Ovipare » vient de « œuf » : il pond des œufs."},
+        {q:"La vache donne naissance à un petit déjà formé : elle est…", o:["ovipare","vivipare","invertébrée","aquatique"], c:1, e:"Elle donne naissance à un petit formé : c'est un animal vivipare."},
+        {q:"La poule est-elle ovipare ou vivipare ?", o:["Ovipare","Vivipare","Les deux","Aucun des deux"], c:0, e:"La poule pond des œufs : elle est ovipare."},
+      ]},
+    {id:'regimes-alimentaires', title:"Les régimes alimentaires des animaux", text:"Un herbivore se nourrit uniquement de végétaux (la vache, le lapin). Un carnivore se nourrit de viande, c'est-à-dire d'autres animaux (le lion, le chat). Un omnivore mange à la fois des végétaux et de la viande (le cochon, l'être humain).",
+      q:[
+        {q:"Un animal qui ne mange que des plantes est un…", o:["carnivore","herbivore","omnivore","insectivore"], c:1, e:"« Herbivore » signifie qu'il se nourrit d'herbe et de végétaux."},
+        {q:"Le lion, qui mange d'autres animaux, est un…", o:["herbivore","carnivore","omnivore","végétarien"], c:1, e:"Le lion se nourrit de viande : c'est un carnivore."},
+        {q:"Un animal qui mange à la fois plantes et viande est…", o:["herbivore","carnivore","omnivore","aucun des trois"], c:2, e:"« Omnivore » = qui mange de tout, végétaux et viande."},
+      ]},
+  ],
+  techno: [
+    {id:'objet-technique', title:"Qu'est-ce qu'un objet technique ?", text:"Un objet technique est un objet fabriqué par l'homme pour répondre à un besoin précis (se déplacer, communiquer, se protéger...). Un vélo, un stylo ou un téléphone sont des objets techniques, contrairement à une pierre trouvée dans la nature.",
+      q:[
+        {q:"Qu'est-ce qu'un objet technique ?", o:["Un objet naturel","Un objet fabriqué pour répondre à un besoin","Un être vivant","Un nombre"], c:1, e:"Un objet technique est fabriqué par l'homme pour un besoin précis."},
+        {q:"Lequel de ces objets est un objet technique ?", o:["Un caillou","Une feuille d'arbre","Un vélo","Un nuage"], c:2, e:"Le vélo est fabriqué par l'homme : c'est un objet technique."},
+        {q:"À quoi sert un objet technique ?", o:["À rien de précis","À répondre à un besoin","Uniquement à décorer","À remplacer les humains"], c:1, e:"Il répond toujours à un besoin précis (se déplacer, communiquer...)."},
+      ]},
+    {id:'materiaux', title:"Les matériaux et leurs propriétés", text:"Les objets techniques sont fabriqués à partir de matériaux différents selon leurs propriétés : le métal est solide et résistant, le bois est léger et facile à travailler, le plastique est léger et peut prendre toutes les formes, le verre est transparent mais fragile.",
+      q:[
+        {q:"Quel matériau est transparent mais fragile ?", o:["Le bois","Le verre","Le métal","Le plastique"], c:1, e:"Le verre laisse passer la lumière mais casse facilement."},
+        {q:"Pourquoi utilise-t-on souvent le métal pour construire un pont ?", o:["Parce qu'il est fragile","Parce qu'il est solide et résistant","Parce qu'il est transparent","Parce qu'il flotte"], c:1, e:"Le métal est choisi pour sa solidité et sa résistance."},
+        {q:"Quelle propriété du plastique le rend pratique pour fabriquer des objets ?", o:["Il est très lourd","Il peut prendre toutes les formes","Il est transparent uniquement","Il est cassant"], c:1, e:"Le plastique est léger et peut être moulé dans toutes les formes."},
+      ]},
+    {id:'fonction-objet', title:"Le besoin et la fonction d'un objet", text:"Chaque objet technique a une fonction, c'est-à-dire un rôle précis qu'il remplit pour satisfaire un besoin. Par exemple, un parapluie a pour fonction de protéger de la pluie : c'est le besoin auquel il répond.",
+      q:[
+        {q:"Quelle est la fonction d'un parapluie ?", o:["Éclairer la nuit","Protéger de la pluie","Transporter de l'eau","Couper du pain"], c:1, e:"Un parapluie protège de la pluie, c'est sa fonction principale."},
+        {q:"Quel besoin satisfait une paire de lunettes ?", o:["Se déplacer","Mieux voir","Se nourrir","Communiquer à distance"], c:1, e:"Les lunettes répondent au besoin de mieux voir."},
+        {q:"Quelle est la fonction principale d'un téléphone ?", o:["Se protéger du froid","Communiquer à distance","Couper des aliments","Se déplacer"], c:1, e:"Le téléphone permet de communiquer à distance."},
+      ]},
+  ],
+  geo: [
+    {id:'reperage-carte', title:"Se repérer sur une carte", text:"Une carte utilise les points cardinaux (Nord, Sud, Est, Ouest) pour situer les lieux. La légende explique ce que représentent les couleurs et les symboles utilisés. L'échelle indique le rapport entre la distance sur la carte et la distance réelle.",
+      q:[
+        {q:"Combien de points cardinaux principaux existe-t-il ?", o:["Deux","Trois","Quatre","Six"], c:2, e:"Nord, Sud, Est, Ouest : quatre points cardinaux."},
+        {q:"À quoi sert la légende d'une carte ?", o:["À décorer la carte","À expliquer les couleurs et symboles","À indiquer l'heure","À donner le nom de l'auteur"], c:1, e:"La légende explique ce que représentent les symboles et couleurs de la carte."},
+        {q:"Que permet de connaître l'échelle d'une carte ?", o:["La météo du jour","Le rapport entre distance sur la carte et distance réelle","La population du pays","La couleur du drapeau"], c:1, e:"L'échelle relie la distance sur la carte à la distance réelle sur le terrain."},
+      ]},
+    {id:'relief-paysages', title:"Le relief et les paysages", text:"Le relief désigne les formes du terrain : la montagne (haute et pentue), la plaine (plate et basse), le plateau (plat mais élevé) et la vallée (creux souvent traversé par un cours d'eau, entre deux montagnes ou collines).",
+      q:[
+        {q:"Comment appelle-t-on une étendue plate et basse ?", o:["Une montagne","Une plaine","Une vallée","Un plateau"], c:1, e:"La plaine est une étendue plate et de faible altitude."},
+        {q:"Qu'est-ce qu'une vallée ?", o:["Un sommet élevé","Un creux entre deux montagnes, souvent avec un cours d'eau","Une étendue plate et élevée","Un désert de sable"], c:1, e:"La vallée est un creux, souvent traversé par une rivière, entre des reliefs plus élevés."},
+        {q:"Un plateau se caractérise par…", o:["une surface plate mais élevée en altitude","une pente très forte","un sommet enneigé uniquement","un fond marin"], c:0, e:"Le plateau est plat mais situé en altitude, contrairement à la plaine."},
+      ]},
+    {id:'continents', title:'Les continents et océans', text:"La Terre compte 6 continents (Afrique, Amérique, Antarctique, Asie, Europe, Océanie) et 5 océans (Pacifique, Atlantique, Indien, Arctique, Austral).",
+      q:[
+        {q:"Combien y a-t-il de continents ?", o:["4","5","6","7"], c:2, e:"On compte 6 continents."},
+        {q:"Quel est le plus grand océan du monde ?", o:["Atlantique","Indien","Pacifique","Arctique"], c:2, e:"Le Pacifique est le plus grand océan."},
+        {q:"La Guinée se trouve sur quel continent ?", o:["Asie","Europe","Afrique","Amérique"], c:2, e:"La Guinée se trouve en Afrique."},
+      ]},
+  ],
+  histoire: [
+    {id:'notion-temps', title:"Qu'est-ce que l'Histoire ?", text:"L'Histoire est l'étude du passé de l'humanité à partir de traces écrites (documents, livres) et d'objets retrouvés. On situe les événements dans le temps grâce à une frise chronologique, qui les place les uns après les autres, du plus ancien au plus récent.",
+      q:[
+        {q:"L'Histoire étudie le passé grâce à…", o:["des documents et des objets","uniquement l'imagination","des prédictions","rien de précis"], c:0, e:"Les historiens s'appuient sur des documents écrits et des objets retrouvés."},
+        {q:"À quoi sert une frise chronologique ?", o:["À dessiner des cartes","À situer les événements dans le temps","À faire des calculs","À classer des animaux"], c:1, e:"La frise chronologique place les événements du plus ancien au plus récent."},
+        {q:"Sur une frise chronologique, un événement plus ancien se situe…", o:["plus à droite","plus à gauche","au centre toujours","n'importe où"], c:1, e:"On place généralement les événements les plus anciens à gauche."},
+      ]},
+    {id:'prehistoire', title:'La Préhistoire', text:"La Préhistoire est la longue période avant l'invention de l'écriture. Les premiers hommes étaient des chasseurs-cueilleurs. Ils ont découvert le feu, fabriqué des outils en pierre, et peint dans des grottes.",
+      q:[
+        {q:"La Préhistoire se termine avec l'invention de…", o:["la roue","l'écriture","l'agriculture","le feu"], c:1, e:"L'écriture marque le début de l'Histoire."},
+        {q:"Que faisaient les hommes préhistoriques pour se nourrir au début ?", o:["Ils cultivaient des champs","Ils chassaient et cueillaient","Ils achetaient au marché","Ils élevaient des vaches"], c:1, e:"C'étaient des chasseurs-cueilleurs."},
+        {q:"Avec quel matériau les premiers outils étaient-ils souvent fabriqués ?", o:["Le plastique","La pierre","Le verre","L'acier"], c:1, e:"Les premiers outils étaient taillés dans la pierre."},
+      ]},
+    {id:'egypte', title:"L'Égypte ancienne", text:"L'Égypte ancienne se développe le long du Nil, un fleuve qui fertilise les terres grâce à ses crues. Les Égyptiens construisent des pyramides pour leurs pharaons et inventent une écriture : les hiéroglyphes.",
+      q:[
+        {q:"Quel fleuve traverse l'Égypte ancienne ?", o:["Le Rhin","Le Nil","Le Tibre","Le Niger"], c:1, e:"Le Nil est le fleuve d'Égypte."},
+        {q:"Comment s'appelle l'écriture égyptienne ?", o:["l'alphabet","les hiéroglyphes","le braille","les runes"], c:1, e:"Les hiéroglyphes sont l'écriture égyptienne."},
+        {q:"Les pyramides étaient construites pour…", o:["les paysans","les pharaons","les commerçants","les animaux"], c:1, e:"Elles servaient de tombeaux aux pharaons."},
+      ]},
+    {id:'grece', title:'La Grèce antique', text:"La Grèce antique est organisée en cités-États comme Athènes ou Sparte. Les Grecs inventent la démocratie à Athènes et honorent des dieux comme Zeus, notamment lors des Jeux Olympiques.",
+      q:[
+        {q:"Quelle cité grecque est célèbre pour avoir inventé la démocratie ?", o:["Sparte","Athènes","Rome","Troie"], c:1, e:"Athènes est le berceau de la démocratie."},
+        {q:"Comment appelle-t-on le roi des dieux grecs ?", o:["Zeus","Ra","Jupiter","Odin"], c:0, e:"Zeus est le roi des dieux grecs."},
+        {q:"Quelle compétition sportive vient de la Grèce antique ?", o:["La Coupe du monde","Les Jeux Olympiques","Le Tour de France","Le marathon local"], c:1, e:"Les Jeux Olympiques sont nés en Grèce antique."},
+      ]},
+  ],
+  vie: [
+    {id:'droits-devoirs', title:"Les droits et les devoirs de l'élève", text:"À l'école, chaque élève a des droits (être respecté, apprendre dans de bonnes conditions, s'exprimer) et des devoirs (respecter les autres, faire son travail sérieusement, respecter le règlement de l'établissement).",
+      q:[
+        {q:"Lequel est un droit de l'élève ?", o:["Être respecté","Ne jamais travailler","Ne jamais écouter","Copier ses camarades"], c:0, e:"Être respecté est un droit fondamental de l'élève."},
+        {q:"Lequel est un devoir de l'élève ?", o:["Se moquer des autres","Respecter le règlement de l'école","Arriver en retard souvent","Ignorer les consignes"], c:1, e:"Respecter le règlement est un devoir de chaque élève."},
+        {q:"Pourquoi est-il important de respecter ses camarades ?", o:["Pour vivre ensemble sereinement","Pour obtenir de meilleures notes automatiquement","Ce n'est pas important","Pour éviter les cours"], c:0, e:"Le respect mutuel permet de bien vivre ensemble à l'école."},
+      ]},
+    {id:'vivre-ensemble', title:"Vivre ensemble : respect et solidarité", text:"Vivre en collectivité (à l'école, en famille, dans le quartier) demande du respect envers les autres et de la solidarité, c'est-à-dire s'entraider en cas de besoin, sans se moquer des différences de chacun.",
+      q:[
+        {q:"Qu'est-ce que la solidarité ?", o:["S'entraider entre personnes","Se moquer des autres","Rester seul toujours","Ignorer les autres"], c:0, e:"La solidarité, c'est s'entraider et se soutenir mutuellement."},
+        {q:"Comment doit-on réagir face à une personne différente de nous ?", o:["La rejeter","La respecter","L'ignorer complètement","Se moquer d'elle"], c:1, e:"Le respect des différences est essentiel pour vivre ensemble."},
+        {q:"Vivre en collectivité signifie…", o:["vivre seul, sans les autres","vivre avec les autres en respectant des règles communes","ne jamais partager","éviter tout contact"], c:1, e:"Cela signifie partager la vie avec d'autres en respectant des règles communes."},
+      ]},
+    {id:'hygiene-sante', title:"L'hygiène et la santé au quotidien", text:"Se laver régulièrement, se brosser les dents matin et soir, manger équilibré (fruits, légumes, eau) et bien dormir sont des habitudes essentielles pour rester en bonne santé et bien réussir à l'école.",
+      q:[
+        {q:"Combien de fois par jour faut-il idéalement se brosser les dents ?", o:["Jamais","Une fois par semaine","Matin et soir","Seulement le soir de temps en temps"], c:2, e:"Il est recommandé de se brosser les dents matin et soir."},
+        {q:"Pourquoi bien dormir est-il important ?", o:["Cela n'a aucune importance","Pour être en forme et bien se concentrer","Pour grossir uniquement","Pour éviter l'école"], c:1, e:"Un bon sommeil aide à être en forme et à bien se concentrer en classe."},
+        {q:"Quelle habitude fait partie d'une alimentation équilibrée ?", o:["Manger des fruits et légumes","Ne jamais boire d'eau","Manger uniquement des sucreries","Sauter tous les repas"], c:0, e:"Manger des fruits et légumes fait partie d'une alimentation équilibrée."},
       ]},
   ],
   ang: [
@@ -403,7 +616,6 @@ const LESSONS = {
       ]},
   ],
 };
-
 const ALPHABET = [
   {l:'A',p:'éï'},{l:'B',p:'bi'},{l:'C',p:'si'},{l:'D',p:'di'},{l:'E',p:'i'},{l:'F',p:'èf'},
   {l:'G',p:'dji'},{l:'H',p:'éitch'},{l:'I',p:'aï'},{l:'J',p:'djéi'},{l:'K',p:'kéi'},{l:'L',p:'èl'},

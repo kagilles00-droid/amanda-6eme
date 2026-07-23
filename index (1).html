@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Carnet de Mission d'Amanda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2340;
+    --paper:#FAF6EA;
+    --paper-line:#E3DAC2;
+    --card:#FFFFFF;
+    --cobalt:#2A4B8D;
+    --cobalt-dark:#1D3564;
+    --sun:#F4B400;
+    --coral:#E8483A;
+    --mint:#2FA37A;
+    --code-bg:#12182B;
+    --code-text:#7CF29C;
+    --shadow: 0 4px 0 rgba(27,35,64,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 1px 1px, var(--paper-line) 1px, transparent 1px) 0 0/22px 22px,
+      var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    min-height:100vh;
+  }
+  h1,h2,h3,.display{font-family:'Baloo 2',sans-serif;}
+  .app{max-width:980px;margin:0 auto;padding:18px 16px 60px;}
+
+  /* HEADER */
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--cobalt);color:#fff;border-radius:18px;
+    padding:16px 20px;box-shadow:var(--shadow);
+    flex-wrap:wrap;gap:10px;
+  }
+  header.top .title{display:flex;align-items:center;gap:12px;}
+  header.top .badge-icon{
+    font-size:32px;background:#fff;border-radius:14px;padding:6px 10px;
+    box-shadow:0 3px 0 rgba(0,0,0,0.15);
+  }
+  header.top h1{margin:0;font-size:22px;letter-spacing:.3px;}
+  header.top .sub{font-size:13px;opacity:.85;margin-top:2px;}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;}
+  .stat-pill{
+    background:rgba(255,255,255,0.15);border-radius:999px;padding:8px 14px;
+    font-weight:800;font-family:'Baloo 2';font-size:14px;display:flex;align-items:center;gap:6px;
+  }
+
+  /* TABS - folder style */
+  nav.tabs{display:flex;gap:6px;margin:22px 0 0;overflow-x:auto;padding-bottom:2px;}
+  nav.tabs button{
+    font-family:'Baloo 2';font-weight:700;font-size:14px;
+    background:#EFE7D2;color:var(--ink);border:none;
+    padding:12px 16px 10px;border-radius:12px 12px 0 0;cursor:pointer;
+    white-space:nowrap;position:relative;top:2px;opacity:.7;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  nav.tabs button:hover{transform:translateY(-2px);opacity:.9;}
+  nav.tabs button.active{
+    background:var(--card);opacity:1;top:0;
+    box-shadow:0 -2px 0 var(--paper-line) inset, var(--shadow);
+  }
+  main.sheet{
+    background:var(--card);border-radius:4px 16px 16px 16px;
+    padding:24px;box-shadow:var(--shadow);min-height:420px;
+  }
+
+  /* HOME */
+  .welcome{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:18px;}
+  .welcome h2{margin:0 0 4px;font-size:24px;}
+  .welcome p{margin:0;color:#55597A;}
+  .mission-card{
+    background:linear-gradient(135deg,#2A4B8D,#3C63B5);color:#fff;border-radius:14px;
+    padding:16px 18px;margin-bottom:20px;
+  }
+  .mission-card .label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;font-weight:800;}
+  .mission-card h3{margin:6px 0 8px;font-size:19px;}
+  .mission-card button{margin-top:6px;}
+  .progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
+  .prog-card{border:2px solid var(--paper-line);border-radius:14px;padding:14px;}
+  .prog-card .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-card .icon{font-size:22px;}
+  .bar{height:10px;background:#EFE7D2;border-radius:999px;overflow:hidden;}
+  .bar > div{height:100%;background:var(--mint);border-radius:999px;transition:width .4s ease;}
+  .prog-card .pct{font-size:12px;color:#777;margin-top:6px;font-weight:700;}
+
+  /* BUTTONS */
+  button{font-family:'Nunito',sans-serif;cursor:pointer;}
+  .btn{
+    border:none;border-radius:10px;padding:10px 18px;font-weight:800;
+    font-family:'Baloo 2';font-size:14px;box-shadow:0 3px 0 rgba(0,0,0,0.15);
+    transition:transform .1s ease;
+  }
+  .btn:active{transform:translateY(2px);box-shadow:none;}
+  .btn-primary{background:var(--sun);color:var(--ink);}
+  .btn-secondary{background:#fff;color:var(--cobalt);border:2px solid var(--cobalt);box-shadow:none;}
+  .btn-ghost{background:#F2EDDD;color:var(--ink);}
+  .btn-danger{background:var(--coral);color:#fff;}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+
+  /* LESSON CARDS */
+  .lesson-list{display:flex;flex-direction:column;gap:12px;}
+  .lesson-card{border:2px solid var(--paper-line);border-radius:14px;padding:14px 16px;}
+  .lesson-head{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;}
+  .lesson-head h3{margin:0;font-size:16px;}
+  .lesson-head .stars{font-size:13px;color:var(--sun);font-weight:800;white-space:nowrap;}
+  .lesson-body{margin-top:10px;font-size:14.5px;line-height:1.55;color:#3A3F5C;}
+  .lesson-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;}
+  .subject-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .subject-header .emoji{font-size:30px;}
+
+  /* QUIZ */
+  .quiz-box{max-width:560px;}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:16px;}
+  .quiz-progress div{flex:1;height:6px;border-radius:999px;background:#EFE7D2;}
+  .quiz-progress div.done{background:var(--mint);}
+  .quiz-progress div.current{background:var(--sun);}
+  .quiz-q{font-size:17px;font-weight:800;font-family:'Baloo 2';margin-bottom:16px;}
+  .quiz-opt{
+    display:block;width:100%;text-align:left;border:2px solid var(--paper-line);
+    background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;font-size:14.5px;font-weight:700;
+    transition:background .15s ease;
+  }
+  .quiz-opt:hover{background:#F7F2E4;}
+  .quiz-opt.correct{background:#E4F6EE;border-color:var(--mint);color:#1B6B4C;}
+  .quiz-opt.wrong{background:#FCE9E7;border-color:var(--coral);color:#a3271d;}
+  .quiz-explain{font-size:13.5px;color:#55597A;background:#F7F2E4;border-radius:10px;padding:10px 12px;margin:10px 0 4px;}
+  .quiz-result{text-align:center;padding:20px 0;}
+  .quiz-result .score{font-size:42px;font-family:'Baloo 2';font-weight:800;color:var(--cobalt);}
+
+  /* ROBOTICS */
+  .robo-wrap{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;}
+  .robo-levels{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .lvl-btn{
+    width:40px;height:40px;border-radius:10px;border:2px solid var(--paper-line);background:#fff;
+    font-family:'Baloo 2';font-weight:800;
+  }
+  .lvl-btn.active{background:var(--cobalt);color:#fff;border-color:var(--cobalt);}
+  .lvl-btn.done{background:var(--mint);color:#fff;border-color:var(--mint);}
+  .lvl-btn:disabled{opacity:.35;}
+  .grid-board{
+    display:grid;gap:3px;background:var(--paper-line);border-radius:10px;padding:6px;
+    width:fit-content;
+  }
+  .cell{
+    width:44px;height:44px;background:#fff;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;font-size:20px;
+    position:relative;
+  }
+  .cell.obstacle{background:#EFE3D2;}
+  .robot{
+    grid-row:1;grid-column:1;
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    font-size:24px;z-index:5;transition:grid-row .3s ease, grid-column .3s ease, transform .3s ease;
+  }
+  .robo-panel{flex:1;min-width:260px;}
+  .objective{background:#F7F2E4;border-left:4px solid var(--sun);padding:10px 14px;border-radius:0 10px 10px 0;font-size:14px;margin-bottom:14px;}
+  .console{
+    background:var(--code-bg);color:var(--code-text);border-radius:12px;padding:14px 16px;
+    font-family:'Space Mono',monospace;font-size:13px;min-height:110px;max-height:220px;overflow-y:auto;margin-bottom:14px;
+  }
+  .console .line{opacity:.9;}
+  .console .empty{opacity:.4;}
+  .console .cursor{display:inline-block;width:8px;background:var(--code-text);animation:blink 1s step-start infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .palette{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .cmd-btn{
+    border:none;border-radius:10px;padding:10px 14px;font-family:'Space Mono',monospace;font-weight:700;font-size:12.5px;
+    background:var(--cobalt);color:#fff;box-shadow:0 3px 0 var(--cobalt-dark);
+  }
+  .cmd-btn:active{transform:translateY(2px);box-shadow:none;}
+  .mult-row{display:flex;gap:6px;align-items:center;margin-bottom:12px;font-size:13px;font-weight:700;}
+  .mult-btn{border:2px solid var(--paper-line);background:#fff;border-radius:8px;padding:6px 10px;font-family:'Baloo 2';font-weight:800;font-size:12px;}
+  .mult-btn.active{background:var(--sun);border-color:var(--sun);}
+  .feedback{border-radius:10px;padding:12px 14px;font-weight:800;font-family:'Baloo 2';margin-top:10px;}
+  .feedback.success{background:#E4F6EE;color:#1B6B4C;}
+  .feedback.fail{background:#FCE9E7;color:#a3271d;}
+  .fact{background:#FFF7E0;border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:18px;border-left:4px solid var(--sun);}
+  .alpha-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:8px;}
+  .alpha-btn{
+    border:2px solid var(--paper-line);background:#fff;border-radius:10px;padding:8px 4px;
+    font-family:'Baloo 2';font-weight:800;font-size:18px;color:var(--cobalt);display:flex;flex-direction:column;align-items:center;gap:2px;
+  }
+  .alpha-btn:hover{background:#F7F2E4;border-color:var(--cobalt);}
+  .alpha-btn span{font-family:'Space Mono',monospace;font-weight:400;font-size:10px;color:#777;}
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-bottom:14px;}
+  .vocab-card{
+    border:2px solid var(--paper-line);background:#fff;border-radius:12px;padding:10px 6px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+  }
+  .vocab-card:hover{border-color:var(--cobalt);background:#F7F2E4;}
+  .vocab-card .swatch{width:34px;height:34px;border-radius:8px;border:1px solid rgba(0,0,0,0.15);}
+  .vocab-card .vocab-emoji{font-size:30px;}
+  .vocab-card .vocab-en{font-family:'Space Mono',monospace;font-size:11.5px;font-weight:700;color:var(--cobalt);margin-top:2px;}
+  .vocab-card .vocab-fr{font-size:11.5px;color:#666;}
+
+  footer.reset{text-align:center;margin-top:26px;}
+  footer.reset button{background:none;border:none;color:#9a9a9a;font-size:12px;text-decoration:underline;}
+  .loading{text-align:center;padding:60px 0;color:#9a9a9a;font-family:'Baloo 2';}
+</style>
+</head>
+<body>
+<div class="app" id="app"><div class="loading">Chargement du carnet de mission…</div></div>
+
+<script>
+/* ===================== DATA ===================== */
+const SUBJECTS = [
+  {id:'fr', name:'Français', emoji:'📖'},
+  {id:'lecture', name:'Lecture', emoji:'📚'},
+  {id:'arithmetique', name:'Arithmétique', emoji:'🔢'},
+  {id:'algebre', name:'Algèbre', emoji:'➗'},
+  {id:'geometrie', name:'Géométrie', emoji:'📐'},
+  {id:'statistique', name:'Statistique', emoji:'📊'},
+  {id:'physique-chimie', name:'Physique-Chimie', emoji:'⚗️'},
+  {id:'sciences', name:'Biologie (SVT)', emoji:'🔬'},
+  {id:'botanique', name:'Botanique', emoji:'🌱'},
+  {id:'anatomie', name:'Anatomie', emoji:'🫀'},
+  {id:'zoologie', name:'Zoologie', emoji:'🐾'},
+  {id:'techno', name:'Technologie', emoji:'⚙️'},
+  {id:'geo', name:'Géographie', emoji:'🗺️'},
+  {id:'histoire', name:'Histoire', emoji:'🏛️'},
+  {id:'vie', name:'Éducation pour la vie', emoji:'🌟'},
+  {id:'ang', name:'Anglais', emoji:'🇬🇧'},
+];
+
+const LESSONS = {
+  fr: [
+    {id:'nature', title:'La nature des mots', text:"Chaque mot d'une phrase a une nature : c'est sa classe grammaticale. Le nom désigne une personne, un animal, une chose ou une idée (chat, joie). Le verbe exprime une action ou un état (manger, être). L'adjectif qualifie le nom (grand, joyeux). Il existe aussi les déterminants (le, un, ma), les pronoms (il, elle) et les adverbes (vite, très).",
+      q:[
+        {q:"Dans « Le petit chat dort », quel mot est un adjectif ?", o:["Le","petit","chat","dort"], c:1, e:"« petit » qualifie le nom « chat » : c'est un adjectif."},
+        {q:"Quelle est la nature du mot « manger » ?", o:["Nom","Verbe","Adjectif","Adverbe"], c:1, e:"« Manger » exprime une action : c'est un verbe."},
+        {q:"Un mot qui désigne une personne, un animal ou une chose est…", o:["un verbe","un adjectif","un nom","un adverbe"], c:2, e:"C'est la définition du nom."},
+      ]},
+    {id:'temps', title:'Les temps du récit', text:"Dans un récit, on utilise souvent l'imparfait pour décrire une situation qui dure (Il faisait beau) et le passé simple pour une action précise et rapide (Il partit soudain).",
+      q:[
+        {q:"Quel temps décrit un décor qui dure dans un récit ?", o:["Le passé simple","L'imparfait","Le futur","L'impératif"], c:1, e:"L'imparfait sert à décrire ce qui dure."},
+        {q:"« Il ouvrit la porte et sursauta » : à quel temps sont ces verbes ?", o:["Imparfait","Passé simple","Présent","Conditionnel"], c:1, e:"Ce sont des actions brèves et précises : passé simple."},
+        {q:"« Il faisait nuit quand elle arriva. » Quel verbe est à l'imparfait ?", o:["faisait","arriva","les deux","aucun"], c:0, e:"« faisait » décrit une situation qui dure : imparfait."},
+      ]},
+    {id:'vocab', title:'Synonymes et antonymes', text:"Un synonyme est un mot de sens proche (content = joyeux). Un antonyme est un mot de sens contraire (grand ≠ petit). Utiliser des synonymes évite de répéter toujours le même mot.",
+      q:[
+        {q:"Quel mot est un synonyme de « content » ?", o:["triste","joyeux","fatigué","rapide"], c:1, e:"« Joyeux » a un sens proche de « content »."},
+        {q:"Quel mot est l'antonyme de « rapide » ?", o:["lent","grand","joyeux","fort"], c:0, e:"« Lent » est le contraire de « rapide »."},
+        {q:"« Immense » est un synonyme de…", o:["petit","énorme","faible","calme"], c:1, e:"« Immense » et « énorme » veulent dire la même chose."},
+      ]},
+    {id:'ponct', title:'La ponctuation', text:"Le point (.) termine une phrase déclarative. Le point d'interrogation (?) marque une question. Le point d'exclamation (!) exprime la surprise. La virgule (,) sépare des éléments dans une phrase.",
+      q:[
+        {q:"Quel signe utilise-t-on à la fin d'une question ?", o:[".",",","!","?"], c:3, e:"Le point d'interrogation marque une question."},
+        {q:"« Quelle chance___ » Quel signe complète cette exclamation ?", o:["?",".","!",","], c:2, e:"Le point d'exclamation exprime la surprise."},
+        {q:"La virgule sert à…", o:["terminer une phrase","séparer des éléments","poser une question","exprimer la surprise"], c:1, e:"La virgule sépare des éléments dans une phrase."},
+      ]},
+    {id:'types-phrases', title:"Les types et formes de phrases", text:"Une phrase déclarative affirme quelque chose (Il pleut.). Une phrase interrogative pose une question (Pleut-il ?). Une phrase impérative donne un ordre (Ferme la porte.). Une phrase exclamative exprime un sentiment fort (Quelle chance !). Chaque type peut être à la forme affirmative ou négative (Il ne pleut pas.).",
+      q:[
+        {q:"« Range ta chambre. » est une phrase…", o:["déclarative","interrogative","impérative","exclamative"], c:2, e:"Cette phrase donne un ordre : c'est une phrase impérative."},
+        {q:"« Quelle belle journée ! » est une phrase…", o:["déclarative","exclamative","interrogative","impérative"], c:1, e:"Elle exprime un sentiment fort avec un point d'exclamation : c'est une phrase exclamative."},
+        {q:"« Il ne vient pas aujourd'hui. » est à la forme…", o:["affirmative","négative","interrogative","impérative"], c:1, e:"« ne...pas » indique la forme négative."},
+      ]},
+    {id:'interrogation', title:"Poser une question (l'interrogation)", text:"On peut poser une question de trois façons : par l'intonation à l'oral (Tu viens ?), avec « est-ce que » (Est-ce que tu viens ?), ou par l'inversion du sujet (Viens-tu ?). Ces trois formes ont le même sens mais un niveau de langue différent.",
+      q:[
+        {q:"Laquelle de ces phrases utilise « est-ce que » ?", o:["Viens-tu ?","Est-ce que tu viens ?","Tu viens ?","Viens vite !"], c:1, e:"« Est-ce que tu viens ? » utilise la formule « est-ce que »."},
+        {q:"« Viens-tu ? » est un exemple de question formée par…", o:["l'intonation seule","l'inversion du sujet","l'exclamation","l'impératif"], c:1, e:"Le sujet « tu » est inversé après le verbe : c'est l'inversion du sujet."},
+        {q:"À l'oral, on peut poser une question uniquement…", o:["par l'inversion","par l'intonation","avec un point d'exclamation","avec un ordre"], c:1, e:"À l'oral, l'intonation seule suffit pour transformer une phrase en question (Tu viens ?)."},
+      ]},
+    {id:'fonctions-grammaticales', title:"Les fonctions grammaticales", text:"Dans une phrase, le sujet fait l'action du verbe. Le verbe exprime l'action ou l'état. Le complément d'objet direct (COD) répond à « quoi/qui » après le verbe sans préposition (Il mange une pomme). Le complément d'objet indirect (COI) est introduit par une préposition (Il parle à son ami). Le complément circonstanciel précise le lieu, le temps ou la manière (Il joue dans le jardin).",
+      q:[
+        {q:"Dans « Le chat mange une souris », quel est le COD ?", o:["Le chat","mange","une souris","rien"], c:2, e:"« une souris » répond à « quoi ? » après le verbe : c'est le COD."},
+        {q:"Dans « Il parle à son ami », quelle est la fonction de « à son ami » ?", o:["Sujet","COD","COI","Verbe"], c:2, e:"« à son ami » est introduit par une préposition : c'est un COI."},
+        {q:"Dans « Elle court dans le parc », que précise « dans le parc » ?", o:["Le sujet","Le complément circonstanciel de lieu","Le COD","Le verbe"], c:1, e:"« dans le parc » précise le lieu : c'est un complément circonstanciel de lieu."},
+      ]},
+    {id:'conjugaison-indicatif', title:"Les temps de l'indicatif", text:"Le présent décrit ce qui se passe maintenant (Je mange). Le futur simple annonce ce qui va arriver (Je mangerai). L'imparfait décrit une situation passée qui dure (Je mangeais). Le passé composé exprime une action passée et terminée, avec l'auxiliaire avoir ou être (J'ai mangé).",
+      q:[
+        {q:"« Je mangerai demain » est au…", o:["présent","futur simple","imparfait","passé composé"], c:1, e:"« mangerai » annonce une action à venir : c'est le futur simple."},
+        {q:"« J'ai mangé » est un exemple de…", o:["présent","futur simple","passé composé","imparfait"], c:2, e:"« ai mangé » utilise l'auxiliaire avoir : c'est le passé composé."},
+        {q:"Quel temps utilise-t-on pour décrire une situation qui dure dans le passé ?", o:["Le futur simple","L'imparfait","Le présent","Le passé composé"], c:1, e:"L'imparfait décrit une situation passée qui dure."},
+      ]},
+    {id:'accord-nominal', title:"L'accord dans le groupe nominal", text:"Dans un groupe nominal, le déterminant, le nom et l'adjectif doivent s'accorder en genre (masculin/féminin) et en nombre (singulier/pluriel). Exemple : « une grande maison » (féminin singulier) devient « de grandes maisons » (féminin pluriel).",
+      q:[
+        {q:"Quel accord faut-il faire dans un groupe nominal ?", o:["Seulement le genre","Seulement le nombre","Le genre et le nombre","Aucun accord n'est nécessaire"], c:2, e:"Déterminant, nom et adjectif s'accordent en genre ET en nombre."},
+        {q:"Comment accorder « un petit chat » au pluriel ?", o:["un petits chats","des petit chats","des petits chats","des petites chats"], c:2, e:"Au pluriel : « des petits chats » (déterminant, adjectif et nom au pluriel)."},
+        {q:"Quel adjectif s'accorde correctement avec « une maison » ?", o:["blanc","blancs","blanche","blanches"], c:2, e:"« maison » est féminin singulier, donc l'adjectif s'accorde : « blanche »."},
+      ]},
+  ],
+  lecture: [
+    {id:'chat-souris', title:'Le chat et la souris', text:"Dans une vieille maison de campagne vivait un chat nommé Gribouille. Il passait ses journées à surveiller un petit trou dans le mur du salon, persuadé qu'une souris s'y cachait. Un soir, alors que la maison était plongée dans le silence, une petite souris grise sortit enfin de sa cachette. Gribouille, immobile depuis des heures, bondit aussitôt. Mais la souris, plus rapide, disparut dans une fissure du plancher. Le chat resta seul, penaud, devant le trou vide. Depuis ce jour, il continue de guetter, patient, certain que sa chance finira par tourner.",
+      q:[
+        {q:"Comment s'appelle le chat de l'histoire ?", o:["Minou","Gribouille","Félix","Grisou"], c:1, e:"Le chat s'appelle Gribouille."},
+        {q:"Que fait le chat pendant ses journées ?", o:["Il dort dans le jardin","Il surveille un trou dans le mur","Il chasse des oiseaux","Il joue avec une pelote"], c:1, e:"Il surveille le trou où il pense que vit la souris."},
+        {q:"Pourquoi la souris échappe-t-elle au chat ?", o:["Elle est plus rapide","Le chat s'endort","Elle est invisible","Le chat a peur"], c:0, e:"Le texte dit qu'elle est « plus rapide »."},
+      ]},
+    {id:'foret', title:'La forêt enchantée', text:"Léa adorait se promener dans la forêt derrière chez sa grand-mère. Un matin de printemps, elle remarqua un sentier qu'elle n'avait jamais vu auparavant. Curieuse, elle décida de le suivre. Plus elle avançait, plus les arbres semblaient chuchoter entre eux, comme s'ils se racontaient une histoire ancienne. Au bout du chemin, elle découvrit une clairière où des centaines de fleurs bleues formaient un cercle parfait. Au centre, une pierre gravée portait un message qu'elle ne comprit pas tout de suite : « Seuls ceux qui écoutent la forêt peuvent la voir deux fois. » Léa sourit, et repartit, le cœur rempli de questions.",
+      q:[
+        {q:"Où Léa se promène-t-elle ?", o:["À la plage","Dans la forêt","À la montagne","Au marché"], c:1, e:"Elle se promène dans la forêt."},
+        {q:"Qu'est-ce qui étonne Léa dans la clairière ?", o:["Un lac","Des fleurs bleues en cercle","Un animal sauvage","Une cabane"], c:1, e:"Elle découvre des centaines de fleurs bleues formant un cercle."},
+        {q:"Que signifie l'expression « écouter la forêt » dans ce texte ?", o:["Entendre des bruits d'animaux","Être attentif et curieux face à la nature","Parler fort dans la forêt","Se perdre volontairement"], c:1, e:"C'est une image pour dire « être attentif et curieux »."},
+      ]},
+    {id:'ferme', title:'Une journée à la ferme', text:"À la ferme, chaque journée commence tôt. Dès l'aube, les vaches sont menées à l'étable pour la traite du lait. Les poules, elles, sont libérées de leur poulailler et picorent dans la cour. Vers midi, l'agriculteur vérifie les champs : selon la saison, il sème, arrose ou récolte le blé, le maïs ou les légumes. Le soir venu, les animaux retournent à l'abri, et le fermier prépare déjà le travail du lendemain. Ce rythme, réglé comme une horloge, change peu importe la météo.",
+      q:[
+        {q:"Que fait-on aux vaches à l'aube ?", o:["On les nourrit de foin","On les mène à la traite","On les emmène au marché","On les brosse"], c:1, e:"Les vaches sont menées à l'étable pour la traite du lait."},
+        {q:"Que font les poules dans la cour ?", o:["Elles dorment","Elles picorent","Elles nagent","Elles courent après le chat"], c:1, e:"Elles picorent dans la cour."},
+        {q:"Que vérifie l'agriculteur vers midi ?", o:["Les animaux du zoo","Les champs","La météo à la télé","Les outils du garage"], c:1, e:"Il vérifie les champs."},
+      ]},
+    {id:'phare', title:'Le vieux phare', text:"Le vieux phare se dressait depuis un siècle à la pointe de l'île, fidèle gardien des navires. Chaque nuit, sa lumière balayait l'horizon, avertissant les marins des rochers cachés sous l'eau. Un soir de tempête, alors que les vagues frappaient violemment la falaise, le gardien remarqua que la lumière faiblissait. Sans hésiter, il grimpa les marches en pierre, répara le mécanisme abîmé, et le faisceau retrouva toute sa force. Grâce à lui, un bateau de pêcheurs put rejoindre le port sain et sauf cette nuit-là.",
+      q:[
+        {q:"Depuis combien de temps le phare existait-il ?", o:["Dix ans","Un siècle","Une semaine","Un mois"], c:1, e:"Le phare existait depuis un siècle."},
+        {q:"Que remarque le gardien pendant la tempête ?", o:["Le bateau a disparu","La lumière faiblit","La porte est cassée","Il n'y a plus d'électricité"], c:1, e:"Il remarque que la lumière faiblit."},
+        {q:"Quelle est la conséquence de l'action du gardien ?", o:["Le phare s'écroule","Un bateau est sauvé","La tempête s'arrête","Rien ne se passe"], c:1, e:"Grâce à lui, un bateau de pêcheurs est sauvé."},
+      ]},
+  ],
+  arithmetique: [
+    {id:'entiers', title:'Les nombres entiers', text:"Un nombre entier s'écrit avec des chiffres (0 à 9) placés selon leur position : unités, dizaines, centaines, milliers... Par exemple 4 528 se lit « quatre mille cinq cent vingt-huit ». Pour comparer deux nombres, on regarde d'abord le nombre de chiffres, puis on compare chiffre par chiffre en partant de la gauche.",
+      q:[
+        {q:"Comment s'écrit en chiffres « trois mille quarante-deux » ?", o:["3402","3042","3420","342"], c:1, e:"« Trois mille » = 3000, puis « quarante-deux » = 42, donc 3042."},
+        {q:"Quel est le plus grand nombre ?", o:["4 785","4 758","4 875","4 587"], c:2, e:"En comparant chiffre par chiffre : 4 875 est le plus grand."},
+        {q:"Dans le nombre 6 291, quel chiffre représente les centaines ?", o:["6","2","9","1"], c:1, e:"En partant de la droite : unités=1, dizaines=9, centaines=2."},
+      ]},
+    {id:'decimaux', title:'Nombres entiers et décimaux', text:"Un nombre décimal a une partie entière et une partie décimale séparées par une virgule (3,25). Dans 3,25 : 3 est la partie entière, 25 la partie décimale.",
+      q:[
+        {q:"Dans 12,7 quelle est la partie décimale ?", o:["12","7","0,7","1,2"], c:1, e:"Après la virgule, on trouve 7 : c'est la partie décimale."},
+        {q:"Quel nombre est le plus grand ?", o:["4,5","4,15","4,05","4,2"], c:0, e:"4,5 = 4,50, c'est le plus grand des quatre."},
+        {q:"5 dixièmes s'écrivent…", o:["0,5","5,0","0,05","50"], c:0, e:"5 dixièmes = 5/10 = 0,5."},
+      ]},
+    {id:'fractions', title:'Les fractions', text:"Une fraction représente une partie d'un tout : dans 3/4, 4 est le dénominateur (nombre de parts égales) et 3 le numérateur (nombre de parts prises).",
+      q:[
+        {q:"Dans 5/8, que représente le 8 ?", o:["le numérateur","le dénominateur","le résultat","rien"], c:1, e:"Le 8 indique en combien de parts égales le tout est découpé."},
+        {q:"Quelle fraction représente la moitié ?", o:["1/3","1/2","2/2","1/4"], c:1, e:"1/2 = la moitié."},
+        {q:"3/4 signifie…", o:["3 parts sur 4","4 parts sur 3","3 fois 4","3 plus 4"], c:0, e:"Le tout est coupé en 4 et on en prend 3."},
+      ]},
+    {id:'operations', title:'Les quatre opérations', text:"Additionner donne une somme, soustraire donne une différence, multiplier donne un produit, diviser donne un quotient. Dans un calcul sans parenthèses, on effectue les multiplications et divisions avant les additions et soustractions.",
+      q:[
+        {q:"Le résultat d'une multiplication s'appelle…", o:["une somme","un produit","une différence","un quotient"], c:1, e:"Le résultat d'une multiplication est un produit."},
+        {q:"Dans 4 + 3 × 2, que calcule-t-on en premier ?", o:["4 + 3","3 × 2","peu importe","4 × 2"], c:1, e:"On effectue d'abord la multiplication : 3 × 2 = 6, puis 4 + 6 = 10."},
+        {q:"Le résultat d'une division s'appelle…", o:["un produit","une somme","un quotient","une différence"], c:2, e:"Le résultat d'une division est un quotient."},
+      ]},
+    {id:'multiples', title:'Multiples et diviseurs', text:"Un multiple d'un nombre s'obtient en le multipliant par un entier (les multiples de 3 sont 3, 6, 9, 12...). Un nombre pair se termine par 0,2,4,6,8 et un nombre impair par 1,3,5,7,9.",
+      q:[
+        {q:"Lequel de ces nombres est un multiple de 5 ?", o:["23","30","42","17"], c:1, e:"30 = 5 × 6, c'est un multiple de 5."},
+        {q:"12 est-il pair ou impair ?", o:["Pair","Impair","Ni l'un ni l'autre","On ne peut pas savoir"], c:0, e:"12 se termine par 2 : il est pair."},
+        {q:"Quel nombre est un diviseur de 20 ?", o:["3","4","6","7"], c:1, e:"20 ÷ 4 = 5 exactement, donc 4 est un diviseur de 20."},
+      ]},
+    {id:'premiers', title:'Nombres premiers et nombres composés', text:"Un nombre premier n'a que deux diviseurs : 1 et lui-même (2, 3, 5, 7, 11, 13...). Un nombre composé a plus de deux diviseurs (comme 12, qui est divisible par 1, 2, 3, 4, 6 et 12). Le nombre 1 n'est ni premier ni composé.",
+      q:[
+        {q:"Pourquoi 7 est-il un nombre premier ?", o:["Il n'est divisible que par 1 et 7","Il est pair","Il est divisible par 10 nombres","Il se termine par 7"], c:0, e:"7 n'a que deux diviseurs : 1 et 7 lui-même."},
+        {q:"Lequel de ces nombres est composé (plus de deux diviseurs) ?", o:["2","5","12","13"], c:2, e:"12 est divisible par 1, 2, 3, 4, 6 et 12 : c'est un nombre composé."},
+        {q:"Le nombre 1 est-il premier ?", o:["Oui","Non, il n'est ni premier ni composé","Non, il est composé","On ne peut pas savoir"], c:1, e:"Par définition, 1 n'est classé ni parmi les nombres premiers ni parmi les composés."},
+      ]},
+    {id:'divisibilite', title:'Les critères de divisibilité', text:"Un nombre est divisible par 2 s'il se termine par 0,2,4,6,8. Il est divisible par 5 s'il se termine par 0 ou 5. Il est divisible par 10 s'il se termine par 0. Il est divisible par 3 (ou 9) si la somme de ses chiffres est divisible par 3 (ou par 9). Ces critères permettent de savoir si une division tombe juste sans avoir à la poser.",
+      q:[
+        {q:"144 est-il divisible par 2 ?", o:["Oui, car il se termine par 4","Non","On ne peut pas savoir sans diviser","Seulement par 10"], c:0, e:"144 se termine par 4, un chiffre pair : il est divisible par 2."},
+        {q:"Comment savoir si un nombre est divisible par 5 sans poser la division ?", o:["Il doit être pair","Il doit se terminer par 0 ou 5","La somme des chiffres doit faire 5","Il doit être inférieur à 5"], c:1, e:"Un nombre divisible par 5 se termine toujours par 0 ou 5."},
+        {q:"Le nombre 231 est-il divisible par 3 ? (2+3+1 = 6)", o:["Oui, car 6 est divisible par 3","Non","Seulement par 2","On ne peut pas le savoir"], c:0, e:"La somme des chiffres (6) est divisible par 3, donc 231 aussi."},
+      ]},
+    {id:'pgcd-ppcm', title:'PGCD et PPCM', text:"Pour trouver le PGCD (Plus Grand Commun Diviseur) et le PPCM (Plus Petit Commun Multiple) de deux nombres, on les décompose en facteurs premiers. Exemple avec 12 et 18 : 12 = 2² × 3 et 18 = 2 × 3². Le PGCD prend les facteurs communs avec le plus petit exposant : PGCD(12,18) = 2 × 3 = 6. Le PPCM prend tous les facteurs avec le plus grand exposant : PPCM(12,18) = 2² × 3² = 36. Le PGCD sert à simplifier un partage, le PPCM à faire correspondre des cycles (comme des engrenages).",
+      q:[
+        {q:"Que signifie PGCD ?", o:["Plus Grand Commun Diviseur","Plus Grand Chiffre Divisé","Petit Groupe de Calcul Direct","Plus Grand Compte Décimal"], c:0, e:"PGCD = Plus Grand Commun Diviseur."},
+        {q:"12 = 2² × 3 et 18 = 2 × 3². Quel est le PGCD(12,18) ?", o:["2","3","6","36"], c:2, e:"On prend les facteurs communs avec le plus petit exposant : 2 × 3 = 6."},
+        {q:"Avec 12 = 2² × 3 et 18 = 2 × 3², quel est le PPCM(12,18) ?", o:["6","12","18","36"], c:3, e:"On prend tous les facteurs avec le plus grand exposant : 2² × 3² = 4 × 9 = 36."},
+      ]},
+  ],
+  algebre: [
+    {id:'vocab-math', title:"Le vocabulaire des opérations", text:"En mathématiques, chaque opération a un nom précis pour ses résultats : la somme (addition), la différence (soustraction), le produit (multiplication) et le quotient (division). Bien connaître ce vocabulaire aide à comprendre un énoncé.",
+      q:[
+        {q:"« La somme de 7 et 5 » signifie…", o:["7 - 5","7 + 5","7 × 5","7 ÷ 5"], c:1, e:"La somme désigne le résultat d'une addition."},
+        {q:"« La différence de 9 et 4 » signifie…", o:["9 + 4","9 - 4","9 × 4","4 - 9"], c:1, e:"La différence désigne le résultat d'une soustraction (dans l'ordre donné)."},
+        {q:"« Le produit de 6 et 3 » vaut…", o:["9","3","18","2"], c:2, e:"Le produit est le résultat de la multiplication : 6 × 3 = 18."},
+      ]},
+    {id:'lettre', title:"Une lettre pour un nombre inconnu", text:"En mathématiques, on utilise parfois une lettre (souvent x ou a) pour représenter un nombre qu'on ne connaît pas encore, ou qui peut changer. Par exemple, dans « a + 3 », a peut être n'importe quel nombre.",
+      q:[
+        {q:"Dans l'expression « x + 5 », que représente x ?", o:["Toujours le nombre 5","Un nombre inconnu ou variable","Une lettre de l'alphabet uniquement","Rien du tout"], c:1, e:"x représente un nombre inconnu ou qui peut varier."},
+        {q:"Si a = 4, quelle est la valeur de « a + 6 » ?", o:["6","10","4","24"], c:1, e:"On remplace a par 4 : 4 + 6 = 10."},
+        {q:"Si b = 3, quelle est la valeur de « 2 × b » ?", o:["5","6","23","2"], c:1, e:"2 × b = 2 × 3 = 6."},
+      ]},
+    {id:'equation', title:"Résoudre une équation simple", text:"Une équation est une égalité contenant une lettre inconnue, comme x + 3 = 8. Pour trouver x, on fait l'opération inverse : x = 8 - 3, donc x = 5. Pour vérifier, on remplace x par 5 dans l'équation de départ.",
+      q:[
+        {q:"Dans x + 4 = 10, combien vaut x ?", o:["4","6","14","10"], c:1, e:"x = 10 - 4 = 6."},
+        {q:"Dans x - 3 = 7, combien vaut x ?", o:["4","10","21","7"], c:1, e:"Pour annuler « - 3 » on ajoute 3 : x = 7 + 3 = 10."},
+        {q:"Pour vérifier que x = 5 est solution de x + 2 = 7, on calcule…", o:["5 - 2","5 + 2","5 × 2","5 ÷ 2"], c:1, e:"On remplace x par 5 : 5 + 2 = 7, c'est correct."},
+      ]},
+    {id:'egalite', title:"Le signe égal et les égalités", text:"Le signe = signifie que deux quantités ont la même valeur. Une égalité doit toujours rester vraie des deux côtés : si on fait une opération d'un côté, il faut faire la même opération de l'autre côté pour que l'égalité reste vraie.",
+      q:[
+        {q:"Que signifie le signe = dans un calcul ?", o:["Une différence","Que les deux côtés ont la même valeur","Un produit","Une inconnue"], c:1, e:"Le signe = indique que les deux côtés ont la même valeur."},
+        {q:"Si 5 + 2 = 7, alors 5 + 2 + 1 est égal à…", o:["7","8","6","9"], c:1, e:"On ajoute 1 des deux côtés : 7 + 1 = 8."},
+        {q:"L'égalité 3 × 4 = 12 est-elle vraie ?", o:["Oui","Non","Cela dépend","Impossible à dire"], c:0, e:"3 × 4 = 12, l'égalité est bien vraie."},
+      ]},
+    {id:'calcul-litteral', title:'Le calcul littéral : réduire une expression', text:"Le calcul littéral consiste à écrire et simplifier des expressions contenant des lettres. Quand on additionne deux termes identiques, on les regroupe : a + a = 2a. De même, 3x × 2 = 6x. Réduire une expression, c'est regrouper les termes semblables pour l'écrire plus simplement : 2a + 3a = 5a.",
+      q:[
+        {q:"Comment simplifie-t-on a + a ?", o:["a","2a","a²","2"], c:1, e:"a + a signifie deux fois a, donc 2a."},
+        {q:"Que vaut 3x × 2 une fois simplifié ?", o:["5x","6x","3x²","32x"], c:1, e:"3 × 2 = 6, donc 3x × 2 = 6x."},
+        {q:"Comment réduit-on l'expression 2a + 3a ?", o:["5a","6a","2a3a","a5"], c:0, e:"2a + 3a = (2+3)a = 5a, on additionne les coefficients des termes semblables."},
+      ]},
+    {id:'equation-ax', title:"Équations du type ax = b", text:"Pour résoudre une équation du type ax = b (où a et b sont des nombres connus), on divise les deux côtés par a : x = b ÷ a. Par exemple, dans 3x = 15, on divise par 3 : x = 15 ÷ 3 = 5. On vérifie ensuite en remplaçant x par 5 : 3 × 5 = 15, c'est correct.",
+      q:[
+        {q:"Dans l'équation 3x = 15, combien vaut x ?", o:["3","5","12","45"], c:1, e:"x = 15 ÷ 3 = 5."},
+        {q:"Pour résoudre ax = b, quelle opération fait-on des deux côtés ?", o:["On multiplie par a","On divise par a","On ajoute a","On soustrait a"], c:1, e:"On divise les deux côtés par a pour isoler x."},
+        {q:"Dans 4x = 20, combien vaut x ?", o:["4","5","16","80"], c:1, e:"x = 20 ÷ 4 = 5."},
+      ]},
+    {id:'mise-equation', title:"Mettre un problème en équation", text:"Mettre un problème en équation, c'est traduire un énoncé en langage mathématique. Exemple : « J'ai un nombre, je lui ajoute 5, j'obtiens 12. Quel est ce nombre ? » se traduit par x + 5 = 12, donc x = 7. Cette méthode sert aussi pour des problèmes d'âge ou de partage.",
+      q:[
+        {q:"« Un nombre augmenté de 8 donne 20 » se traduit par…", o:["x - 8 = 20","x + 8 = 20","8x = 20","x = 8 + 20"], c:1, e:"« Augmenté de 8 » signifie qu'on ajoute 8 : x + 8 = 20."},
+        {q:"Dans le problème précédent, combien vaut x ?", o:["12","28","160","8"], c:0, e:"x = 20 - 8 = 12."},
+        {q:"« Le triple d'un nombre est égal à 21 » se traduit par…", o:["x + 3 = 21","3x = 21","x - 3 = 21","x ÷ 3 = 21"], c:1, e:"« Le triple » signifie multiplié par 3 : 3x = 21 (donc x = 7)."},
+      ]},
+  ],
+  geometrie: [
+    {id:'figures', title:"Les figures planes de base", text:"Le carré a 4 côtés égaux et 4 angles droits. Le rectangle a 4 angles droits mais des côtés opposés seulement égaux deux à deux. Le triangle a 3 côtés. Le cercle est formé de tous les points situés à la même distance (le rayon) d'un point central.",
+      q:[
+        {q:"Combien de côtés égaux a un carré ?", o:["2","3","4","0"], c:2, e:"Un carré a ses 4 côtés égaux."},
+        {q:"Qu'est-ce qui distingue un rectangle d'un carré ?", o:["Le rectangle n'a pas d'angles droits","Le rectangle a des côtés opposés égaux deux à deux, pas les 4 identiques","Le rectangle a 3 côtés","Il n'y a aucune différence"], c:1, e:"Dans un rectangle, seuls les côtés opposés sont égaux."},
+        {q:"Tous les points d'un cercle sont…", o:["à la même distance du centre","alignés","de couleurs différentes","à l'intérieur du carré"], c:0, e:"C'est la définition du cercle : tous les points sont à égale distance du centre (le rayon)."},
+      ]},
+    {id:'droites', title:"Droites, segments et points", text:"Un point marque un emplacement précis. Une droite est une ligne qui va à l'infini dans les deux sens. Un segment est une portion de droite limitée par deux points appelés extrémités.",
+      q:[
+        {q:"Qu'est-ce qu'un segment ?", o:["Une droite infinie","Une portion de droite entre deux points","Un point unique","Un angle"], c:1, e:"Un segment est limité par deux extrémités, contrairement à la droite qui est infinie."},
+        {q:"Une droite s'arrête-t-elle quelque part ?", o:["Oui, toujours","Non, elle continue à l'infini","Seulement à droite","Seulement à gauche"], c:1, e:"Une droite se prolonge à l'infini dans les deux sens."},
+        {q:"Combien de points faut-il au minimum pour tracer un segment ?", o:["1","2","3","4"], c:1, e:"Il faut deux points : les deux extrémités du segment."},
+      ]},
+    {id:'positions-droites', title:"Droites sécantes, parallèles, perpendiculaires", text:"Deux droites sécantes se croisent en un seul point. Deux droites parallèles ne se croisent jamais, même prolongées à l'infini. Deux droites perpendiculaires sont sécantes et forment un angle droit (90°) à leur croisement. On trace les droites avec une règle, et on vérifie les angles droits avec une équerre.",
+      q:[
+        {q:"Deux droites qui se croisent en un seul point sont dites…", o:["parallèles","sécantes","perpendiculaires uniquement","invisibles"], c:1, e:"« Sécantes » signifie qu'elles se croisent en un point."},
+        {q:"Deux droites parallèles…", o:["se croisent toujours","ne se croisent jamais","forment un angle droit obligatoirement","sont toujours perpendiculaires"], c:1, e:"Par définition, des droites parallèles ne se rencontrent jamais."},
+        {q:"Deux droites perpendiculaires forment un angle de…", o:["45°","60°","90°","180°"], c:2, e:"Des droites perpendiculaires forment un angle droit, soit 90°."},
+      ]},
+    {id:'perimetre', title:'Périmètre et aire', text:"Le périmètre d'un rectangle se calcule avec (Longueur + largeur) × 2. L'aire (surface) se calcule avec Longueur × largeur.",
+      q:[
+        {q:"Un rectangle a une longueur de 5 cm et une largeur de 3 cm. Son périmètre est…", o:["8 cm","15 cm","16 cm","30 cm"], c:2, e:"(5+3)×2 = 16 cm."},
+        {q:"Quelle est l'aire de ce même rectangle ?", o:["8 cm²","15 cm²","16 cm²","30 cm²"], c:1, e:"5×3 = 15 cm²."},
+        {q:"L'aire d'un carré de côté 4 cm est…", o:["8 cm²","16 cm²","4 cm²","12 cm²"], c:1, e:"4×4 = 16 cm²."},
+      ]},
+    {id:'angles', title:"Les angles", text:"Un angle droit mesure exactement 90°, comme le coin d'une feuille de papier. Un angle aigu est plus petit qu'un angle droit (moins de 90°). Un angle obtus est plus grand qu'un angle droit (plus de 90° mais moins de 180°).",
+      q:[
+        {q:"Combien de degrés mesure un angle droit ?", o:["45°","90°","180°","360°"], c:1, e:"Un angle droit mesure exactement 90°."},
+        {q:"Un angle de 40° est un angle…", o:["droit","aigu","obtus","plat"], c:1, e:"40° est inférieur à 90° : c'est un angle aigu."},
+        {q:"Un angle de 120° est un angle…", o:["aigu","droit","obtus","nul"], c:2, e:"120° est entre 90° et 180° : c'est un angle obtus."},
+      ]},
+    {id:'symetrie', title:'La symétrie axiale', text:"Deux points sont symétriques par rapport à une droite (l'axe) si cette droite est la médiatrice du segment qui les relie. La figure symétrique garde la même forme et la même taille.",
+      q:[
+        {q:"Une figure et son symétrique par rapport à un axe ont…", o:["des tailles différentes","la même forme et la même taille","des couleurs différentes","rien en commun"], c:1, e:"La symétrie conserve forme et taille."},
+        {q:"L'axe de symétrie est…", o:["au hasard","une droite qui sert de miroir","un point","un angle"], c:1, e:"L'axe agit comme un miroir."},
+        {q:"Quelle lettre majuscule a un axe de symétrie vertical ?", o:["F","A","R","N"], c:1, e:"La lettre A est symétrique par rapport à un axe vertical."},
+      ]},
+    {id:'triangles', title:"Les triangles", text:"On classe les triangles selon leurs côtés : équilatéral (3 côtés égaux), isocèle (2 côtés égaux), scalène (aucun côté égal). On les classe aussi selon leurs angles : un triangle rectangle possède un angle droit (90°). Le périmètre d'un triangle est la somme de ses 3 côtés. Son aire se calcule avec (base × hauteur) ÷ 2.",
+      q:[
+        {q:"Un triangle qui a ses 3 côtés égaux est dit…", o:["isocèle","scalène","équilatéral","rectangle"], c:2, e:"« Équilatéral » signifie que les 3 côtés ont la même longueur."},
+        {q:"Un triangle qui possède un angle de 90° est un triangle…", o:["équilatéral","rectangle","scalène uniquement","obtus toujours"], c:1, e:"Un triangle rectangle a un angle droit de 90°."},
+        {q:"Un triangle a une base de 6 cm et une hauteur de 4 cm. Quelle est son aire ?", o:["10 cm²","24 cm²","12 cm²","20 cm²"], c:2, e:"Aire = (base × hauteur) ÷ 2 = (6×4) ÷ 2 = 12 cm²."},
+      ]},
+    {id:'quadrilateres', title:"Les quadrilatères", text:"Un quadrilatère a 4 côtés. Le carré a 4 côtés égaux et 4 angles droits. Le rectangle a 4 angles droits et des côtés opposés égaux. Le parallélogramme a ses côtés opposés parallèles et égaux, sans forcément avoir d'angle droit. Le losange a ses 4 côtés égaux, mais pas forcément d'angle droit.",
+      q:[
+        {q:"Combien de côtés possède un quadrilatère ?", o:["3","4","5","6"], c:1, e:"« Quadri » signifie quatre : un quadrilatère a 4 côtés."},
+        {q:"Quelle est la particularité d'un losange ?", o:["Il a 4 angles droits obligatoirement","Ses 4 côtés sont égaux","Il n'a que 3 côtés","Il n'a aucun côté égal"], c:1, e:"Le losange a ses 4 côtés de même longueur, mais pas forcément d'angles droits."},
+        {q:"Un parallélogramme a…", o:["des côtés opposés parallèles et égaux","seulement 3 côtés","toujours 4 angles droits","aucun côté parallèle"], c:0, e:"C'est la définition du parallélogramme : côtés opposés parallèles et égaux."},
+      ]},
+    {id:'cercle-circonference', title:"Le cercle : rayon, diamètre et circonférence", text:"Dans un cercle, le rayon (R) est la distance du centre à un point du cercle. Le diamètre est deux fois le rayon et traverse le cercle en passant par le centre. Une corde relie deux points du cercle sans forcément passer par le centre. La circonférence (le tour du cercle) se calcule avec la formule P = 2 × π × R (avec π environ égal à 3,14).",
+      q:[
+        {q:"Quelle est la relation entre le diamètre et le rayon ?", o:["Le diamètre est deux fois le rayon","Le diamètre est la moitié du rayon","Ils sont toujours égaux","Il n'y a aucun lien"], c:0, e:"Le diamètre traverse le cercle en passant par le centre : il vaut 2 × rayon."},
+        {q:"Quelle formule permet de calculer la circonférence d'un cercle ?", o:["P = R × R","P = 2 × π × R","P = π ÷ R","P = 4 × R"], c:1, e:"La circonférence se calcule avec P = 2 × π × R."},
+        {q:"Un cercle a un rayon de 5 cm (π ≈ 3,14). Sa circonférence est environ…", o:["15,7 cm","31,4 cm","10 cm","78,5 cm"], c:1, e:"P = 2 × 3,14 × 5 = 31,4 cm."},
+      ]},
+  ],
+  statistique: [
+    {id:'donnees', title:"Recueillir et lire des données", text:"En statistique, on recueille des informations (des données) sur un groupe, par exemple les notes d'une classe. On les range souvent dans un tableau avec des colonnes claires pour pouvoir les lire facilement.",
+      q:[
+        {q:"Qu'appelle-t-on une « donnée » en statistique ?", o:["Une information recueillie","Une opération mathématique","Un angle","Une figure géométrique"], c:0, e:"Une donnée est une information recueillie, par exemple une note ou un âge."},
+        {q:"À quoi sert un tableau de données ?", o:["À dessiner des figures","À ranger l'information pour la lire facilement","À faire des additions uniquement","À rien de particulier"], c:1, e:"Le tableau organise les données pour les rendre lisibles."},
+        {q:"Si on note l'âge de chaque élève d'une classe, on obtient…", o:["une figure géométrique","un ensemble de données","une équation","un angle"], c:1, e:"C'est un ensemble de données sur l'âge des élèves."},
+      ]},
+    {id:'diagramme', title:"Lire un diagramme en bâtons", text:"Un diagramme en bâtons représente des quantités par des barres verticales : plus la barre est haute, plus la quantité est grande. L'axe horizontal indique les catégories (par exemple les mois), l'axe vertical indique les quantités.",
+      q:[
+        {q:"Dans un diagramme en bâtons, que représente la hauteur d'une barre ?", o:["Sa couleur","La quantité représentée","Sa largeur","Rien"], c:1, e:"Plus la barre est haute, plus la quantité qu'elle représente est grande."},
+        {q:"Si la barre de « juin » est plus haute que celle de « mai », cela signifie…", o:["juin a une valeur plus petite","juin a une valeur plus grande","les deux mois sont égaux","on ne peut rien dire"], c:1, e:"Une barre plus haute indique une valeur plus grande."},
+        {q:"L'axe horizontal d'un diagramme en bâtons indique souvent…", o:["les quantités","les catégories (ex: les mois)","les couleurs","les angles"], c:1, e:"L'axe horizontal indique en général les catégories comparées."},
+      ]},
+    {id:'moyenne', title:"La moyenne", text:"Pour calculer une moyenne, on additionne toutes les valeurs puis on divise par le nombre de valeurs. Par exemple, pour les notes 12, 14 et 16 : (12+14+16) ÷ 3 = 14.",
+      q:[
+        {q:"Comment calcule-t-on une moyenne ?", o:["On multiplie toutes les valeurs","On additionne les valeurs et on divise par leur nombre","On prend la plus grande valeur","On prend la plus petite valeur"], c:1, e:"La moyenne est la somme des valeurs divisée par leur nombre."},
+        {q:"Quelle est la moyenne de 10 et 20 ?", o:["10","15","20","30"], c:1, e:"(10+20) ÷ 2 = 15."},
+        {q:"Quelle est la moyenne de 8, 10 et 12 ?", o:["8","10","12","30"], c:1, e:"(8+10+12) ÷ 3 = 30 ÷ 3 = 10."},
+      ]},
+  ],
+  sciences: [
+    {id:'vivant', title:'Vivant et non-vivant', text:"Un être vivant naît, grandit, se nourrit, respire et se reproduit. Une pierre ou une voiture ne fait rien de tout cela : ce sont des objets non-vivants.",
+      q:[
+        {q:"Lequel de ces éléments est vivant ?", o:["un caillou","un champignon","une chaise","l'eau"], c:1, e:"Le champignon est un être vivant."},
+        {q:"Un critère du vivant est…", o:["être en métal","se reproduire","être immobile","être coloré"], c:1, e:"Se reproduire est un critère du vivant."},
+        {q:"Une voiture est-elle un être vivant ?", o:["Oui","Non","Parfois","On ne sait pas"], c:1, e:"Une voiture ne naît pas et ne se reproduit pas."},
+      ]},
+    {id:'cellule', title:'La cellule', text:"La cellule est la plus petite unité qui constitue tous les êtres vivants. Certains organismes n'ont qu'une seule cellule (unicellulaires), d'autres en ont des milliards (pluricellulaires).",
+      q:[
+        {q:"Qu'est-ce que la cellule ?", o:["Un organe","L'unité de base du vivant","Un os","Un liquide"], c:1, e:"La cellule est l'unité de base de tout être vivant."},
+        {q:"Un organisme fait d'une seule cellule est dit…", o:["pluricellulaire","unicellulaire","minéral","artificiel"], c:1, e:"« Uni » = une seule cellule."},
+        {q:"Le corps humain est composé de…", o:["une seule cellule","quelques cellules","des milliards de cellules","aucune cellule"], c:2, e:"Notre corps contient des milliards de cellules."},
+      ]},
+    {id:'ecosysteme', title:'Les écosystèmes', text:"Un écosystème regroupe des êtres vivants (plantes, animaux) et leur milieu (eau, sol, air) qui interagissent entre eux, par exemple une forêt ou un étang.",
+      q:[
+        {q:"Un écosystème comprend…", o:["seulement des animaux","des êtres vivants et leur milieu","uniquement des plantes","uniquement des minéraux"], c:1, e:"Un écosystème associe êtres vivants et milieu."},
+        {q:"Une forêt est un exemple de…", o:["planète","écosystème","cellule","atome"], c:1, e:"La forêt est un écosystème."},
+        {q:"Dans un écosystème, les êtres vivants…", o:["n'interagissent jamais","interagissent entre eux et avec leur milieu","vivent seuls","ne se nourrissent pas"], c:1, e:"Ils interagissent entre eux et avec leur milieu."},
+      ]},
+  ],
+  'physique-chimie': [
+    {id:'methode-scientifique', title:"La méthode scientifique", text:"Un scientifique procède par étapes : il observe un phénomène, il pose une question et imagine une hypothèse (une explication possible), il réalise une expérience pour la tester, puis il tire une conclusion selon ce qu'il a observé. C'est cette méthode qui permet de vérifier si une idée est vraie.",
+      q:[
+        {q:"Quelle est la première étape de la méthode scientifique ?", o:["Conclure","Observer un phénomène","Ranger le matériel","Deviner au hasard"], c:1, e:"Tout commence par l'observation d'un phénomène."},
+        {q:"Qu'est-ce qu'une hypothèse ?", o:["Une conclusion finale","Une explication possible à vérifier","Un instrument de mesure","Une erreur d'expérience"], c:1, e:"L'hypothèse est une explication proposée, qu'on va ensuite tester."},
+        {q:"À quoi sert l'expérience dans la démarche scientifique ?", o:["À décorer le laboratoire","À tester l'hypothèse","À remplacer l'observation","À rien de précis"], c:1, e:"L'expérience permet de vérifier si l'hypothèse est correcte."},
+      ]},
+    {id:'grandeurs-mesures', title:"Les grandeurs physiques et leurs mesures", text:"On mesure la longueur avec un mètre (en mètres, cm), la masse avec une balance (en grammes, kilogrammes), le volume avec une éprouvette (en litres, millilitres) et la température avec un thermomètre (en degrés Celsius, °C).",
+      q:[
+        {q:"Quel instrument utilise-t-on pour mesurer une masse ?", o:["Le thermomètre","La balance","L'éprouvette","Le mètre"], c:1, e:"La balance mesure la masse, en grammes ou kilogrammes."},
+        {q:"Dans quelle unité mesure-t-on la température ?", o:["Le litre","Le gramme","Le degré Celsius","Le mètre"], c:2, e:"La température se mesure en degrés Celsius (°C)."},
+        {q:"Quel instrument sert à mesurer un volume de liquide ?", o:["L'éprouvette","Le thermomètre","La règle","La balance"], c:0, e:"L'éprouvette graduée permet de mesurer un volume de liquide."},
+      ]},
+    {id:'etats-matiere-pc', title:"Les états et changements d'état de la matière", text:"La matière existe sous 3 états : solide (forme fixe), liquide (prend la forme du récipient) et gazeux (se répand partout). Elle change d'état selon la température : la fusion (solide → liquide), la vaporisation (liquide → gaz), la liquéfaction (gaz → liquide) et la solidification (liquide → solide).",
+      q:[
+        {q:"Comment appelle-t-on le passage du solide au liquide ?", o:["La vaporisation","La fusion","La solidification","La liquéfaction"], c:1, e:"La fusion transforme un solide en liquide (ex : la glace qui fond)."},
+        {q:"Comment appelle-t-on le passage du liquide au gaz ?", o:["La fusion","La solidification","La vaporisation","La condensation solide"], c:2, e:"La vaporisation transforme un liquide en gaz (ex : l'eau qui bout)."},
+        {q:"Quand l'eau liquide se transforme en glace, on parle de…", o:["fusion","vaporisation","solidification","liquéfaction"], c:2, e:"La solidification transforme un liquide en solide."},
+      ]},
+    {id:'melanges', title:"Mélanges et corps purs", text:"Un mélange homogène ne laisse voir qu'une seule substance à l'œil nu (l'eau salée). Un mélange hétérogène laisse voir plusieurs éléments distincts (l'eau et le sable). Pour séparer un mélange, on utilise la filtration (à travers un filtre), la décantation (en laissant reposer) ou la distillation (par évaporation puis condensation).",
+      q:[
+        {q:"L'eau salée est un exemple de mélange…", o:["hétérogène","homogène","solide","gazeux"], c:1, e:"On ne distingue qu'une seule substance à l'œil nu : c'est un mélange homogène."},
+        {q:"Quelle technique sépare un solide d'un liquide à l'aide d'un filtre ?", o:["La distillation","La filtration","La solidification","La fusion"], c:1, e:"La filtration retient les particules solides grâce à un filtre."},
+        {q:"L'eau et le sable forment un mélange…", o:["homogène","hétérogène","gazeux uniquement","invisible"], c:1, e:"On distingue clairement les deux éléments : c'est un mélange hétérogène."},
+      ]},
+    {id:'electricite', title:"Initiation à l'électricité", text:"Un circuit électrique simple comprend une pile (qui fournit l'énergie), une lampe, des fils de connexion et parfois un interrupteur (qui ouvre ou ferme le circuit). Les conducteurs (comme le métal) laissent passer le courant électrique, alors que les isolants (comme le plastique ou le bois) l'empêchent de passer.",
+      q:[
+        {q:"Quel élément d'un circuit fournit l'énergie électrique ?", o:["La lampe","La pile","L'interrupteur","Le fil"], c:1, e:"La pile est la source d'énergie du circuit électrique."},
+        {q:"À quoi sert un interrupteur dans un circuit ?", o:["À fournir l'énergie","À ouvrir ou fermer le circuit","À éclairer la pièce","À rien de particulier"], c:1, e:"L'interrupteur permet d'ouvrir ou de fermer le circuit, donc d'allumer ou d'éteindre."},
+        {q:"Lequel de ces matériaux est un bon conducteur électrique ?", o:["Le plastique","Le bois","Le métal","Le caoutchouc"], c:2, e:"Le métal laisse bien passer le courant électrique : c'est un conducteur."},
+      ]},
+  ],
+  botanique: [
+    {id:'parties-plante', title:"Les parties de la plante", text:"Une plante se compose généralement de racines (qui puisent l'eau et les minéraux dans le sol et fixent la plante), d'une tige (qui la soutient et transporte la sève), de feuilles (qui captent la lumière), et souvent de fleurs qui donnent des fruits contenant des graines.",
+      q:[
+        {q:"Quel organe puise l'eau dans le sol ?", o:["La feuille","La racine","La fleur","Le fruit"], c:1, e:"Les racines puisent l'eau et les minéraux dans le sol."},
+        {q:"Quel organe capte la lumière pour la plante ?", o:["La racine","La feuille","La tige","Le fruit"], c:1, e:"Les feuilles captent la lumière du soleil."},
+        {q:"Que contient un fruit ?", o:["Des racines","Des graines","De l'eau uniquement","Rien"], c:1, e:"Le fruit contient les graines de la plante."},
+      ]},
+    {id:'photosynthese', title:"La photosynthèse", text:"Grâce à la lumière du soleil, les feuilles vertes des plantes fabriquent leur propre nourriture à partir d'eau et de gaz carbonique (CO2), et elles rejettent de l'oxygène dans l'air. Ce phénomène s'appelle la photosynthèse.",
+      q:[
+        {q:"De quoi une plante a-t-elle besoin pour faire la photosynthèse ?", o:["De lumière, d'eau et de CO2","Uniquement d'eau","Uniquement de nuit","De sable"], c:0, e:"La photosynthèse nécessite lumière, eau et gaz carbonique."},
+        {q:"Que rejette la plante dans l'air grâce à la photosynthèse ?", o:["Du gaz carbonique","De l'oxygène","De l'azote","De la fumée"], c:1, e:"La plante rejette de l'oxygène, indispensable à notre respiration."},
+        {q:"La photosynthèse se produit surtout dans…", o:["les racines","les feuilles vertes","les fruits mûrs","le sol"], c:1, e:"Ce sont les feuilles vertes qui réalisent la photosynthèse."},
+      ]},
+    {id:'besoins-plante', title:"Les besoins de la plante", text:"Pour vivre et grandir, une plante a besoin d'eau, de lumière, d'air et de sol nourricier (avec des minéraux). Si l'un de ces éléments manque, la plante pousse mal ou meurt.",
+      q:[
+        {q:"Lequel de ces éléments n'est PAS un besoin essentiel de la plante ?", o:["L'eau","La lumière","La musique","L'air"], c:2, e:"La musique n'est pas un besoin vital pour une plante, contrairement à l'eau, la lumière et l'air."},
+        {q:"Que se passe-t-il si une plante manque d'eau longtemps ?", o:["Elle pousse plus vite","Elle risque de dépérir","Rien ne change","Elle change de couleur de fleur uniquement"], c:1, e:"Sans eau, la plante se dessèche et peut mourir."},
+        {q:"Le sol apporte à la plante…", o:["de la lumière","des minéraux nourriciers","de l'air uniquement","rien du tout"], c:1, e:"Le sol fournit les minéraux nécessaires à la plante, absorbés par les racines."},
+      ]},
+    {id:'reproduction-plante', title:"La reproduction des plantes", text:"La fleur est l'organe de reproduction de la plante. La pollinisation transporte le pollen (souvent grâce aux insectes ou au vent) jusqu'à une autre fleur, ce qui permet la fécondation. La fleur fécondée se transforme alors en fruit contenant des graines. Pour germer, une graine a besoin d'eau, de chaleur et d'air.",
+      q:[
+        {q:"Quel est l'organe de reproduction de la plante ?", o:["La racine","La fleur","La tige","Le sol"], c:1, e:"La fleur est l'organe qui permet la reproduction de la plante."},
+        {q:"Qu'est-ce que la pollinisation ?", o:["Le transport du pollen vers une autre fleur","La chute des feuilles","La formation des racines","L'arrosage de la plante"], c:0, e:"La pollinisation transporte le pollen d'une fleur à une autre, souvent via les insectes ou le vent."},
+        {q:"De quoi une graine a-t-elle besoin pour germer ?", o:["De musique et de lumière artificielle","D'eau, de chaleur et d'air","Uniquement d'obscurité totale","De sable sec uniquement"], c:1, e:"La germination nécessite de l'eau, de la chaleur et de l'air."},
+      ]},
+  ],
+  anatomie: [
+    {id:'corps-humain', title:"Les grandes parties du corps humain", text:"Le corps humain est soutenu par le squelette (les os), qui protège des organes comme le cœur et les poumons. Les muscles, attachés aux os, permettent de bouger. Le corps est organisé en plusieurs parties : la tête, le tronc et les membres (bras et jambes).",
+      q:[
+        {q:"Quelle structure soutient et protège le corps ?", o:["Le muscle","Le squelette","La peau","Le sang"], c:1, e:"Le squelette, formé des os, soutient et protège le corps."},
+        {q:"Que permettent les muscles ?", o:["De digérer","De bouger","De voir","De respirer"], c:1, e:"Les muscles, attachés aux os, permettent le mouvement."},
+        {q:"Le corps humain est organisé en…", o:["une seule partie","tête, tronc et membres","quatre membres uniquement","aucune partie précise"], c:1, e:"On distingue la tête, le tronc et les membres."},
+      ]},
+    {id:'organes-sens', title:"Les organes des sens", text:"Nous percevons le monde grâce à cinq sens : la vue (les yeux), l'ouïe (les oreilles), l'odorat (le nez), le goût (la langue) et le toucher (la peau). Chaque organe des sens envoie des informations au cerveau.",
+      q:[
+        {q:"Quel organe permet la vue ?", o:["Le nez","Les yeux","La langue","La peau"], c:1, e:"Les yeux sont l'organe de la vue."},
+        {q:"Quel sens correspond aux oreilles ?", o:["Le goût","L'odorat","L'ouïe","Le toucher"], c:2, e:"Les oreilles permettent d'entendre : c'est l'ouïe."},
+        {q:"Combien de sens principaux possède l'être humain ?", o:["Trois","Quatre","Cinq","Six"], c:2, e:"On compte cinq sens : vue, ouïe, odorat, goût, toucher."},
+      ]},
+    {id:'digestion', title:"Le système digestif", text:"Les aliments que nous mangeons parcourent un long trajet : la bouche (mastication), l'œsophage, l'estomac (où ils sont transformés), puis l'intestin, qui absorbe les nutriments utiles au corps avant l'élimination des déchets.",
+      q:[
+        {q:"Où commence la digestion des aliments ?", o:["Dans l'estomac","Dans la bouche","Dans l'intestin","Dans les poumons"], c:1, e:"La digestion commence dans la bouche, avec la mastication."},
+        {q:"Quel organe absorbe les nutriments utiles au corps ?", o:["L'œsophage","L'intestin","La bouche","Le cœur"], c:1, e:"C'est l'intestin qui absorbe les nutriments utiles."},
+        {q:"Quel est le rôle de l'estomac ?", o:["Voir","Transformer les aliments","Entendre","Respirer"], c:1, e:"L'estomac transforme les aliments reçus."},
+      ]},
+  ],
+  zoologie: [
+    {id:'vertebres', title:"Vertébrés et invertébrés", text:"Les animaux vertébrés possèdent une colonne vertébrale et un squelette interne (mammifères, oiseaux, poissons, reptiles, amphibiens). Les invertébrés n'ont pas de colonne vertébrale (insectes, vers, mollusques).",
+      q:[
+        {q:"Qu'est-ce qui caractérise un animal vertébré ?", o:["Il vole","Il possède une colonne vertébrale","Il vit dans l'eau","Il n'a pas de squelette"], c:1, e:"Un vertébré possède une colonne vertébrale et un squelette interne."},
+        {q:"Lequel de ces animaux est un invertébré ?", o:["Le chat","Le poisson","La fourmi","L'oiseau"], c:2, e:"La fourmi est un insecte, donc un invertébré."},
+        {q:"Les mammifères, oiseaux, poissons et reptiles sont tous des…", o:["invertébrés","vertébrés","plantes","minéraux"], c:1, e:"Ce sont toutes des familles d'animaux vertébrés."},
+      ]},
+    {id:'reproduction-animaux', title:"Modes de reproduction des animaux", text:"Les animaux ovipares pondent des œufs qui se développent à l'extérieur du corps de la mère (poules, poissons, la plupart des reptiles). Les animaux vivipares donnent naissance à des petits déjà formés (la plupart des mammifères, comme la vache ou l'être humain).",
+      q:[
+        {q:"Un animal qui pond des œufs est dit…", o:["vivipare","ovipare","carnivore","herbivore"], c:1, e:"« Ovipare » vient de « œuf » : il pond des œufs."},
+        {q:"La vache donne naissance à un petit déjà formé : elle est…", o:["ovipare","vivipare","invertébrée","aquatique"], c:1, e:"Elle donne naissance à un petit formé : c'est un animal vivipare."},
+        {q:"La poule est-elle ovipare ou vivipare ?", o:["Ovipare","Vivipare","Les deux","Aucun des deux"], c:0, e:"La poule pond des œufs : elle est ovipare."},
+      ]},
+    {id:'regimes-alimentaires', title:"Les régimes alimentaires des animaux", text:"Un herbivore se nourrit uniquement de végétaux (la vache, le lapin). Un carnivore se nourrit de viande, c'est-à-dire d'autres animaux (le lion, le chat). Un omnivore mange à la fois des végétaux et de la viande (le cochon, l'être humain).",
+      q:[
+        {q:"Un animal qui ne mange que des plantes est un…", o:["carnivore","herbivore","omnivore","insectivore"], c:1, e:"« Herbivore » signifie qu'il se nourrit d'herbe et de végétaux."},
+        {q:"Le lion, qui mange d'autres animaux, est un…", o:["herbivore","carnivore","omnivore","végétarien"], c:1, e:"Le lion se nourrit de viande : c'est un carnivore."},
+        {q:"Un animal qui mange à la fois plantes et viande est…", o:["herbivore","carnivore","omnivore","aucun des trois"], c:2, e:"« Omnivore » = qui mange de tout, végétaux et viande."},
+      ]},
+    {id:'classes-vertebres', title:"Les 5 classes de vertébrés", text:"On distingue 5 grandes classes de vertébrés : les mammifères (poils, allaitent leurs petits), les oiseaux (plumes, pondent des œufs), les reptiles (peau écailleuse, pondent des œufs), les amphibiens (vivent dans l'eau puis sur terre, comme la grenouille) et les poissons (respirent avec des branchies dans l'eau).",
+      q:[
+        {q:"Quelle classe de vertébrés allaite ses petits ?", o:["Les oiseaux","Les mammifères","Les poissons","Les reptiles"], c:1, e:"Les mammifères sont caractérisés par l'allaitement de leurs petits."},
+        {q:"Avec quoi les poissons respirent-ils dans l'eau ?", o:["Des poumons","Des branchies","La peau uniquement","Des plumes"], c:1, e:"Les poissons respirent grâce à leurs branchies."},
+        {q:"Quel animal est un amphibien, qui vit dans l'eau puis sur terre ?", o:["Le serpent","La grenouille","Le poisson-chat","L'aigle"], c:1, e:"La grenouille est l'exemple typique d'un amphibien."},
+      ]},
+    {id:'ecologie-environnement', title:"Écologie et environnement", text:"Dans une chaîne alimentaire, les producteurs (les plantes) fabriquent leur nourriture grâce à la lumière, les consommateurs (les animaux) se nourrissent d'autres êtres vivants, et les décomposeurs (champignons, bactéries) recyclent les déchets et les cadavres. Protéger la biodiversité, c'est préserver la diversité des espèces animales et végétales d'une région.",
+      q:[
+        {q:"Qui sont les producteurs dans une chaîne alimentaire ?", o:["Les animaux carnivores","Les plantes","Les champignons","Les décomposeurs uniquement"], c:1, e:"Les plantes produisent leur propre nourriture grâce à la lumière : ce sont les producteurs."},
+        {q:"Quel est le rôle des décomposeurs ?", o:["Fabriquer de la nourriture avec la lumière","Recycler les déchets et les cadavres","Chasser d'autres animaux","Voler dans le ciel"], c:1, e:"Les décomposeurs (champignons, bactéries) recyclent la matière organique morte."},
+        {q:"Que signifie « protéger la biodiversité » ?", o:["Éliminer certaines espèces","Préserver la diversité des espèces d'une région","Ne garder qu'une seule espèce","Ne rien faire"], c:1, e:"La biodiversité désigne la diversité des espèces vivantes ; la protéger, c'est la préserver."},
+      ]},
+  ],
+  techno: [
+    {id:'objet-technique', title:"Qu'est-ce qu'un objet technique ?", text:"Un objet technique est un objet fabriqué par l'homme pour répondre à un besoin précis (se déplacer, communiquer, se protéger...). Un vélo, un stylo ou un téléphone sont des objets techniques, contrairement à une pierre trouvée dans la nature.",
+      q:[
+        {q:"Qu'est-ce qu'un objet technique ?", o:["Un objet naturel","Un objet fabriqué pour répondre à un besoin","Un être vivant","Un nombre"], c:1, e:"Un objet technique est fabriqué par l'homme pour un besoin précis."},
+        {q:"Lequel de ces objets est un objet technique ?", o:["Un caillou","Une feuille d'arbre","Un vélo","Un nuage"], c:2, e:"Le vélo est fabriqué par l'homme : c'est un objet technique."},
+        {q:"À quoi sert un objet technique ?", o:["À rien de précis","À répondre à un besoin","Uniquement à décorer","À remplacer les humains"], c:1, e:"Il répond toujours à un besoin précis (se déplacer, communiquer...)."},
+      ]},
+    {id:'materiaux', title:"Les matériaux et leurs propriétés", text:"Les objets techniques sont fabriqués à partir de matériaux différents selon leurs propriétés : le métal est solide et résistant, le bois est léger et facile à travailler, le plastique est léger et peut prendre toutes les formes, le verre est transparent mais fragile.",
+      q:[
+        {q:"Quel matériau est transparent mais fragile ?", o:["Le bois","Le verre","Le métal","Le plastique"], c:1, e:"Le verre laisse passer la lumière mais casse facilement."},
+        {q:"Pourquoi utilise-t-on souvent le métal pour construire un pont ?", o:["Parce qu'il est fragile","Parce qu'il est solide et résistant","Parce qu'il est transparent","Parce qu'il flotte"], c:1, e:"Le métal est choisi pour sa solidité et sa résistance."},
+        {q:"Quelle propriété du plastique le rend pratique pour fabriquer des objets ?", o:["Il est très lourd","Il peut prendre toutes les formes","Il est transparent uniquement","Il est cassant"], c:1, e:"Le plastique est léger et peut être moulé dans toutes les formes."},
+      ]},
+    {id:'fonction-objet', title:"Le besoin et la fonction d'un objet", text:"Chaque objet technique a une fonction, c'est-à-dire un rôle précis qu'il remplit pour satisfaire un besoin. Par exemple, un parapluie a pour fonction de protéger de la pluie : c'est le besoin auquel il répond.",
+      q:[
+        {q:"Quelle est la fonction d'un parapluie ?", o:["Éclairer la nuit","Protéger de la pluie","Transporter de l'eau","Couper du pain"], c:1, e:"Un parapluie protège de la pluie, c'est sa fonction principale."},
+        {q:"Quel besoin satisfait une paire de lunettes ?", o:["Se déplacer","Mieux voir","Se nourrir","Communiquer à distance"], c:1, e:"Les lunettes répondent au besoin de mieux voir."},
+        {q:"Quelle est la fonction principale d'un téléphone ?", o:["Se protéger du froid","Communiquer à distance","Couper des aliments","Se déplacer"], c:1, e:"Le téléphone permet de communiquer à distance."},
+      ]},
+    {id:'hardware', title:"Découvrir l'ordinateur (le matériel)", text:"Un ordinateur est composé de plusieurs éléments : l'unité centrale (le « cerveau » de la machine), l'écran (qui affiche les images), le clavier (pour taper du texte), la souris (avec un clic gauche et un clic droit) et des périphériques de stockage comme la clé USB (pour sauvegarder des fichiers).",
+      q:[
+        {q:"Quel élément affiche les images de l'ordinateur ?", o:["Le clavier","L'écran","La souris","La clé USB"], c:1, e:"L'écran affiche ce que fait l'ordinateur."},
+        {q:"À quoi sert une clé USB ?", o:["À afficher des images","À stocker et transporter des fichiers","À taper du texte","À alimenter l'écran"], c:1, e:"La clé USB est un périphérique de stockage qui permet de sauvegarder et transporter des fichiers."},
+        {q:"Que permet le clic droit de la souris ?", o:["D'éteindre l'ordinateur","D'afficher un menu d'options","De taper du texte","De brancher une clé USB"], c:1, e:"Le clic droit ouvre généralement un menu contextuel avec des options."},
+      ]},
+    {id:'software', title:"Le système d'exploitation (le logiciel)", text:"Le bureau est l'écran principal qui apparaît quand on allume l'ordinateur. On y ouvre et ferme des logiciels (des programmes), et on peut créer, renommer ou supprimer des dossiers et des fichiers pour organiser son travail.",
+      q:[
+        {q:"Comment appelle-t-on l'écran principal de l'ordinateur ?", o:["Le dossier","Le bureau","Le logiciel","La clé USB"], c:1, e:"Le bureau est l'écran principal affiché après le démarrage."},
+        {q:"À quoi sert un dossier sur l'ordinateur ?", o:["À ranger et organiser des fichiers","À afficher des vidéos uniquement","À éteindre l'ordinateur","À taper du texte"], c:0, e:"Un dossier permet de ranger et organiser des fichiers."},
+        {q:"Qu'est-ce qu'un logiciel ?", o:["Une pièce physique de l'ordinateur","Un programme qu'on utilise sur l'ordinateur","Un câble électrique","Un type de souris"], c:1, e:"Un logiciel est un programme, par exemple un traitement de texte ou un jeu."},
+      ]},
+    {id:'traitement-texte', title:"Initiation au traitement de texte", text:"Un logiciel de traitement de texte (comme Word) permet de taper et de mettre en forme un texte. La touche espace sépare les mots, la touche entrée permet d'aller à la ligne, et la touche effacement (ou retour arrière) permet de corriger une erreur en supprimant un caractère.",
+      q:[
+        {q:"À quoi sert la touche entrée dans un traitement de texte ?", o:["À supprimer un mot","À aller à la ligne suivante","À éteindre l'ordinateur","À sauvegarder automatiquement"], c:1, e:"La touche entrée permet de passer à la ligne suivante."},
+        {q:"Quelle touche sépare deux mots l'un de l'autre ?", o:["La touche entrée","La touche espace","La touche effacement","La touche majuscule"], c:1, e:"La barre d'espace insère un espace entre les mots."},
+        {q:"Que fait la touche effacement (retour arrière) ?", o:["Elle ajoute un mot","Elle supprime un caractère","Elle imprime le texte","Elle change la couleur du texte"], c:1, e:"Elle permet de corriger une erreur en supprimant un caractère déjà tapé."},
+      ]},
+    {id:'securite-numerique', title:"Sécurité et éthique numérique", text:"Il faut prendre soin du matériel informatique : éviter la poussière, manipuler les câbles avec précaution, et ne pas manger près du clavier. Sur internet, il faut aussi adopter un usage responsable : ne pas donner d'informations personnelles à des inconnus et rester respectueux avec les autres.",
+      q:[
+        {q:"Pourquoi faut-il éviter la poussière sur un ordinateur ?", o:["Elle peut abîmer le matériel","Elle rend l'écran plus lumineux","Elle accélère l'ordinateur","Cela n'a aucune importance"], c:0, e:"La poussière peut endommager les composants de l'ordinateur."},
+        {q:"Quel est un bon réflexe de sécurité sur internet ?", o:["Donner ses informations personnelles à tout le monde","Ne pas partager d'informations personnelles avec des inconnus","Insulter les autres utilisateurs","Cliquer sur tous les liens sans réfléchir"], c:1, e:"Il faut protéger ses informations personnelles et rester prudent en ligne."},
+        {q:"Comment doit-on manipuler les câbles d'un ordinateur ?", o:["Avec précaution","En tirant fort dessus","En les mouillant","Cela n'a pas d'importance"], c:0, e:"Il faut manipuler les câbles avec précaution pour ne pas les abîmer."},
+      ]},
+  ],
+  geo: [
+    {id:'reperage-carte', title:"Se repérer sur une carte", text:"Une carte utilise les points cardinaux (Nord, Sud, Est, Ouest) pour situer les lieux. La légende explique ce que représentent les couleurs et les symboles utilisés. L'échelle indique le rapport entre la distance sur la carte et la distance réelle.",
+      q:[
+        {q:"Combien de points cardinaux principaux existe-t-il ?", o:["Deux","Trois","Quatre","Six"], c:2, e:"Nord, Sud, Est, Ouest : quatre points cardinaux."},
+        {q:"À quoi sert la légende d'une carte ?", o:["À décorer la carte","À expliquer les couleurs et symboles","À indiquer l'heure","À donner le nom de l'auteur"], c:1, e:"La légende explique ce que représentent les symboles et couleurs de la carte."},
+        {q:"Que permet de connaître l'échelle d'une carte ?", o:["La météo du jour","Le rapport entre distance sur la carte et distance réelle","La population du pays","La couleur du drapeau"], c:1, e:"L'échelle relie la distance sur la carte à la distance réelle sur le terrain."},
+      ]},
+    {id:'relief-paysages', title:"Le relief et les paysages", text:"Le relief désigne les formes du terrain : la montagne (haute et pentue), la plaine (plate et basse), le plateau (plat mais élevé) et la vallée (creux souvent traversé par un cours d'eau, entre deux montagnes ou collines).",
+      q:[
+        {q:"Comment appelle-t-on une étendue plate et basse ?", o:["Une montagne","Une plaine","Une vallée","Un plateau"], c:1, e:"La plaine est une étendue plate et de faible altitude."},
+        {q:"Qu'est-ce qu'une vallée ?", o:["Un sommet élevé","Un creux entre deux montagnes, souvent avec un cours d'eau","Une étendue plate et élevée","Un désert de sable"], c:1, e:"La vallée est un creux, souvent traversé par une rivière, entre des reliefs plus élevés."},
+        {q:"Un plateau se caractérise par…", o:["une surface plate mais élevée en altitude","une pente très forte","un sommet enneigé uniquement","un fond marin"], c:0, e:"Le plateau est plat mais situé en altitude, contrairement à la plaine."},
+      ]},
+    {id:'continents', title:'Les continents et océans', text:"La Terre compte 6 continents (Afrique, Amérique, Antarctique, Asie, Europe, Océanie) et 5 océans (Pacifique, Atlantique, Indien, Arctique, Austral).",
+      q:[
+        {q:"Combien y a-t-il de continents ?", o:["4","5","6","7"], c:2, e:"On compte 6 continents."},
+        {q:"Quel est le plus grand océan du monde ?", o:["Atlantique","Indien","Pacifique","Arctique"], c:2, e:"Le Pacifique est le plus grand océan."},
+        {q:"La Guinée se trouve sur quel continent ?", o:["Asie","Europe","Afrique","Amérique"], c:2, e:"La Guinée se trouve en Afrique."},
+      ]},
+  ],
+  histoire: [
+    {id:'notion-temps', title:"Qu'est-ce que l'Histoire ?", text:"L'Histoire est l'étude du passé de l'humanité à partir de traces écrites (documents, livres) et d'objets retrouvés. On situe les événements dans le temps grâce à une frise chronologique, qui les place les uns après les autres, du plus ancien au plus récent.",
+      q:[
+        {q:"L'Histoire étudie le passé grâce à…", o:["des documents et des objets","uniquement l'imagination","des prédictions","rien de précis"], c:0, e:"Les historiens s'appuient sur des documents écrits et des objets retrouvés."},
+        {q:"À quoi sert une frise chronologique ?", o:["À dessiner des cartes","À situer les événements dans le temps","À faire des calculs","À classer des animaux"], c:1, e:"La frise chronologique place les événements du plus ancien au plus récent."},
+        {q:"Sur une frise chronologique, un événement plus ancien se situe…", o:["plus à droite","plus à gauche","au centre toujours","n'importe où"], c:1, e:"On place généralement les événements les plus anciens à gauche."},
+      ]},
+    {id:'prehistoire', title:'La Préhistoire', text:"La Préhistoire est la longue période avant l'invention de l'écriture. Les premiers hommes étaient des chasseurs-cueilleurs. Ils ont découvert le feu, fabriqué des outils en pierre, et peint dans des grottes.",
+      q:[
+        {q:"La Préhistoire se termine avec l'invention de…", o:["la roue","l'écriture","l'agriculture","le feu"], c:1, e:"L'écriture marque le début de l'Histoire."},
+        {q:"Que faisaient les hommes préhistoriques pour se nourrir au début ?", o:["Ils cultivaient des champs","Ils chassaient et cueillaient","Ils achetaient au marché","Ils élevaient des vaches"], c:1, e:"C'étaient des chasseurs-cueilleurs."},
+        {q:"Avec quel matériau les premiers outils étaient-ils souvent fabriqués ?", o:["Le plastique","La pierre","Le verre","L'acier"], c:1, e:"Les premiers outils étaient taillés dans la pierre."},
+      ]},
+    {id:'egypte', title:"L'Égypte ancienne", text:"L'Égypte ancienne se développe le long du Nil, un fleuve qui fertilise les terres grâce à ses crues. Les Égyptiens construisent des pyramides pour leurs pharaons et inventent une écriture : les hiéroglyphes.",
+      q:[
+        {q:"Quel fleuve traverse l'Égypte ancienne ?", o:["Le Rhin","Le Nil","Le Tibre","Le Niger"], c:1, e:"Le Nil est le fleuve d'Égypte."},
+        {q:"Comment s'appelle l'écriture égyptienne ?", o:["l'alphabet","les hiéroglyphes","le braille","les runes"], c:1, e:"Les hiéroglyphes sont l'écriture égyptienne."},
+        {q:"Les pyramides étaient construites pour…", o:["les paysans","les pharaons","les commerçants","les animaux"], c:1, e:"Elles servaient de tombeaux aux pharaons."},
+      ]},
+    {id:'grece', title:'La Grèce antique', text:"La Grèce antique est organisée en cités-États comme Athènes ou Sparte. Les Grecs inventent la démocratie à Athènes et honorent des dieux comme Zeus, notamment lors des Jeux Olympiques.",
+      q:[
+        {q:"Quelle cité grecque est célèbre pour avoir inventé la démocratie ?", o:["Sparte","Athènes","Rome","Troie"], c:1, e:"Athènes est le berceau de la démocratie."},
+        {q:"Comment appelle-t-on le roi des dieux grecs ?", o:["Zeus","Ra","Jupiter","Odin"], c:0, e:"Zeus est le roi des dieux grecs."},
+        {q:"Quelle compétition sportive vient de la Grèce antique ?", o:["La Coupe du monde","Les Jeux Olympiques","Le Tour de France","Le marathon local"], c:1, e:"Les Jeux Olympiques sont nés en Grèce antique."},
+      ]},
+  ],
+  vie: [
+    {id:'droits-devoirs', title:"Les droits et les devoirs de l'élève", text:"À l'école, chaque élève a des droits (être respecté, apprendre dans de bonnes conditions, s'exprimer) et des devoirs (respecter les autres, faire son travail sérieusement, respecter le règlement de l'établissement).",
+      q:[
+        {q:"Lequel est un droit de l'élève ?", o:["Être respecté","Ne jamais travailler","Ne jamais écouter","Copier ses camarades"], c:0, e:"Être respecté est un droit fondamental de l'élève."},
+        {q:"Lequel est un devoir de l'élève ?", o:["Se moquer des autres","Respecter le règlement de l'école","Arriver en retard souvent","Ignorer les consignes"], c:1, e:"Respecter le règlement est un devoir de chaque élève."},
+        {q:"Pourquoi est-il important de respecter ses camarades ?", o:["Pour vivre ensemble sereinement","Pour obtenir de meilleures notes automatiquement","Ce n'est pas important","Pour éviter les cours"], c:0, e:"Le respect mutuel permet de bien vivre ensemble à l'école."},
+      ]},
+    {id:'vivre-ensemble', title:"Vivre ensemble : respect et solidarité", text:"Vivre en collectivité (à l'école, en famille, dans le quartier) demande du respect envers les autres et de la solidarité, c'est-à-dire s'entraider en cas de besoin, sans se moquer des différences de chacun.",
+      q:[
+        {q:"Qu'est-ce que la solidarité ?", o:["S'entraider entre personnes","Se moquer des autres","Rester seul toujours","Ignorer les autres"], c:0, e:"La solidarité, c'est s'entraider et se soutenir mutuellement."},
+        {q:"Comment doit-on réagir face à une personne différente de nous ?", o:["La rejeter","La respecter","L'ignorer complètement","Se moquer d'elle"], c:1, e:"Le respect des différences est essentiel pour vivre ensemble."},
+        {q:"Vivre en collectivité signifie…", o:["vivre seul, sans les autres","vivre avec les autres en respectant des règles communes","ne jamais partager","éviter tout contact"], c:1, e:"Cela signifie partager la vie avec d'autres en respectant des règles communes."},
+      ]},
+    {id:'hygiene-sante', title:"L'hygiène et la santé au quotidien", text:"Se laver régulièrement, se brosser les dents matin et soir, manger équilibré (fruits, légumes, eau) et bien dormir sont des habitudes essentielles pour rester en bonne santé et bien réussir à l'école.",
+      q:[
+        {q:"Combien de fois par jour faut-il idéalement se brosser les dents ?", o:["Jamais","Une fois par semaine","Matin et soir","Seulement le soir de temps en temps"], c:2, e:"Il est recommandé de se brosser les dents matin et soir."},
+        {q:"Pourquoi bien dormir est-il important ?", o:["Cela n'a aucune importance","Pour être en forme et bien se concentrer","Pour grossir uniquement","Pour éviter l'école"], c:1, e:"Un bon sommeil aide à être en forme et à bien se concentrer en classe."},
+        {q:"Quelle habitude fait partie d'une alimentation équilibrée ?", o:["Manger des fruits et légumes","Ne jamais boire d'eau","Manger uniquement des sucreries","Sauter tous les repas"], c:0, e:"Manger des fruits et légumes fait partie d'une alimentation équilibrée."},
+      ]},
+  ],
+  ang: [
+    {id:'presenter', title:'Se présenter', text:"Pour se présenter en anglais : « Hello, my name is Amanda. » / « I am 11 years old. » On demande le nom avec « What is your name? »",
+      q:[
+        {q:"Comment dit-on « Je m'appelle Amanda » en anglais ?", o:["I am Amanda house","My name is Amanda","Amanda is me","Call Amanda"], c:1, e:"« My name is Amanda » = « Je m'appelle Amanda »."},
+        {q:"Que signifie « How old are you? »", o:["Comment vas-tu ?","Quel âge as-tu ?","Où habites-tu ?","Comment t'appelles-tu ?"], c:1, e:"« How old are you? » demande l'âge."},
+        {q:"« I am eleven years old » signifie…", o:["J'ai onze ans","Je suis onze","J'habite à onze","Il est onze heures"], c:0, e:"Cela signifie « J'ai onze ans »."},
+      ]},
+    {id:'nombres', title:"Les nombres et l'heure", text:"Les nombres de 1 à 10 : one, two, three, four, five, six, seven, eight, nine, ten. Pour l'heure : « What time is it? » → « It is three o'clock. »",
+      q:[
+        {q:"Comment dit-on « sept » en anglais ?", o:["six","seven","eight","ten"], c:1, e:"« Seven » = sept."},
+        {q:"« What time is it? » signifie…", o:["Quelle heure est-il ?","Quel jour est-on ?","Quel âge as-tu ?","Où es-tu ?"], c:0, e:"On demande l'heure."},
+        {q:"« Ten » correspond au nombre…", o:["9","10","11","100"], c:1, e:"« Ten » = 10."},
+      ]},
+    {id:'present', title:'Le présent simple', text:"Le présent simple sert à parler d'habitudes : « I play football on Sundays. » Avec he/she/it, on ajoute un « s » : « She plays football. »",
+      q:[
+        {q:"Complète : « She ___ (play) tennis every day. »", o:["play","plays","playing","played"], c:1, e:"Avec « she », on ajoute un s : « plays »."},
+        {q:"« I like chocolate » est au…", o:["passé","présent","futur","impératif"], c:1, e:"C'est une habitude au présent."},
+        {q:"Quelle forme est correcte avec « he » ?", o:["he go","he goes","he going","he gone"], c:1, e:"« He goes » : on ajoute un s à la 3e personne."},
+      ]},
+    {id:'famille', title:'La famille', visual:'family', text:"Vocabulaire de la famille : mother (mère), father (père), sister (sœur), brother (frère), grandmother (grand-mère), grandfather (grand-père).",
+      q:[
+        {q:"Comment dit-on « sœur » en anglais ?", o:["brother","sister","mother","cousin"], c:1, e:"« Sister » = sœur."},
+        {q:"« Father » signifie…", o:["mère","frère","père","oncle"], c:2, e:"« Father » = père."},
+        {q:"« Grandmother » signifie…", o:["grand-père","tante","grand-mère","sœur"], c:2, e:"« Grandmother » = grand-mère."},
+      ]},
+    {id:'couleurs', title:'Vocabulaire : les couleurs', visual:'colors', text:"Les couleurs de base : red (rouge), blue (bleu), green (vert), yellow (jaune), black (noir), white (blanc), orange (orange), purple (violet), pink (rose), brown (marron).",
+      q:[
+        {q:"Comment dit-on « rouge » en anglais ?", o:["red","blue","green","black"], c:0, e:"« Red » = rouge."},
+        {q:"« Yellow » signifie…", o:["vert","jaune","blanc","rose"], c:1, e:"« Yellow » = jaune."},
+        {q:"Comment dit-on « noir » en anglais ?", o:["white","brown","black","purple"], c:2, e:"« Black » = noir."},
+      ]},
+    {id:'tobehave', title:'Les verbes to be et to have', text:"« To be » (être) : I am, you are, he/she/it is, we are, they are. « To have » (avoir) : I have, you have, he/she/it has, we have, they have.",
+      q:[
+        {q:"Comment dit-on « il est » avec le verbe to be ?", o:["he am","he are","he is","he has"], c:2, e:"« He is » = il est."},
+        {q:"Quelle forme est correcte pour « elle a » ?", o:["she have","she has","she is","she are"], c:1, e:"« She has » = elle a."},
+        {q:"Comment dit-on « je suis » ?", o:["I is","I are","I am","I has"], c:2, e:"« I am » = je suis."},
+      ]},
+    {id:'lecture1', title:'Lecture : My Family', lang:'en-US', text:"My name is Tom. I am eleven years old. I have one sister and one brother. My sister is called Emma. She is seven years old. My brother's name is Jack. He is fourteen. We live in a small house with our mother and father. On Sundays, we play football in the garden.",
+      q:[
+        {q:"Quel âge a Tom ?", o:["Sept ans","Onze ans","Quatorze ans","Dix ans"], c:1, e:"« I am eleven years old » : Tom a onze ans."},
+        {q:"Combien de frères et sœurs Tom a-t-il ?", o:["Un frère seulement","Une sœur seulement","Un frère et une sœur","Aucun"], c:2, e:"Il a « one sister and one brother »."},
+        {q:"Que fait la famille le dimanche ?", o:["Ils regardent la télé","Ils jouent au football dans le jardin","Ils vont à l'école","Ils font du vélo"], c:1, e:"« On Sundays, we play football in the garden »."},
+      ]},
+    {id:'lecture2', title:'Lecture : A Day at School', lang:'en-US', text:"Every morning, Lily wakes up at seven o'clock. She has breakfast with her parents, then walks to school with her best friend, Sarah. Her favourite subject is science, because she loves animals and plants. At lunchtime, she eats in the school canteen with her classmates. After school, she does her homework before dinner.",
+      q:[
+        {q:"À quelle heure Lily se réveille-t-elle ?", o:["Six heures","Sept heures","Huit heures","Neuf heures"], c:1, e:"« wakes up at seven o'clock »."},
+        {q:"Quelle est la matière préférée de Lily ?", o:["Les mathématiques","Les sciences","L'anglais","Le sport"], c:1, e:"« Her favourite subject is science »."},
+        {q:"Où Lily mange-t-elle à midi ?", o:["Chez elle","À la cantine","Au restaurant","Dans le jardin"], c:1, e:"« she eats in the school canteen »."},
+      ]},
+  ],
+};
+const ALPHABET = [
+  {l:'A',p:'éï'},{l:'B',p:'bi'},{l:'C',p:'si'},{l:'D',p:'di'},{l:'E',p:'i'},{l:'F',p:'èf'},
+  {l:'G',p:'dji'},{l:'H',p:'éitch'},{l:'I',p:'aï'},{l:'J',p:'djéi'},{l:'K',p:'kéi'},{l:'L',p:'èl'},
+  {l:'M',p:'èm'},{l:'N',p:'èn'},{l:'O',p:'ô'},{l:'P',p:'pi'},{l:'Q',p:'kiou'},{l:'R',p:'ar'},
+  {l:'S',p:'ès'},{l:'T',p:'ti'},{l:'U',p:'you'},{l:'V',p:'vi'},{l:'W',p:'dabeul-you'},{l:'X',p:'èks'},
+  {l:'Y',p:'waï'},{l:'Z',p:'zi'},
+];
+
+const COLOR_VOCAB = [
+  {en:'Red', fr:'Rouge', hex:'#E8483A'},
+  {en:'Blue', fr:'Bleu', hex:'#2A4B8D'},
+  {en:'Green', fr:'Vert', hex:'#2FA37A'},
+  {en:'Yellow', fr:'Jaune', hex:'#F4B400'},
+  {en:'Black', fr:'Noir', hex:'#1B2340'},
+  {en:'White', fr:'Blanc', hex:'#FFFFFF'},
+  {en:'Orange', fr:'Orange', hex:'#F2994A'},
+  {en:'Purple', fr:'Violet', hex:'#8E5FD9'},
+  {en:'Pink', fr:'Rose', hex:'#F27EB0'},
+  {en:'Brown', fr:'Marron', hex:'#8B5E3C'},
+];
+const FAMILY_VOCAB = [
+  {en:'Mother', fr:'Mère', emoji:'👩'},
+  {en:'Father', fr:'Père', emoji:'👨'},
+  {en:'Sister', fr:'Sœur', emoji:'👧'},
+  {en:'Brother', fr:'Frère', emoji:'👦'},
+  {en:'Grandmother', fr:'Grand-mère', emoji:'👵'},
+  {en:'Grandfather', fr:'Grand-père', emoji:'👴'},
+];
+function renderVocabVisual(kind){
+  if(kind==='colors') return `<div class="vocab-grid">${COLOR_VOCAB.map(c=>`
+    <button class="vocab-card" onclick="speak('${c.en}','en-US')">
+      <div class="swatch" style="background:${c.hex}"></div>
+      <div class="vocab-en">${c.en} 🔊</div>
+      <div class="vocab-fr">${c.fr}</div>
+    </button>`).join('')}</div>`;
+  if(kind==='family') return `<div class="vocab-grid">${FAMILY_VOCAB.map(f=>`
+    <button class="vocab-card" onclick="speak('${f.en}','en-US')">
+      <div class="vocab-emoji">${f.emoji}</div>
+      <div class="vocab-en">${f.en} 🔊</div>
+      <div class="vocab-fr">${f.fr}</div>
+    </button>`).join('')}</div>`;
+  return '';
+}
+
+const ROBO_FACTS = [
+  "Un algorithme, c'est simplement une suite d'instructions précises pour réaliser une tâche — comme une recette de cuisine !",
+  "Un robot fait exactement ce qu'on lui dit, dans l'ordre exact. S'il se trompe, c'est presque toujours une erreur dans les instructions.",
+  "L'intelligence artificielle apprend souvent à partir d'exemples : plus elle en voit, plus elle devient précise.",
+  "En vrai code, TOURNE_DROITE() et AVANCE() sont des fonctions : de petites instructions qu'on peut réutiliser autant de fois qu'on veut.",
+];
+
+const ROBO_LEVELS = [
+  {id:1, size:4, start:{x:0,y:3,dir:0}, target:{x:0,y:0}, obstacles:[], objective:"Programme le robot pour qu'il avance tout droit jusqu'à l'étoile ⭐."},
+  {id:2, size:4, start:{x:0,y:3,dir:0}, target:{x:3,y:0}, obstacles:[], objective:"Cette fois il faut tourner ! Utilise TOURNE_DROITE() pour changer de direction."},
+  {id:3, size:5, start:{x:0,y:4,dir:0}, target:{x:4,y:0}, obstacles:[{x:0,y:2}], objective:"Un rocher 🪨 bloque le passage direct. Tourne plus tôt pour l'éviter."},
+  {id:4, size:5, start:{x:4,y:4,dir:3}, target:{x:0,y:0}, obstacles:[{x:2,y:2}], objective:"Le robot part vers la gauche. Guide-le jusqu'à l'étoile en évitant le rocher."},
+  {id:5, size:6, start:{x:0,y:5,dir:1}, target:{x:5,y:0}, obstacles:[{x:3,y:3}], objective:"Niveau expert : utilise le multiplicateur ×2/×3 pour répéter des instructions, comme une vraie boucle en programmation !"},
+];
+
+const DIR_ARROW = ['▲','▶','▼','◀'];
+const CMD_LABEL = {A:'AVANCE()', L:'TOURNE_GAUCHE()', R:'TOURNE_DROITE()'};
+
+/* ===================== STATE ===================== */
+let state = null;
+let view = {tab:'home', subject:null, lessonId:null, quiz:null, roboLevel:1, roboSeq:[], roboMult:1, roboRunning:false, roboRobot:null, roboMsg:null};
+
+function defaultState(){
+  return {points:0, quiz:{}, roboticsLevel:1, roboticsDone:[]};
+}
+
+async function loadState(){
+  try{
+    const raw = localStorage.getItem('amanda_progress');
+    state = raw ? JSON.parse(raw) : defaultState();
+  }catch(e){
+    state = defaultState();
+  }
+  view.roboLevel = state.roboticsLevel || 1;
+  render();
+}
+
+async function saveState(){
+  try{ localStorage.setItem('amanda_progress', JSON.stringify(state)); }catch(e){ console.error('storage error', e); }
+}
+
+/* ===================== HELPERS ===================== */
+function lessonCount(subj){ return LESSONS[subj].length; }
+function bestScore(subj,lessonId){
+  return (state.quiz[subj] && state.quiz[subj][lessonId]) || 0;
+}
+function subjectPct(subj){
+  const total = lessonCount(subj) * 3;
+  let sum = 0;
+  LESSONS[subj].forEach(l => sum += bestScore(subj,l.id));
+  return Math.round((sum/total)*100);
+}
+function overallPct(){
+  let sum=0,total=0;
+  SUBJECTS.forEach(s=>{ total += lessonCount(s.id)*3; LESSONS[s.id].forEach(l=> sum += bestScore(s.id,l.id)); });
+  return total ? Math.round((sum/total)*100) : 0;
+}
+
+/* ===================== RENDER ===================== */
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <header class="top">
+      <div class="title">
+        <div class="badge-icon">🧭</div>
+        <div>
+          <h1>Le Carnet de Mission d'Amanda</h1>
+          <div class="sub">Objectif : la 6ᵉ, prête à explorer !</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat-pill">⭐ ${state.points} pts</div>
+        <div class="stat-pill">📊 ${overallPct()}%</div>
+      </div>
+    </header>
+    <nav class="tabs">
+      ${tabBtn('home','🏠 Accueil')}
+      ${SUBJECTS.map(s=>tabBtn(s.id, s.emoji+' '+s.name)).join('')}
+      ${tabBtn('robo','🤖 Robotique &amp; IA')}
+    </nav>
+    <main class="sheet">${renderTab()}</main>
+    <footer class="reset"><button onclick="resetProgress()">Réinitialiser la progression</button></footer>
+  `;
+  attachHandlers();
+}
+function tabBtn(id,label){
+  return `<button class="${view.tab===id?'active':''}" onclick="goTab('${id}')">${label}</button>`;
+}
+function goTab(id){
+  view.tab=id; view.subject = SUBJECTS.some(s=>s.id===id)?id:null; view.lessonId=null; view.quiz=null;
+  render();
+}
+
+function renderTab(){
+  if(view.tab==='home') return renderHome();
+  if(view.tab==='robo') return renderRobo();
+  if(view.subject) return renderSubject(view.subject);
+  return '';
+}
+
+function renderHome(){
+  // find first incomplete lesson across subjects for "mission of the day"
+  let mission = null;
+  for(const s of SUBJECTS){
+    for(const l of LESSONS[s.id]){
+      if(bestScore(s.id,l.id) < 3){ mission = {subj:s, lesson:l}; break; }
+    }
+    if(mission) break;
+  }
+  return `
+    <div class="welcome">
+      <div>
+        <h2>Salut Amanda 👋</h2>
+        <p>Chaque mission réussie te rapproche un peu plus de la 6ᵉ. À toi de jouer !</p>
+      </div>
+    </div>
+    ${mission ? `
+    <div class="mission-card">
+      <div class="label">Mission du jour</div>
+      <h3>${mission.subj.emoji} ${mission.lesson.title} — ${mission.subj.name}</h3>
+      <button class="btn btn-primary" onclick="goTab('${mission.subj.id}')">Commencer</button>
+    </div>` : `
+    <div class="mission-card">
+      <div class="label">Bravo !</div>
+      <h3>Tu as terminé toutes les leçons disponibles 🎉</h3>
+    </div>`}
+    <div class="progress-grid">
+      ${SUBJECTS.map(s=>`
+        <div class="prog-card">
+          <div class="top-row"><span class="icon">${s.emoji}</span><strong>${s.name}</strong></div>
+          <div class="bar"><div style="width:${subjectPct(s.id)}%"></div></div>
+          <div class="pct">${subjectPct(s.id)}% maîtrisé</div>
+        </div>`).join('')}
+      <div class="prog-card">
+        <div class="top-row"><span class="icon">🤖</span><strong>Robotique &amp; IA</strong></div>
+        <div class="bar"><div style="width:${Math.round(((state.roboticsDone.length)/ROBO_LEVELS.length)*100)}%"></div></div>
+        <div class="pct">${state.roboticsDone.length}/${ROBO_LEVELS.length} niveaux réussis</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAlphabet(){
+  return `
+    <div class="lesson-card" style="margin-bottom:14px;">
+      <h3 style="margin:0 0 8px;">🔤 L'alphabet anglais — clique pour écouter</h3>
+      <p style="font-size:13.5px;color:#55597A;margin:0 0 12px;">La prononciation entre parenthèses est indicative (pas l'alphabet phonétique officiel), pour t'aider à te repérer.</p>
+      <div class="alpha-grid">
+        ${ALPHABET.map(a=>`<button class="alpha-btn" onclick="sayLetter('${a.l}')">${a.l}<span>${a.p}</span></button>`).join('')}
+      </div>
+    </div>
+  `;
+}
+function speak(text, lang){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang || 'fr-FR';
+    u.rate = (lang==='en-US') ? 0.9 : 0.95;
+    speechSynthesis.speak(u);
+  }catch(e){ console.error('speech error', e); }
+}
+function sayLetter(letter){ speak(letter, 'en-US'); }
+function speakLesson(subj, lessonId){
+  const l = LESSONS[subj].find(x=>x.id===lessonId);
+  if(l) speak(l.text, l.lang || 'fr-FR');
+}
+function speakQuizQuestion(){
+  const qz = view.quiz;
+  if(!qz) return;
+  const q = qz.questions[qz.idx];
+  if(q) speak(q.q, 'fr-FR');
+}
+
+function renderSubject(subj){
+  const s = SUBJECTS.find(x=>x.id===subj);
+  if(view.quiz && view.subject===subj) return renderQuiz();
+  return `
+    <div class="subject-header"><span class="emoji">${s.emoji}</span><h2>${s.name}</h2></div>
+    ${subj==='ang' ? renderAlphabet() : ''}
+    <div class="lesson-list">
+      ${LESSONS[subj].map(l=>{
+        const score = bestScore(subj,l.id);
+        const open = view.lessonId===l.id;
+        return `
+        <div class="lesson-card">
+          <div class="lesson-head" onclick="toggleLesson('${l.id}')">
+            <h3>${l.title}</h3>
+            <span class="stars">${'⭐'.repeat(score)}${'☆'.repeat(3-score)}</span>
+          </div>
+          ${open ? `
+            ${l.visual ? renderVocabVisual(l.visual) : ''}
+            <div class="lesson-body">${l.text}</div>
+            <div class="lesson-actions">
+              <button class="btn btn-ghost" onclick="speakLesson('${subj}','${l.id}')">🔊 Écouter le texte</button>
+              <button class="btn btn-primary" onclick="startQuiz('${subj}','${l.id}')">Faire le quiz</button>
+            </div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+function toggleLesson(id){ view.lessonId = (view.lessonId===id) ? null : id; render(); }
+
+function startQuiz(subj, lessonId){
+  const lesson = LESSONS[subj].find(l=>l.id===lessonId);
+  view.subject = subj;
+  view.quiz = {lessonId, idx:0, correctCount:0, answered:null, questions:lesson.q};
+  render();
+}
+
+function renderQuiz(){
+  const qz = view.quiz;
+  const subj = view.subject;
+  const lesson = LESSONS[subj].find(l=>l.id===qz.lessonId);
+  if(qz.idx >= qz.questions.length){
+    return renderQuizResult(subj, lesson, qz);
+  }
+  const q = qz.questions[qz.idx];
+  const answered = qz.answered;
+  return `
+    <div class="quiz-box">
+      <div class="quiz-progress">
+        ${qz.questions.map((_,i)=>`<div class="${i<qz.idx?'done':(i===qz.idx?'current':'')}"></div>`).join('')}
+      </div>
+      <div class="quiz-q">${lesson.title} — Question ${qz.idx+1}/${qz.questions.length}</div>
+      <div class="quiz-q" style="font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between;">
+        <span>${q.q}</span>
+        <button class="btn btn-ghost" style="padding:6px 10px;flex-shrink:0;" onclick="speakQuizQuestion()">🔊</button>
+      </div>
+      ${q.o.map((opt,i)=>{
+        let cls='quiz-opt';
+        if(answered!==null){
+          if(i===q.c) cls+=' correct';
+          else if(i===answered) cls+=' wrong';
+        }
+        return `<button class="${cls}" ${answered!==null?'disabled':''} onclick="answerQuiz(${i})">${opt}</button>`;
+      }).join('')}
+      ${answered!==null ? `<div class="quiz-explain">${q.e}</div><button class="btn btn-primary" onclick="nextQuizQuestion()">${qz.idx+1<qz.questions.length?'Question suivante':'Voir mon score'}</button>` : ''}
+    </div>
+  `;
+}
+
+function answerQuiz(i){
+  const qz = view.quiz;
+  if(qz.answered!==null) return;
+  qz.answered = i;
+  const q = qz.questions[qz.idx];
+  if(i===q.c) qz.correctCount++;
+  render();
+}
+function nextQuizQuestion(){
+  const qz = view.quiz;
+  qz.idx++; qz.answered=null;
+  render();
+}
+
+function renderQuizResult(subj, lesson, qz){
+  const prevBest = bestScore(subj, lesson.id);
+  const isNewBest = qz.correctCount > prevBest;
+  if(isNewBest){
+    if(!state.quiz[subj]) state.quiz[subj]={};
+    const gain = (qz.correctCount - prevBest) * 10 + (qz.correctCount===3 && prevBest<3 ? 20 : 0);
+    state.quiz[subj][lesson.id] = qz.correctCount;
+    state.points += gain;
+    saveState();
+  }
+  return `
+    <div class="quiz-result">
+      <div class="score">${qz.correctCount} / ${qz.questions.length}</div>
+      <p>${qz.correctCount===qz.questions.length ? 'Parfait, tu maîtrises cette leçon ! 🎉' : 'Bien joué, continue à t’entraîner !'}</p>
+      ${isNewBest ? `<p style="color:var(--mint);font-weight:800;">Nouveau record enregistré ⭐</p>` : ''}
+      <div class="lesson-actions" style="justify-content:center;">
+        <button class="btn btn-secondary" onclick="startQuiz('${subj}','${lesson.id}')">Recommencer</button>
+        <button class="btn btn-primary" onclick="closeQuiz()">Retour aux leçons</button>
+      </div>
+    </div>
+  `;
+}
+function closeQuiz(){ view.quiz=null; render(); }
+
+/* ===================== ROBOTICS ===================== */
+function renderRobo(){
+  const lvl = ROBO_LEVELS.find(l=>l.id===view.roboLevel);
+  if(!view.roboRobot || view.roboRobot.levelId !== lvl.id){
+    view.roboRobot = {...lvl.start, levelId:lvl.id};
+    view.roboSeq = [];
+    view.roboMsg = null;
+  }
+  const fact = ROBO_FACTS[(lvl.id-1) % ROBO_FACTS.length];
+  return `
+    <div class="subject-header"><span class="emoji">🤖</span><h2>Robotique &amp; IA</h2></div>
+    <div class="fact">💡 ${fact}</div>
+    <div class="robo-levels">
+      ${ROBO_LEVELS.map(l=>{
+        const unlocked = l.id <= state.roboticsLevel;
+        const done = state.roboticsDone.includes(l.id);
+        return `<button class="lvl-btn ${l.id===view.roboLevel?'active':''} ${done?'done':''}" ${unlocked?'':'disabled'} onclick="setRoboLevel(${l.id})">${l.id}</button>`;
+      }).join('')}
+    </div>
+    <div class="objective">🎯 ${lvl.objective}</div>
+    <div class="robo-wrap">
+      <div>${renderGrid(lvl)}</div>
+      <div class="robo-panel">
+        <div class="mult-row">
+          Répéter :
+          <button class="mult-btn ${view.roboMult===1?'active':''}" onclick="setMult(1)">×1</button>
+          <button class="mult-btn ${view.roboMult===2?'active':''}" onclick="setMult(2)">×2</button>
+          <button class="mult-btn ${view.roboMult===3?'active':''}" onclick="setMult(3)">×3</button>
+        </div>
+        <div class="palette">
+          <button class="cmd-btn" ${view.roboRunning?'disabled':''} onclick="addCmd('A')">⬆️ AVANCE()</button>
+          <button class="cmd-btn" ${view.roboRunning?'disabled':''} onclick="addCmd('L')">↩️ TOURNE_GAUCHE()</button>
+          <button class="cmd-btn" ${view.roboRunning?'disabled':''} onclick="addCmd('R')">↪️ TOURNE_DROITE()</button>
+        </div>
+        <div class="console">
+          ${view.roboSeq.length===0 ? '<div class="line empty">// tes instructions apparaîtront ici<span class="cursor">&nbsp;</span></div>' :
+            view.roboSeq.map((c,i)=>`<div class="line">${i+1}. ${CMD_LABEL[c]}</div>`).join('') + '<span class="cursor">&nbsp;</span>'}
+        </div>
+        <div class="lesson-actions">
+          <button class="btn btn-ghost" ${view.roboRunning?'disabled':''} onclick="undoCmd()">Effacer dernier</button>
+          <button class="btn btn-ghost" ${view.roboRunning?'disabled':''} onclick="clearCmd()">Effacer tout</button>
+          <button class="btn btn-primary" ${view.roboRunning||view.roboSeq.length===0?'disabled':''} onclick="runProgram()">▶ Exécuter</button>
+        </div>
+        ${view.roboMsg ? `<div class="feedback ${view.roboMsg.ok?'success':'fail'}">${view.roboMsg.text}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderGrid(lvl){
+  const n = lvl.size;
+  const isObstacle = (x,y)=> lvl.obstacles.some(o=>o.x===x&&o.y===y);
+  let cells = '';
+  for(let y=0;y<n;y++){
+    for(let x=0;x<n;x++){
+      let content = '';
+      if(x===lvl.target.x && y===lvl.target.y) content='⭐';
+      else if(isObstacle(x,y)) content='🪨';
+      cells += `<div class="cell ${isObstacle(x,y)?'obstacle':''}" style="grid-row:${y+1};grid-column:${x+1};">${content}</div>`;
+    }
+  }
+  const r = view.roboRobot;
+  const rot = r.dir*90;
+  const robotEl = `<div class="robot" id="robotEl" style="grid-row:${r.y+1};grid-column:${r.x+1};transform:rotate(${rot}deg);">${DIR_ARROW[0]}</div>`;
+  return `<div class="grid-board" style="grid-template-columns:repeat(${n},44px);grid-template-rows:repeat(${n},44px);">${cells}${robotEl}</div>`;
+}
+
+function setRoboLevel(id){
+  if(id > state.roboticsLevel) return;
+  view.roboLevel = id;
+  view.roboRobot = null;
+  render();
+}
+function setMult(n){ view.roboMult = n; render(); }
+function addCmd(c){
+  for(let i=0;i<view.roboMult;i++) view.roboSeq.push(c);
+  view.roboMsg = null;
+  render();
+}
+function undoCmd(){ view.roboSeq.pop(); view.roboMsg=null; render(); }
+function clearCmd(){ view.roboSeq=[]; view.roboMsg=null; render(); }
+
+function delay(ms){ return new Promise(res=>setTimeout(res,ms)); }
+
+async function runProgram(){
+  const lvl = ROBO_LEVELS.find(l=>l.id===view.roboLevel);
+  view.roboRunning = true;
+  view.roboMsg = null;
+  let r = {...lvl.start};
+  render();
+  for(const cmd of view.roboSeq){
+    await delay(380);
+    if(cmd==='L') r.dir = (r.dir+3)%4;
+    else if(cmd==='R') r.dir = (r.dir+1)%4;
+    else if(cmd==='A'){
+      if(r.dir===0) r.y -= 1;
+      else if(r.dir===1) r.x += 1;
+      else if(r.dir===2) r.y += 1;
+      else if(r.dir===3) r.x -= 1;
+    }
+    view.roboRobot = {...r, levelId:lvl.id};
+    // check bounds/obstacle
+    const outOfBounds = r.x<0 || r.y<0 || r.x>=lvl.size || r.y>=lvl.size;
+    const hitObstacle = !outOfBounds && lvl.obstacles.some(o=>o.x===r.x&&o.y===r.y);
+    if(outOfBounds || hitObstacle){
+      view.roboRunning = false;
+      view.roboMsg = {ok:false, text: outOfBounds ? "Oups, le robot sort de la zone ! Ajuste ton programme et réessaie." : "Aïe, un rocher 🪨 bloque le passage. Trouve un autre chemin !"};
+      render();
+      return;
+    }
+    render();
+  }
+  view.roboRunning = false;
+  const success = r.x===lvl.target.x && r.y===lvl.target.y;
+  if(success){
+    view.roboMsg = {ok:true, text:"Bravo, mission réussie ! 🎉"};
+    if(!state.roboticsDone.includes(lvl.id)){
+      state.roboticsDone.push(lvl.id);
+      state.points += 15;
+      if(state.roboticsLevel <= lvl.id && lvl.id < ROBO_LEVELS.length){
+        state.roboticsLevel = lvl.id + 1;
+      }
+      saveState();
+    }
+  }else{
+    view.roboMsg = {ok:false, text:"Presque ! Le robot n'est pas encore sur l'étoile. Ajuste le programme."};
+  }
+  render();
+}
+
+function attachHandlers(){}
+
+async function resetProgress(){
+  if(!confirm("Réinitialiser toute la progression d'Amanda ? Cette action est définitive.")) return;
+  state = defaultState();
+  view.roboLevel = 1;
+  await saveState();
+  render();
+}
+
+loadState();
+</script>
+</body>
+</html>
